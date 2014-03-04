@@ -1,0 +1,8 @@
+{
+  "name": "mini-rpg",
+  "private": true,
+  "dependencies": {
+    "threejs": "r66"
+  },
+  "devDependencies": {}
+}
