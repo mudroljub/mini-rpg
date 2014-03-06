@@ -1,5 +1,3 @@
-var camera, scene, renderer;
-var geometry, material, mesh;
 
 var MiniRPG = new GameEngine();
 
