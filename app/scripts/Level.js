@@ -11,7 +11,7 @@ Level.prototype.generate = function() {
     var x, y, floor;
     var _floor = new THREE.PlaneGeometry(this.tile.width, this.tile.depth);
     var floor_geometry = new THREE.Geometry();
-    var material = new THREE.MeshLambertMaterial({ color: 0x0000ff, shading: THREE.SmoothShading });
+    var material = new THREE.MeshLambertMaterial({ color: 0x0000dd, shading: THREE.FlatShading });
     var offsetXX = 0;
     var offsetYY = 0;
 

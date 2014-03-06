@@ -18,6 +18,7 @@ function GameEngine() {
     this.renderer.shadowMapCullFace      = THREE.CullFaceBack;
     this.renderer.shadowMapAutoUpdate    = true;
     this.renderer.shadowMapType          = THREE.PCFSoftShadowMap;
+    this.controls = new THREE.OrbitControls( this.camera, this.renderer.domElement );
     document.body.appendChild( this.renderer.domElement );
 
 }
@@ -48,51 +49,35 @@ GameEngine.prototype.update = function() {
             entity.update();
         }
     }
+
+    this.controls.update();
 };
 
 
 GameEngine.prototype.init = function() {
-    var d = 500;
+
+    this.level = new Level( { size : 48 } );
+    var ground = this.level.generate();
+
     console.log('MiniRPG init!');
 
-    var ambient = new THREE.AmbientLight( 0x444444 );
-    this.scene.add( ambient );
-
-    var gen = new THREE.PointLight( 0xfee5ac, 1, 1000);
-    gen.position.set(new THREE.Vector3(50, 50, 50));
-    this.scene.add(gen);
-
-    // light for shadows
-    dirLight = new THREE.DirectionalLight( 0xffffff, 0.5 ,500);
-    dirLight.color.setHSL( 0.1, 1, 0.95 );
-    dirLight.position.set( -1, 1.75, 1 );
-    dirLight.position.multiplyScalar( 100 );
-    this.scene.add( dirLight );
-    dirLight.position              = this.camera.position;
-    dirLight.castShadow            = true;
-    dirLight.shadowMapWidth        = 2048;
-    dirLight.shadowMapHeight       = 2048;
-    dirLight.shadowCameraLeft      = -d;
-    dirLight.shadowCameraRight     = d;
-    dirLight.shadowCameraTop       = d;
-    dirLight.shadowCameraBottom    = -d;
-    dirLight.shadowCameraFar       = 3500;
-    dirLight.shadowBias            = -0.0001;
-    dirLight.shadowDarkness        = 0.35;
-
-    var farm = new Farm(this);
-    this.addEntity(farm);
-
-    for (var i = 0; i < 20; i++) {
-        this.addEntity(new Tree(this));
+    for (var i = 0; i < 10; i++) {
+        this.addEntity(new Farm(this));
+        this.addEntity(new Cloud(this));
     }
 
-    var mine = new Mine(this);
-    this.addEntity(mine);
+    for (var i = 0; i < 200; i++) {
+        this.addEntity(new Tree(this));
 
-    var level = new Level({size:48});
-    var ground = level.generate();
+    }
+
+    for (var i = 0; i < 4; i++) {
+        this.addEntity(new Mine(this));
+    }
+
     this.scene.add(ground);
+
+    this.initLighting();
 
 };
 
@@ -107,6 +92,37 @@ GameEngine.prototype.start = function() {
         that.elapsed = that.clock.getElapsedTime();
     })();
 };
+
+GameEngine.prototype.initLighting = function() {
+
+    var d = 500;
+    var ambient = new THREE.AmbientLight( 0x444444 );
+    var gen = new THREE.PointLight( 0xfee5ac, 1, 1000);
+    var dirLight = new THREE.DirectionalLight( 0xffffff, 0.5 ,500);
+
+    gen.position.set(new THREE.Vector3(50, 50, 50));
+
+    // light for shadows
+    dirLight.color.setHSL( 0.1, 1, 0.95 );
+    dirLight.position.set( -1, 1.75, 1 );
+    dirLight.position.multiplyScalar( 100 );
+    dirLight.position              = this.camera.position;
+    dirLight.castShadow            = true;
+    dirLight.shadowMapWidth        = 2048;
+    dirLight.shadowMapHeight       = 2048;
+    dirLight.shadowCameraLeft      = -d;
+    dirLight.shadowCameraRight     = d;
+    dirLight.shadowCameraTop       = d;
+    dirLight.shadowCameraBottom    = -d;
+    dirLight.shadowCameraFar       = 3500;
+    dirLight.shadowBias            = -0.0001;
+    dirLight.shadowDarkness        = 0.35;
+
+    this.scene.add( dirLight );
+    this.scene.add( ambient );
+    this.scene.add( gen );
+
+}
 
 
 GameEngine.prototype.pause = function () {

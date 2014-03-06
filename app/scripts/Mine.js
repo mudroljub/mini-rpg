@@ -1,7 +1,7 @@
 function Mine(game) {
     this.type = 'mine';
     Entity.call(this, game, 0x333333);
-    this.pos = new THREE.Vector3(100, 10, 100);
+    this.pos = new THREE.Vector3((Math.random() * 128 - 64) * 5, 5, (Math.random() * 128 - 64) * 5);
 }
 
 

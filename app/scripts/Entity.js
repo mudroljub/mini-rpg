@@ -40,5 +40,6 @@ Entity.prototype.create = function () {
     geometry = new THREE.BoxGeometry(10, 10, 10);
     this.solidMat = new THREE.MeshLambertMaterial({ color: this.color, shading: THREE.SmoothShading });
     this.mesh = new THREE.Mesh(geometry, this.solidMat);
+    this.mesh.castShadow = true;
 
 };
