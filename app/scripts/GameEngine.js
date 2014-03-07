@@ -61,18 +61,22 @@ GameEngine.prototype.init = function() {
 
     console.log('MiniRPG init!');
 
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 5; i++) {
         this.addEntity(new Farm(this));
         this.addEntity(new Cloud(this));
     }
 
-    for (var i = 0; i < 200; i++) {
+    for (var i = 0; i < 20; i++) {
         this.addEntity(new Tree(this));
 
     }
 
     for (var i = 0; i < 4; i++) {
         this.addEntity(new Mine(this));
+    }
+
+    for (var i = 0; i < 14; i++) {
+        this.addEntity(new Mob(this));
     }
 
     this.scene.add(ground);
@@ -96,11 +100,8 @@ GameEngine.prototype.start = function() {
 GameEngine.prototype.initLighting = function() {
 
     var d = 500;
-    var ambient = new THREE.AmbientLight( 0x444444 );
-    var gen = new THREE.PointLight( 0xfee5ac, 1, 1000);
+    var ambient = new THREE.AmbientLight( 0x222222 );
     var dirLight = new THREE.DirectionalLight( 0xffffff, 0.5 ,500);
-
-    gen.position.set(new THREE.Vector3(50, 50, 50));
 
     // light for shadows
     dirLight.color.setHSL( 0.1, 1, 0.95 );
@@ -120,7 +121,6 @@ GameEngine.prototype.initLighting = function() {
 
     this.scene.add( dirLight );
     this.scene.add( ambient );
-    this.scene.add( gen );
 
 }
 
