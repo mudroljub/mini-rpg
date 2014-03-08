@@ -2,7 +2,7 @@ function GameEngine() {
 
     this.entityId = 0;
     this.paused = false;
-    this.entities = [];
+    this.entities = {};
     this.clock = new THREE.Clock();
     this.delta = 0;
     this.elapsed = 0;
@@ -40,7 +40,7 @@ GameEngine.prototype.addEntity = function(entity) {
 
 GameEngine.prototype.removeEntity = function(entity) {
 
-    //delete this.entities[entity.id];
+    this.entities[entity.id].remove = true;
     //this.scene.remove(entity.mesh);
 
 };
@@ -50,11 +50,11 @@ GameEngine.prototype.getCloseEntity = function(name, position, range) {
 
     var i, distance, entity;
 
-    for (i = 0; i < this.entities.length; i++) {
+    for (i in this.entities) {
 
         entity = this.entities[i];
 
-        if (entity.name === name) {
+        if (entity.name === name && !entity.remove) {
 
             distance = position.distanceTo(entity.pos);
 
@@ -82,10 +82,9 @@ GameEngine.prototype.loop = function() {
 
 
 GameEngine.prototype.update = function() {
-    var entitiesCount = this.entities.length;
     var i;
 
-    for (i = 0; i < entitiesCount; i++) {
+    for (i in this.entities) {
         var entity = this.entities[i];
         if (!entity.remove) {
             entity.update();
@@ -109,7 +108,7 @@ GameEngine.prototype.init = function() {
         this.addEntity(new Cloud(this));
     }
 
-    for (var i = 0; i < 20; i++) {
+    for (var i = 0; i < 40; i++) {
         this.addEntity(new Tree(this));
 
     }
@@ -122,7 +121,7 @@ GameEngine.prototype.init = function() {
         this.addEntity(new Village(this));
     }
 
-    for (var i = 0; i < 1; i++) {
+    for (var i = 0; i < 20; i++) {
         mob = new Mob(this);
         mob.brain.setState("exploring");
         this.addEntity(mob);

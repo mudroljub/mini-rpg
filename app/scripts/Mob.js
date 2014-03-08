@@ -34,7 +34,7 @@ Mob.prototype.update = function () {
         oldPos, newPos, distance;
 
     this.brain.think();
-    console.log(this.brain.activeState.name)
+    //console.log(this.brain.activeState.name)
 
 //    if (this.target) {
 //
