@@ -103,7 +103,7 @@ GameEngine.prototype.init = function() {
 
     console.log('MiniRPG init!');
 
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 15; i++) {
         this.addEntity(new Farm(this));
         this.addEntity(new Cloud(this));
     }
