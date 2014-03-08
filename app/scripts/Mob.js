@@ -7,6 +7,7 @@ function Mob(game) {
     this.target = null;
     this.speed = 40;
     this.brain = new StateMachine();
+
     this.exploringState  = new MobStateExploring(this);
     this.seekingState    = new MobStateSeeking(this);
     this.deliveringState = new MobStateDelivering(this);
@@ -16,6 +17,8 @@ function Mob(game) {
     this.brain.addState(this.seekingState);
     this.brain.addState(this.deliveringState);
     this.brain.addState(this.huntingState);
+
+    this.carryEntity = undefined;
 
 }
 
@@ -30,20 +33,23 @@ Mob.prototype.update = function () {
         distanceToDestination, heading, travelDistance,
         oldPos, newPos, distance;
 
-    if (this.target) {
+    this.brain.think();
+    console.log(this.brain.activeState.name)
 
-        this.destination = this.target.pos.clone();
-
-    } else {
-
-        distance = this.destination.clone().sub(this.pos).length();
-
-        if (distance < 20) {
-
-            this.destination = new THREE.Vector3(rndInt(200), 18, rndInt(200))
-
-        }
-    }
+//    if (this.target) {
+//
+//        this.destination = this.target.pos.clone();
+//
+//    } else {
+//
+//        distance = this.destination.clone().sub(this.pos).length();
+//
+//        if (distance < 20) {
+//
+//            this.destination = new THREE.Vector3(rndInt(200), 18, rndInt(200))
+//
+//        }
+//    }
 
     // rotation to target location
     deltaX = this.destination.x - this.pos.x;
@@ -63,6 +69,14 @@ Mob.prototype.update = function () {
 
     this.rotation.y = (Math.atan2(deltaX, deltaZ));
 
+
+
+    if (this.carryEntity) {
+        this.carryEntity.pos.x = this.pos.x + 10;
+        this.carryEntity.pos.y = this.pos.y;
+        this.carryEntity.pos.z = this.pos.z;
+    }
+
     Entity.prototype.update.call(this);
 
 };
@@ -78,5 +92,19 @@ Mob.prototype.create = function () {
 };
 
 
-Mob.prototype.carry = function () {};
+Mob.prototype.carry = function ( entity ) {
 
+    this.carryEntity = entity;
+
+};
+
+
+Mob.prototype.drop = function ( entity ) {
+    var x, y;
+    if (this.carryEntity) {
+        x = this.pos.x;
+        y = this.pos.y;
+        this.carryEntity.pos = new THREE.Vector3(x , 5, y);
+        this.carryEntity = undefined;
+    }
+}

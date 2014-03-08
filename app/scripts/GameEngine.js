@@ -40,8 +40,8 @@ GameEngine.prototype.addEntity = function(entity) {
 
 GameEngine.prototype.removeEntity = function(entity) {
 
-    delete this.entities[entity.id];
-    this.scene.removeEntity(entity.mesh);
+    //delete this.entities[entity.id];
+    //this.scene.remove(entity.mesh);
 
 };
 
@@ -52,11 +52,11 @@ GameEngine.prototype.getCloseEntity = function(name, position, range) {
 
     for (i = 0; i < this.entities.length; i++) {
 
-        entity = this.entities[e];
+        entity = this.entities[i];
 
         if (entity.name === name) {
 
-            distance = position.getDistanceTo(entity.position);
+            distance = position.distanceTo(entity.pos);
 
             if (distance < range) {
 
@@ -122,7 +122,7 @@ GameEngine.prototype.init = function() {
         this.addEntity(new Village(this));
     }
 
-    for (var i = 0; i < 14; i++) {
+    for (var i = 0; i < 1; i++) {
         mob = new Mob(this);
         mob.brain.setState("exploring");
         this.addEntity(mob);

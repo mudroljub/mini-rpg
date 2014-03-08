@@ -28,27 +28,27 @@ MobStateExploring.prototype.doActions = function () {
 
 MobStateExploring.prototype.checkConditions = function () {
 
-    var leaf = this.mob.game.getCloseEntity("leaf", this.mob.position, 10);
+    var tree = this.mob.game.getCloseEntity("tree", this.mob.pos, 100);
 
-    if (leaf) {
+    if (tree) {
 
-        this.mob.leafId = leaf.id;
+        this.mob.treeId = tree.id;
         return "seeking";
 
     }
 
-    var spider = this.mob.game.getCloseEntity("spider", this.mob.position, 10);
-
-    if (spider) {
-
-        if (this.mob.position.getDistanceTo(spider.position) < 100) {
-
-            this.mob.spiderId = spider.id;
-            return "hunting";
-
-        }
-
-    }
+//    var spider = this.mob.game.getCloseEntity("spider", this.mob.pos, 10);
+//
+//    if (spider) {
+//
+//        if (this.mob.pos.distanceTo(spider.pos) < 100) {
+//
+//            this.mob.spiderId = spider.id;
+//            return "hunting";
+//
+//        }
+//
+//    }
 
     return;
 
@@ -69,7 +69,7 @@ var MobStateSeeking = function( mob ) {
 
     State.call(this, "seeking");
     this.mob = mob;
-    this.leafId = undefined;
+    this.treeId = undefined;
 
 };
 
@@ -79,18 +79,18 @@ MobStateSeeking.prototype.constructor = MobStateSeeking;
 
 MobStateSeeking.prototype.checkConditions = function () {
 
-    var leaf = this.mob.game.getEntity(this.mob.leafId);
+    var tree = this.mob.game.getEntity(this.mob.treeId);
 
-    if (!leaf) {
+    if (!tree) {
 
         return "exploring";
 
     }
 
-    if (this.mob.position.getDistanceTo(leaf.position) < 5) {
+    if (this.mob.pos.distanceTo(tree.pos) < 10) {
 
-        this.mob.carry(leaf);
-        this.mob.game.removeEntity(leaf);
+        this.mob.carry(tree);
+        this.mob.game.removeEntity(tree);
         return "delivering";
 
     }
@@ -101,11 +101,11 @@ MobStateSeeking.prototype.checkConditions = function () {
 
 MobStateSeeking.prototype.entryActions = function () {
 
-    var leaf = this.mob.game.getEntity(this.mob.leafId);
+    var tree = this.mob.game.getEntity(this.mob.treeId);
 
-    if (leaf) {
+    if (tree) {
 
-        this.mob.destination = leaf.position;
+        this.mob.destination = tree.pos.clone();
         this.mob.speed = 120 + rndInt(20);
 
     }
@@ -126,9 +126,9 @@ MobStateDelivering.prototype.constructor = MobStateDelivering;
 
 MobStateDelivering.prototype.checkConditions = function () {
 
-    var nestPosition = new THREE.Vector3(NEST_POSITION[0], 5, NEST_POSITION[1]);
+    var nestPosition = new THREE.Vector3(0, 5, 0);
 
-    if (nestPosition.getDistanceTo(this.mob.position) < NEST_SIZE) {
+    if (nestPosition.distanceTo(this.mob.pos) < 10) {
 
         if (roll(10) === 1) {
 
@@ -146,7 +146,7 @@ MobStateDelivering.prototype.entryActions = function () {
 
     this.mob.speed = 60;
     var randomOffset = new THREE.Vector3(rndInt(20), 5, rndInt(20));
-    this.mob.destination = new THREE.Vector3(NEST_POSITION[0], 5, NEST_POSITION[1]).add(randomOffset);
+    this.mob.destination = new THREE.Vector3(0, 5, 0).add(randomOffset);
 
 };
 
@@ -173,9 +173,9 @@ MobStateHunting.prototype.doActions = function () {
 
     }
 
-    this.mob.destination = spider.position;
+    this.mob.destination = spider.pos;
 
-    if (this.mob.position.getDistanceTo(spider.position) < 15) {
+    if (this.mob.pos.distanceTo(spider.pos) < 15) {
 
         if (roll(5) === 1) {
 
@@ -212,7 +212,7 @@ MobStateHunting.prototype.checkConditions = function () {
 
     }
 
-    if (spider.position.getDistanceTo([NEST_POSITION[0], NEST_POSITION[1]]) > NEST_SIZE * 3) {
+    if (spider.pos.distanceTo(new THREE.Vector3(0, 0, 0)) > 10 * 3) {
 
         return "exploring";
 
