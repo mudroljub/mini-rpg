@@ -1,7 +1,9 @@
 function Cloud(game) {
-    this.type = 'cloud';
+
+    this.name = 'cloud';
     Entity.call(this, game, 0xff0000);
     this.pos = new THREE.Vector3((Math.random() * 128 - 64) * 5, 100, (Math.random() * 128 - 64) * 5);
+
 }
 
 

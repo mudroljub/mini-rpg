@@ -1,4 +1,6 @@
 function GameEngine() {
+
+    this.entityId = 0;
     this.paused = false;
     this.entities = [];
     this.clock = new THREE.Clock();
@@ -23,19 +25,59 @@ function GameEngine() {
 
 }
 
-
 GameEngine.prototype.constructor = GameEngine;
 
 
 GameEngine.prototype.addEntity = function(entity) {
-    this.entities.push(entity);
+
+    this.entities[this.entityId] = entity;
+    entity.id = this.entityId;
+    this.entityId++;
     this.scene.add(entity.mesh);
+
+};
+
+
+GameEngine.prototype.removeEntity = function(entity) {
+
+    delete this.entities[entity.id];
+    this.scene.removeEntity(entity.mesh);
+
+};
+
+
+GameEngine.prototype.getCloseEntity = function(name, position, range) {
+
+    var i, distance, entity;
+
+    for (i = 0; i < this.entities.length; i++) {
+
+        entity = this.entities[e];
+
+        if (entity.name === name) {
+
+            distance = position.getDistanceTo(entity.position);
+
+            if (distance < range) {
+
+                return entity;
+
+            }
+
+        }
+
+    }
+
+    return false;
+
 };
 
 
 GameEngine.prototype.loop = function() {
+
     this.delta = this.clock.getDelta();
     this.update();
+
 };
 
 
@@ -55,6 +97,7 @@ GameEngine.prototype.update = function() {
 
 
 GameEngine.prototype.init = function() {
+    var mob;
 
     this.level = new Level( { size : 48 } );
     var ground = this.level.generate();
@@ -71,12 +114,18 @@ GameEngine.prototype.init = function() {
 
     }
 
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < 3; i++) {
         this.addEntity(new Mine(this));
     }
 
+    for (var i = 0; i < 2; i++) {
+        this.addEntity(new Village(this));
+    }
+
     for (var i = 0; i < 14; i++) {
-        this.addEntity(new Mob(this));
+        mob = new Mob(this);
+        mob.brain.setState("exploring");
+        this.addEntity(mob);
     }
 
     this.scene.add(ground);
@@ -128,3 +177,8 @@ GameEngine.prototype.initLighting = function() {
 GameEngine.prototype.pause = function () {
     this.paused = this.paused ? false : true;
 };
+
+
+GameEngine.prototype.getEntity = function( id ) {
+    return this.entities[id] || false;
+}

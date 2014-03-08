@@ -1,11 +1,21 @@
 function Mob(game) {
 
-    this.type = 'mob';
+    this.name = 'mob';
     Entity.call(this, game, 0xecc2a7);
     this.pos = new THREE.Vector3(rndInt(128) * 5, 5, rndInt(128) * 5);
     this.destination = this.pos.clone();
     this.target = null;
     this.speed = 40;
+    this.brain = new StateMachine();
+    this.exploringState  = new MobStateExploring(this);
+    this.seekingState    = new MobStateSeeking(this);
+    this.deliveringState = new MobStateDelivering(this);
+    this.huntingState    = new MobStateHunting(this);
+
+    this.brain.addState(this.exploringState);
+    this.brain.addState(this.seekingState);
+    this.brain.addState(this.deliveringState);
+    this.brain.addState(this.huntingState);
 
 }
 
@@ -67,4 +77,6 @@ Mob.prototype.create = function () {
 
 };
 
+
+Mob.prototype.carry = function () {};
 

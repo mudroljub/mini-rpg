@@ -1,7 +1,9 @@
 function Tree(game) {
-    this.type = 'tree';
+
+    this.name = 'tree';
     Entity.call(this, game, 0x00aa00);
     this.pos = new THREE.Vector3((Math.random() * 128 - 64) * 5, 10, (Math.random() * 128 - 64) * 5);
+
 }
 
 
