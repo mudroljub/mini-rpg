@@ -34,22 +34,6 @@ Mob.prototype.update = function () {
         oldPos, newPos, distance;
 
     this.brain.think();
-    //console.log(this.brain.activeState.name)
-
-//    if (this.target) {
-//
-//        this.destination = this.target.pos.clone();
-//
-//    } else {
-//
-//        distance = this.destination.clone().sub(this.pos).length();
-//
-//        if (distance < 20) {
-//
-//            this.destination = new THREE.Vector3(rndInt(200), 18, rndInt(200))
-//
-//        }
-//    }
 
     // rotation to target location
     deltaX = this.destination.x - this.pos.x;

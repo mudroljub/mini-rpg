@@ -20,8 +20,10 @@ Mine.prototype.update = function() {
 
 Mine.prototype.create = function() {
 
-    Entity.prototype.create.call(this);
-
+    var geometry = new THREE.BoxGeometry(20, 20, 20);
+    this.solidMat = new THREE.MeshLambertMaterial({ color: this.color, shading: THREE.SmoothShading });
+    this.mesh = new THREE.Mesh(geometry, this.solidMat);
+    this.mesh.castShadow = true;
 };
 
 
