@@ -11,7 +11,10 @@ Level.prototype.generate = function() {
 //    var x, y, floor;
 //    var _floor = new THREE.PlaneGeometry(this.tile.width, this.tile.depth);
 //    var floor_geometry = new THREE.Geometry();
-    var material = new THREE.MeshLambertMaterial({ color: 0x33aa33, shading: THREE.FlatShading, vertexColors: THREE.FaceColors});
+    var solidMat = new THREE.MeshLambertMaterial({ color: 0x33aa33, shading: THREE.FlatShading, vertexColors: THREE.FaceColors});
+    var wireMat = new THREE.MeshPhongMaterial({ color: 0x55cc55, wireframe: true, shading: THREE.FlatShading });
+    wireMat.opacity = 0.15;
+    wireMat.blending = THREE.AdditiveAlphaBlending;
 //
 //    var offsetXX = 0;
 //    var offsetYY = 0;
@@ -37,12 +40,21 @@ Level.prototype.generate = function() {
 
     var geometry = new THREE.PlaneGeometry(650, 650, 10, 10);
     for (var i = 0; i < geometry.vertices.length; i++) {
-        geometry.vertices[i].z += rndInt(50);
+        geometry.vertices[i].z += rndInt(5);
     }
 
-    var floor = new THREE.Mesh(geometry, material);
+    var floor_solid = new THREE.Mesh(geometry, solidMat);
+    var floor_wire = new THREE.Mesh(geometry, wireMat);
+    floor_solid.receiveShadow = true;
+
+    var floor = new THREE.Object3D();
+
+    floor.add(floor_solid);
+    floor.add(floor_wire);
+
+
     floor.rotation.x = -Math.PI / 2;
-    floor.position.set(0, -10, 0);
+    floor.position.set(0, -15, 0);
     floor.receiveShadow = true;
 
     return floor;

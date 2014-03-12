@@ -2,7 +2,7 @@ function Mine(game) {
 
     this.name = 'mine';
     Entity.call(this, game, 0x3e414e);
-    this.pos = new THREE.Vector3((Math.random() * 128 - 64) * 5, 5, (Math.random() * 128 - 64) * 5);
+    this.pos = new THREE.Vector3((Math.random() * 128 - 64) * 5, -15, (Math.random() * 128 - 64) * 5);
 
 }
 
@@ -20,10 +20,15 @@ Mine.prototype.update = function() {
 
 Mine.prototype.create = function() {
 
-    var geometry = new THREE.BoxGeometry(20, 20, 20);
-    this.solidMat = new THREE.MeshLambertMaterial({ color: this.color, shading: THREE.SmoothShading });
-    this.mesh = new THREE.Mesh(geometry, this.solidMat);
-    this.mesh.castShadow = true;
+    if (objects['mine']) {
+        objects['mine'].scale.set(5, 5, 5);
+        objects['mine'].castShadow = true;
+        this.mesh = objects['mine'].clone();
+        this.rotation.y = roll(180) * (Math.PI / 180);
+        this.mesh.name = this.name;
+        this.mesh.castShadow = true;
+
+    }
 };
 
 

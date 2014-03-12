@@ -26,11 +26,14 @@ Cloud.prototype.update = function() {
 
 Cloud.prototype.create = function() {
 
-    var geometry;
-    geometry = new THREE.BoxGeometry(Math.random() * 60 + 10, 10, Math.random() * 60 + 10);
-    this.solidMat = new THREE.MeshLambertMaterial({ color: 0xffffff, shading: THREE.SmoothShading, transparent: true, opacity: 0.75 });
-    this.mesh = new THREE.Mesh(geometry, this.solidMat);
-    this.mesh.castShadow = true;
+    if (objects['cloud']) {
+        objects['cloud'].scale.set(roll(50) + 10, 15, roll(10)+ 10);
+        objects['cloud'].castShadow = true;
+        this.mesh = objects['cloud'].clone();
+        this.mesh.castShadow = true;
+
+        this.mesh.name = this.name;
+    }
 
 };
 

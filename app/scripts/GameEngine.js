@@ -117,7 +117,7 @@ GameEngine.prototype.init = function() {
         this.addEntity(new Mine(this));
     }
 
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < 1; i++) {
         this.addEntity(new Village(this));
     }
 
@@ -148,7 +148,7 @@ GameEngine.prototype.start = function() {
 GameEngine.prototype.initLighting = function() {
 
     var d = 500;
-    var ambient = new THREE.AmbientLight( 0x222222 );
+    var ambient = new THREE.AmbientLight( 0x111111 );
     var dirLight = new THREE.DirectionalLight( 0xffffff, 0.5 ,500);
 
     // light for shadows
