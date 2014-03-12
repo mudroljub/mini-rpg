@@ -2,7 +2,7 @@ function Village(game) {
 
     this.name = 'village';
     Entity.call(this, game, 0x0000ff);
-    this.pos = new THREE.Vector3((Math.random() * 128 - 64) * 5, 5, (Math.random() * 128 - 64) * 5);
+    this.pos = new THREE.Vector3(-256, 20, -256);
 
 }
 
@@ -20,10 +20,14 @@ Village.prototype.update = function() {
 
 Village.prototype.create = function() {
 
-    var geometry = new THREE.BoxGeometry(30, 10, 30);
-    this.solidMat = new THREE.MeshLambertMaterial({ color: this.color, shading: THREE.SmoothShading });
-    this.mesh = new THREE.Mesh(geometry, this.solidMat);
-    this.mesh.castShadow = true;
+    if (objects['village']) {
+        objects['village'].scale.set(15, 15, 15);
+        objects['village'].castShadow = true;
+        this.mesh = objects['village'].clone();
+        this.mesh.castShadow = true;
+
+        this.mesh.name = this.name;
+    }
 
 };
 

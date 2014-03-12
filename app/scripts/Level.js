@@ -54,7 +54,7 @@ Level.prototype.generate = function() {
 
 
     floor.rotation.x = -Math.PI / 2;
-    floor.position.set(0, -15, 0);
+    floor.position.set(0, -20, 0);
     floor.receiveShadow = true;
 
     return floor;

@@ -68,7 +68,7 @@ Mob.prototype.update = function () {
 
 Mob.prototype.create = function () {
 
-    var geometry = new THREE.BoxGeometry(5, 5, 5);
+    var geometry = new THREE.BoxGeometry(5, 10, 5);
     this.solidMat = new THREE.MeshLambertMaterial({ color: this.color, shading: THREE.SmoothShading });
     this.mesh = new THREE.Mesh(geometry, this.solidMat);
     this.mesh.castShadow = true;

@@ -113,7 +113,7 @@ GameEngine.prototype.init = function() {
 
     }
 
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < 1; i++) {
         this.addEntity(new Mine(this));
     }
 

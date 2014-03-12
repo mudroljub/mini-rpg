@@ -1,6 +1,6 @@
 var IMAGES = [];
-var MESHES = ['tree', 'mine', 'cloud'];
-var ITEMS = ['tree', 'mine', 'cloud'];
+var MESHES = ['tree', 'mine', 'cloud', 'village'];
+var ITEMS = ['tree', 'mine', 'cloud', 'village'];
 
 function AssetManager() {
     this.TEXTURES  = {};
