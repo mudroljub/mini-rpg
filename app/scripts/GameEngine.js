@@ -41,7 +41,7 @@ GameEngine.prototype.addEntity = function(entity) {
 GameEngine.prototype.removeEntity = function(entity) {
 
     this.entities[entity.id].remove = true;
-    //this.scene.remove(entity.mesh);
+    this.scene.remove(entity.mesh);
 
 };
 

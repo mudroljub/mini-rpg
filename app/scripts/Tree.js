@@ -3,6 +3,7 @@ function Tree(game) {
     this.name = 'tree';
     Entity.call(this, game, 0x3EA055);
     this.pos = new THREE.Vector3(rndInt(64) * 8, 10, rndInt(64) * 8);
+    this.units = 4;
 
 }
 

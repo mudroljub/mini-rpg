@@ -37,10 +37,18 @@ Level.prototype.generate = function() {
 //    floor.receiveShadow = true;
 //    floor.castShadow = false;
 
-    var geometry = new THREE.PlaneGeometry(650, 650, 20, 20);
+    var geometry = new THREE.PlaneGeometry(650, 650, 10, 10);
     for (var i = 0; i < geometry.vertices.length; i++) {
         geometry.vertices[i].z += rndInt(5);
+        geometry.vertices[i].x += rndInt(15);
+        geometry.vertices[i].y += rndInt(15);
     }
+
+    for (var f = 0; f < geometry.faces.length; f++) {
+        var color = geometry.faces[f].color;
+        geometry.faces[f].color.setRGB(color.r + Math.random() / 2, color.g + Math.random() / 2, color.b + Math.random() / 2);
+    }
+
 
     var floor_solid = new THREE.Mesh(geometry, solidMat);
     var floor_wire = new THREE.Mesh(geometry, wireMat);

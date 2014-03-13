@@ -77,7 +77,7 @@ Mob.prototype.create = function () {
 
 
 Mob.prototype.carry = function ( entity ) {
-
+    entity.units -= 1;
     this.carryEntity = entity;
 
 };

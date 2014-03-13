@@ -90,7 +90,9 @@ MobStateSeeking.prototype.checkConditions = function () {
     if (this.mob.pos.distanceTo(tree.pos) < 10) {
 
         this.mob.carry(tree);
-        this.mob.game.removeEntity(tree);
+        if (tree.units === 0) {
+            this.mob.game.removeEntity(tree);
+        }
         return "delivering";
 
     }
