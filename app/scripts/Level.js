@@ -11,7 +11,7 @@ Level.prototype.generate = function() {
 //    var x, y, floor;
 //    var _floor = new THREE.PlaneGeometry(this.tile.width, this.tile.depth);
 //    var floor_geometry = new THREE.Geometry();
-    var solidMat = new THREE.MeshLambertMaterial({ color: 0x33aa33, shading: THREE.FlatShading, vertexColors: THREE.FaceColors});
+    var solidMat = new THREE.MeshLambertMaterial({ color: 0x33aa33, shading: THREE.FlatShading, vertexColors: THREE.FaceColors, overdraw: true});
     var wireMat = new THREE.MeshPhongMaterial({ color: 0x55cc55, wireframe: true, shading: THREE.FlatShading });
     wireMat.blending = THREE.AdditiveAlphaBlending;
 //
@@ -51,13 +51,11 @@ Level.prototype.generate = function() {
 
 
     var floor_solid = new THREE.Mesh(geometry, solidMat);
-    var floor_wire = new THREE.Mesh(geometry, wireMat);
     floor_solid.receiveShadow = true;
 
     var floor = new THREE.Object3D();
 
     floor.add(floor_solid);
-    floor.add(floor_wire);
 
 
     floor.rotation.x = -Math.PI / 2;
