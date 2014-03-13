@@ -13,7 +13,6 @@ Level.prototype.generate = function() {
 //    var floor_geometry = new THREE.Geometry();
     var solidMat = new THREE.MeshLambertMaterial({ color: 0x33aa33, shading: THREE.FlatShading, vertexColors: THREE.FaceColors});
     var wireMat = new THREE.MeshPhongMaterial({ color: 0x55cc55, wireframe: true, shading: THREE.FlatShading });
-    wireMat.opacity = 0.15;
     wireMat.blending = THREE.AdditiveAlphaBlending;
 //
 //    var offsetXX = 0;
@@ -38,7 +37,7 @@ Level.prototype.generate = function() {
 //    floor.receiveShadow = true;
 //    floor.castShadow = false;
 
-    var geometry = new THREE.PlaneGeometry(650, 650, 10, 10);
+    var geometry = new THREE.PlaneGeometry(650, 650, 20, 20);
     for (var i = 0; i < geometry.vertices.length; i++) {
         geometry.vertices[i].z += rndInt(5);
     }

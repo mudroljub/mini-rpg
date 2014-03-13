@@ -11,7 +11,7 @@ function GameEngine() {
     this.camera.position.z = 500;
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
     this.scene = new THREE.Scene();
-    this.renderer = new THREE.WebGLRenderer({antialias: true, maxLights: 100});
+    this.renderer = new THREE.WebGLRenderer({antialias: true, maxLights: 100, alpha: true});
     this.renderer.setSize( window.innerWidth, window.innerHeight );
     this.renderer.gammaInput             = true;
     this.renderer.gammaOutput            = true;
@@ -169,6 +169,14 @@ GameEngine.prototype.initLighting = function() {
 
     this.scene.add( dirLight );
     this.scene.add( ambient );
+
+    hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
+    hemiLight.color.setHSL( 0.6, 1, 0.6 );
+    hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
+    hemiLight.position.set( 0, 500, 0 );
+    this.scene.add( hemiLight );
+
+
 
 }
 
