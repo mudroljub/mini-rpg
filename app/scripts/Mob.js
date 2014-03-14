@@ -79,10 +79,10 @@ Mob.prototype.create = function () {
 Mob.prototype.carry = function ( entity ) {
 
     if (entity.units > 0) {
-    entity.units -= 1;
-    var resource = new Resource(this.game, 'wood', this.pos.clone());
-    this.game.addEntity(resource);
-    this.carryEntity = resource;
+        entity.units -= 1;
+        var resource = new Resource(this.game, entity.name, this.pos.clone());
+        this.game.addEntity(resource);
+        this.carryEntity = resource;
     }
 
 };

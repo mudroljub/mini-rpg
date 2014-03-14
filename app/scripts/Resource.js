@@ -1,12 +1,14 @@
 function Resource(game, name, pos) {
 
-    this.name = name;
+
     switch(name) {
-        case 'wood':
+        case 'tree':
+            this.name = 'wood';
             this.color = 0x966f33;
 
             break;
-        case 'gold':
+        case 'mine':
+            this.name = 'gold';
             this.color = 0xfdd017;
             break;
     }

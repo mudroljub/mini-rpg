@@ -3,6 +3,7 @@ function Mine(game) {
     this.name = 'mine';
     Entity.call(this, game, 0x3e414e);
     this.pos = new THREE.Vector3((Math.random() * 128 - 64) * 5, -15, (Math.random() * 128 - 64) * 5);
+    this.units = 100;
 
 }
 
