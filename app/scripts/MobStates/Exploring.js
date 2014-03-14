@@ -1,15 +1,9 @@
-/**
- * Mob exploring the map.
- * @param mob
- * @constructor
- */
 var MobStateExploring = function( mob ) {
 
     State.call(this, "exploring");
     this.mob = mob;
 
 };
-
 
 MobStateExploring.prototype = new State();
 MobStateExploring.prototype.constructor = MobStateExploring;
@@ -59,7 +53,6 @@ MobStateExploring.prototype.checkConditions = function () {
     return;
 
 };
-
 
 MobStateExploring.prototype.entryActions = function () {
 

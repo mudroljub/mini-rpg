@@ -1,8 +1,3 @@
-/**
- * Mob is going to a target.
- * @param mob
- * @constructor
- */
 var MobStateSeeking = function( mob ) {
 
     State.call(this, "seeking");
@@ -10,7 +5,6 @@ var MobStateSeeking = function( mob ) {
     this.treeId = undefined;
 
 };
-
 
 MobStateSeeking.prototype = new State();
 MobStateSeeking.prototype.constructor = MobStateSeeking;
@@ -30,11 +24,8 @@ MobStateSeeking.prototype.checkConditions = function () {
 
         this.mob.carry(tree);
         if (tree.units === 0) {
-
             this.mob.game.removeEntity(tree);
-
         }
-
         return "delivering";
 
     }

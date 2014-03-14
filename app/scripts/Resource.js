@@ -18,10 +18,8 @@ function Resource(game, name, pos) {
             this.color = 0xfdd017;
             break;
     }
-
     Entity.call(this, game, this.color);
     this.pos = pos;
-
 }
 
 
