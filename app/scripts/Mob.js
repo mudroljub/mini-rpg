@@ -56,9 +56,9 @@ Mob.prototype.update = function () {
 
 
     if (this.carryEntity) {
-        this.carryEntity.pos.x = this.pos.x + 10;
+        this.carryEntity.pos.x = this.pos.x - 4;
         this.carryEntity.pos.y = this.pos.y;
-        this.carryEntity.pos.z = this.pos.z;
+        this.carryEntity.pos.z = this.pos.z - 4;
     }
 
     Entity.prototype.update.call(this);
@@ -77,18 +77,24 @@ Mob.prototype.create = function () {
 
 
 Mob.prototype.carry = function ( entity ) {
+
+    if (entity.units > 0) {
     entity.units -= 1;
-    this.carryEntity = entity;
+    var resource = new Resource(this.game, 'wood', this.pos.clone());
+    this.game.addEntity(resource);
+    this.carryEntity = resource;
+    }
 
 };
 
 
 Mob.prototype.drop = function ( entity ) {
-    var x, y;
+    var x, y, z;
     if (this.carryEntity) {
         x = this.pos.x;
         y = this.pos.y;
-        this.carryEntity.pos = new THREE.Vector3(x , 5, y);
+        z = this.pos.z;
+        this.carryEntity.pos = new THREE.Vector3(x , y, z);
         this.carryEntity = undefined;
     }
 }

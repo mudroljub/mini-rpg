@@ -128,9 +128,10 @@ MobStateDelivering.prototype.constructor = MobStateDelivering;
 
 MobStateDelivering.prototype.checkConditions = function () {
 
-    var nestPosition = new THREE.Vector3(0, 5, 0);
+    var village = this.mob.game.getCloseEntity("village", this.mob.pos, 1500);
 
-    if (nestPosition.distanceTo(this.mob.pos) < 10) {
+
+    if (village.pos.distanceTo(this.mob.pos) < 50) {
 
         if (roll(10) === 1) {
 
@@ -145,10 +146,11 @@ MobStateDelivering.prototype.checkConditions = function () {
 
 
 MobStateDelivering.prototype.entryActions = function () {
+    var village = this.mob.game.getCloseEntity("village", this.mob.pos, 1500);
 
     this.mob.speed = 60;
-    var randomOffset = new THREE.Vector3(rndInt(20), 5, rndInt(20));
-    this.mob.destination = new THREE.Vector3(0, 5, 0).add(randomOffset);
+    var randomOffset = new THREE.Vector3(rndInt(10), 5, rndInt(10));
+    this.mob.destination = village.pos.clone().add(randomOffset);
 
 };
 
