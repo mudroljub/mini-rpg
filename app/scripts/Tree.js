@@ -1,7 +1,13 @@
+/**
+ * Trees constructed from primitives.
+ * Provide wood resources.
+ * @param game
+ * @constructor
+ */
 function Tree(game) {
 
     this.name = 'tree';
-    Entity.call(this, game, 0x3EA055);
+    Entity.call(this, game);
     this.pos = new THREE.Vector3(rndInt(64) * 8, 10, rndInt(64) * 8);
     this.units = 4;
 
@@ -21,30 +27,33 @@ Tree.prototype.update = function() {
 
 Tree.prototype.create = function() {
 
-//    var tree = new THREE.Object3D();
-//    var leaves = new THREE.CylinderGeometry( 0, 20, 40, 4, 1 );
-//    for (var i = 0; i < leaves.vertices.length; i++) {
-//        leaves.vertices[i].y += 20;
-//    }
-//    this.solidMat = new THREE.MeshLambertMaterial({ color: this.color, shading: THREE.SmoothShading });
-//    tree.add(new THREE.Mesh(leaves, this.solidMat));
-//
-//    var trunk = new THREE.BoxGeometry(5, 40, 5);
-//    for (var i = 0; i < trunk.vertices.length; i++) {
-//        trunk.vertices[i].y -= 20;
-//    }
-//    this.solidMat = new THREE.MeshLambertMaterial({ color: 0x966F33, shading: THREE.SmoothShading });
-//    tree.add(new THREE.Mesh(trunk, this.solidMat));
-    if (objects['tree']) {
-        objects['tree'].scale.set(15, 15, 15);
-        objects['tree'].castShadow = true;
-        this.mesh = objects['tree'].clone();
-        this.rotation.y = roll(180) * (Math.PI / 180);
-        this.mesh.castShadow = true;
+    var tree = new THREE.Object3D();
+    var leaves = new THREE.Mesh(treeData.geom.leaves, treeData.materials.leaves);
+    var trunk = new THREE.Mesh(treeData.geom.trunk, treeData.materials.trunk);
 
-        this.mesh.name = this.name;
-    }
+    leaves.castShadow = true;
+    trunk.castShadow = true;
 
+    leaves.position.y += 20;
+    trunk.position.y -= 20;
+
+    tree.add(leaves);
+    tree.add(trunk);
+    tree.castShadow = true;
+
+    this.rotation.y = roll(180) * (Math.PI / 180);
+    this.mesh = tree;
 };
 
+
+var treeData = {
+    geom: {
+        leaves: new THREE.CylinderGeometry( 0, 25, 60, 4, 1 ),
+        trunk: new THREE.BoxGeometry(5, 20, 5)
+    },
+    materials: {
+        leaves: new THREE.MeshLambertMaterial({ color: 0x3EA055, shading: THREE.SmoothShading }),
+        trunk: new THREE.MeshLambertMaterial({ color: 0x966F33, shading: THREE.SmoothShading })
+    }
+};
 

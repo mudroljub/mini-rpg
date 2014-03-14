@@ -1,3 +1,8 @@
+/**
+ *
+ * @param game
+ * @constructor
+ */
 function Village(game) {
 
     this.name = 'village';
@@ -25,8 +30,6 @@ Village.prototype.create = function() {
         objects['village'].castShadow = true;
         this.mesh = objects['village'].clone();
         this.mesh.castShadow = true;
-
-        this.mesh.name = this.name;
     }
 
 };

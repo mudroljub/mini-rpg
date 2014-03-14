@@ -2,7 +2,7 @@ function Mine(game) {
 
     this.name = 'mine';
     Entity.call(this, game, 0x3e414e);
-    this.pos = new THREE.Vector3((Math.random() * 128 - 64) * 5, -15, (Math.random() * 128 - 64) * 5);
+    this.pos = new THREE.Vector3(rndInt(128) * 5, -15, rndInt(128) * 5);
     this.units = 100;
 
 }
@@ -22,11 +22,11 @@ Mine.prototype.update = function() {
 Mine.prototype.create = function() {
 
     if (objects['mine']) {
+
         objects['mine'].scale.set(5, 5, 5);
         objects['mine'].castShadow = true;
         this.mesh = objects['mine'].clone();
         this.rotation.y = roll(180) * (Math.PI / 180);
-        this.mesh.name = this.name;
         this.mesh.castShadow = true;
 
     }

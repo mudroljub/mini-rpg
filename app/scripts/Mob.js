@@ -6,6 +6,8 @@ function Mob(game) {
     this.destination = this.pos.clone();
     this.target = null;
     this.speed = 40;
+
+    // setup the brain for the mob
     this.brain = new StateMachine();
 
     this.exploringState  = new MobStateExploring(this);
@@ -31,7 +33,7 @@ Mob.prototype.update = function () {
 
     var deltaX, deltaY, deltaZ, vecToDestination,
         distanceToDestination, heading, travelDistance,
-        oldPos, newPos, distance;
+        oldPos, newPos;
 
     this.brain.think();
 
@@ -53,8 +55,7 @@ Mob.prototype.update = function () {
 
     this.rotation.y = (Math.atan2(deltaX, deltaZ));
 
-
-
+    // Mob is carrying a resource.
     if (this.carryEntity) {
         this.carryEntity.pos.x = this.pos.x - 4;
         this.carryEntity.pos.y = this.pos.y;
@@ -69,8 +70,8 @@ Mob.prototype.update = function () {
 Mob.prototype.create = function () {
 
     var geometry = new THREE.BoxGeometry(5, 10, 5);
-    this.solidMat = new THREE.MeshLambertMaterial({ color: this.color, shading: THREE.SmoothShading });
-    this.mesh = new THREE.Mesh(geometry, this.solidMat);
+    var material = new THREE.MeshLambertMaterial({ color: this.color, shading: THREE.SmoothShading });
+    this.mesh = new THREE.Mesh(geometry, material);
     this.mesh.castShadow = true;
 
 };
@@ -79,22 +80,29 @@ Mob.prototype.create = function () {
 Mob.prototype.carry = function ( entity ) {
 
     if (entity.units > 0) {
+
         entity.units -= 1;
         var resource = new Resource(this.game, entity.name, this.pos.clone());
         this.game.addEntity(resource);
         this.carryEntity = resource;
+
     }
 
 };
 
 
-Mob.prototype.drop = function ( entity ) {
+Mob.prototype.drop = function () {
+
     var x, y, z;
+
     if (this.carryEntity) {
+
         x = this.pos.x;
         y = this.pos.y;
         z = this.pos.z;
-        this.carryEntity.pos = new THREE.Vector3(x , y, z);
+        this.carryEntity.pos = new THREE.Vector3(x, y, z);
         this.carryEntity = undefined;
+
     }
-}
+
+};

@@ -5,7 +5,7 @@ function Level(data) {
 
 Level.prototype.constructor = Level;
 
-Level.prototype.generate = function() {
+Level.prototype.generate = function () {
 //    var offsetX = -(this.size * this.tile.width) / 2;
 //    var offsetY = -(this.size * this.tile.width) / 2;
 //    var x, y, floor;
@@ -63,4 +63,4 @@ Level.prototype.generate = function() {
     floor.receiveShadow = true;
 
     return floor;
-}
+};

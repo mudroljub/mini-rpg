@@ -23,32 +23,32 @@ function ImprovedNoise() {
 
 }
 
-ImprovedNoise.prototype.noise =  function (x, y, z) {
+ImprovedNoise.prototype.noise = function (x, y, z) {
 
-	var floorX = ~~x, floorY = ~~y, floorZ = ~~z;
+    var floorX = ~~x, floorY = ~~y, floorZ = ~~z;
 
-	var X = floorX & 255, Y = floorY & 255, Z = floorZ & 255;
+    var X = floorX & 255, Y = floorY & 255, Z = floorZ & 255;
 
-	x -= floorX;
-	y -= floorY;
-	z -= floorZ;
+    x -= floorX;
+    y -= floorY;
+    z -= floorZ;
 
-	var xMinus1 = x -1, yMinus1 = y - 1, zMinus1 = z - 1;
+    var xMinus1 = x - 1, yMinus1 = y - 1, zMinus1 = z - 1;
 
-	var u = fade(x), v = fade(y), w = fade(z);
+    var u = fade(x), v = fade(y), w = fade(z);
 
-	var A = this.p[X]+Y, AA = this.p[A]+Z, AB = this.p[A+1]+Z, B = this.p[X+1]+Y, BA = this.p[B]+Z, BB = this.p[B+1]+Z;
+    var A = this.p[X] + Y, AA = this.p[A] + Z, AB = this.p[A + 1] + Z, B = this.p[X + 1] + Y, BA = this.p[B] + Z, BB = this.p[B + 1] + Z;
 
-	return lerp(w, lerp(v, lerp(u, grad(this.p[AA], x, y, z), 
-					grad(this.p[BA], xMinus1, y, z)),
-				lerp(u, grad(this.p[AB], x, yMinus1, z),
-					grad(this.p[BB], xMinus1, yMinus1, z))),
-			lerp(v, lerp(u, grad(this.p[AA+1], x, y, zMinus1),
-					grad(this.p[BA+1], xMinus1, y, z-1)),
-				lerp(u, grad(this.p[AB+1], x, yMinus1, zMinus1),
-					grad(this.p[BB+1], xMinus1, yMinus1, zMinus1))));
+    return lerp(w, lerp(v, lerp(u, grad(this.p[AA], x, y, z),
+        grad(this.p[BA], xMinus1, y, z)),
+        lerp(u, grad(this.p[AB], x, yMinus1, z),
+            grad(this.p[BB], xMinus1, yMinus1, z))),
+        lerp(v, lerp(u, grad(this.p[AA + 1], x, y, zMinus1),
+            grad(this.p[BA + 1], xMinus1, y, z - 1)),
+            lerp(u, grad(this.p[AB + 1], x, yMinus1, zMinus1),
+                grad(this.p[BB + 1], xMinus1, yMinus1, zMinus1))));
 
-}
+};
 
 function fade(t) {
 

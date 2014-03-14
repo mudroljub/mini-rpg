@@ -1,5 +1,11 @@
+/**
+ * Small items to be carried by mobs.
+ * @param game
+ * @param name
+ * @param pos
+ * @constructor
+ */
 function Resource(game, name, pos) {
-
 
     switch(name) {
         case 'tree':
@@ -12,8 +18,10 @@ function Resource(game, name, pos) {
             this.color = 0xfdd017;
             break;
     }
+
     Entity.call(this, game, this.color);
     this.pos = pos;
+
 }
 
 
@@ -30,10 +38,9 @@ Resource.prototype.update = function() {
 
 Resource.prototype.create = function() {
 
-    var geometry;
-    geometry = new THREE.BoxGeometry(4, 4, 4);
-    this.solidMat = new THREE.MeshLambertMaterial({ color: this.color, shading: THREE.SmoothShading });
-    this.mesh = new THREE.Mesh(geometry, this.solidMat);
+    var geometry = new THREE.BoxGeometry(4, 4, 4);
+    var material = new THREE.MeshLambertMaterial({ color: this.color, shading: THREE.SmoothShading });
+    this.mesh = new THREE.Mesh(geometry, material);
     this.mesh.castShadow = true;
 
 };

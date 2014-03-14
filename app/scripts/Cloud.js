@@ -1,3 +1,8 @@
+/**
+ * Clouds!
+ * @param game
+ * @constructor
+ */
 function Cloud(game) {
 
     this.name = 'cloud';
@@ -30,9 +35,6 @@ Cloud.prototype.create = function() {
         objects['cloud'].scale.set(roll(50) + 10, 15, roll(10)+ 10);
         objects['cloud'].castShadow = true;
         this.mesh = objects['cloud'].clone();
-        this.mesh.castShadow = true;
-
-        this.mesh.name = this.name;
     }
 
 };
