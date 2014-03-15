@@ -96,7 +96,7 @@ GameEngine.prototype.update = function() {
 
 
 GameEngine.prototype.init = function() {
-    var mob;
+    var mob, rabbit;
 
     this.level = new Level( { size : 48 } );
     var ground = this.level.generate();
@@ -104,7 +104,9 @@ GameEngine.prototype.init = function() {
     console.log('MiniRPG init!');
 
     for (var i = 0; i < 15; i++) {
-        this.addEntity(new Farm(this));
+        rabbit = new Rabbit(this)
+        rabbit.brain.setState("exploring");
+        this.addEntity(rabbit);
         this.addEntity(new Cloud(this));
     }
 

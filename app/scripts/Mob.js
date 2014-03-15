@@ -8,7 +8,7 @@ function Mob(game) {
     this.speed = 40;
 
     // setup the brain for the mob
-    this.brain = new StateMachine();
+
 
     this.exploringState  = new MobStateExploring(this);
     this.seekingState    = new MobStateSeeking(this);
@@ -31,11 +31,10 @@ Mob.prototype.constructor = Mob;
 
 Mob.prototype.update = function () {
 
+
     var deltaX, deltaY, deltaZ, vecToDestination,
         distanceToDestination, heading, travelDistance,
         oldPos, newPos;
-
-    this.brain.think();
 
     // rotation to target location
     deltaX = this.destination.x - this.pos.x;
@@ -78,15 +77,18 @@ Mob.prototype.create = function () {
 
 
 Mob.prototype.carry = function ( entity ) {
-    if (entity.units > 0) {
+    if (entity.name !== 'rabbit') {
+        if (entity.units > 0) {
 
-        entity.units -= 1;
-        var resource = new Resource(this.game, entity.name, this.pos.clone());
-        this.game.addEntity(resource);
-        this.carryEntity = resource;
+            entity.units -= 1;
+            var resource = new Resource(this.game, entity.name, this.pos.clone());
+            this.game.addEntity(resource);
+            this.carryEntity = resource;
 
+        }
+    } else {
+        this.carryEntity = entity;
     }
-
 };
 
 

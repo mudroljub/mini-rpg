@@ -17,27 +17,26 @@ MobStateHunting.prototype.constructor = MobStateHunting;
 
 
 MobStateHunting.prototype.doActions = function () {
+    var rabbit = this.mob.game.getEntity(this.mob.rabbitId);
 
-    var spider = this.mob.game.getEntity(this.mob.spiderId);
-
-    if (!spider) {
+    if (!rabbit) {
 
         return;
 
     }
 
-    this.mob.destination = spider.pos;
+    this.mob.destination = rabbit.pos.clone();
 
-    if (this.mob.pos.distanceTo(spider.pos) < 15) {
+    if (this.mob.pos.distanceTo(rabbit.pos) < 15) {
 
         if (roll(5) === 1) {
 
-            spider.bitten();
+            rabbit.attacked();
 
-            if (spider.health <= 0) {
+            if (rabbit.health <= 0) {
 
-                this.mob.carry(spider);
-                this.mob.game.removeEntity(spider);
+                this.mob.carry(rabbit);
+                this.mob.game.removeEntity(rabbit);
                 this.gotKill = true;
 
             }
@@ -57,15 +56,15 @@ MobStateHunting.prototype.checkConditions = function () {
 
     }
 
-    var spider = this.mob.game.getEntity(this.mob.spiderId);
+    var rabbit = this.mob.game.getEntity(this.mob.rabbitId);
 
-    if (!spider) {
+    if (!rabbit) {
 
         return "exploring";
 
     }
 
-    if (spider.pos.distanceTo(new THREE.Vector3(0, 0, 0)) > 10 * 3) {
+    if (rabbit.pos.distanceTo(new THREE.Vector3(-256, 0, -256)) > 10 * 3) {
 
         return "exploring";
 

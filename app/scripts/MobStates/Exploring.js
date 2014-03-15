@@ -11,7 +11,7 @@ MobStateExploring.prototype.constructor = MobStateExploring;
 
 MobStateExploring.prototype.randomDestination = function () {
 
-    this.mob.destination = new THREE.Vector3(rndInt(128), 5, rndInt(128));
+    this.mob.destination = new THREE.Vector3(rndInt(500), 5, rndInt(500));
 
 };
 
@@ -37,18 +37,18 @@ MobStateExploring.prototype.checkConditions = function () {
 
     }
 
-//    var spider = this.mob.game.getCloseEntity("spider", this.mob.pos, 10);
-//
-//    if (spider) {
-//
-//        if (this.mob.pos.distanceTo(spider.pos) < 100) {
-//
-//            this.mob.spiderId = spider.id;
-//            return "hunting";
-//
-//        }
-//
-//    }
+    var rabbit = this.mob.game.getCloseEntity("rabbit", this.mob.pos, 10);
+
+    if (rabbit) {
+
+        if (this.mob.pos.distanceTo(rabbit.pos) < 100) {
+
+            this.mob.rabbitId = rabbit.id;
+            return "hunting";
+
+        }
+
+    }
 
     return;
 
