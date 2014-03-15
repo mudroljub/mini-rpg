@@ -6,7 +6,7 @@
 function Cloud(game) {
 
     this.name = 'cloud';
-    Entity.call(this, game, 0xff0000);
+    Entity.call(this, game);
     this.pos = new THREE.Vector3(rndInt(128) * 5, 100 + rndInt(20), rndInt(128) * 5);
 
 }

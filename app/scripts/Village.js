@@ -6,7 +6,7 @@
 function Village(game) {
 
     this.name = 'village';
-    Entity.call(this, game, 0x0000ff);
+    Entity.call(this, game);
     this.pos = new THREE.Vector3(-256, 20, -256);
 
 }
@@ -29,7 +29,6 @@ Village.prototype.create = function() {
         objects['village'].scale.set(15, 15, 15);
         objects['village'].castShadow = true;
         this.mesh = objects['village'].clone();
-        this.mesh.castShadow = true;
     }
 
 };

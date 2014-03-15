@@ -1,7 +1,7 @@
 function Mine(game) {
 
     this.name = 'mine';
-    Entity.call(this, game, 0x3e414e);
+    Entity.call(this, game);
     this.pos = new THREE.Vector3(rndInt(128) * 5, -20, rndInt(128) * 5);
     this.units = 100;
 
