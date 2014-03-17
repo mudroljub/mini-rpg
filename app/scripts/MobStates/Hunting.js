@@ -27,10 +27,11 @@ MobStateHunting.prototype.doActions = function () {
 
     this.mob.destination = rabbit.pos.clone();
 
-    if (this.mob.pos.distanceTo(rabbit.pos) < 15) {
+    if (this.mob.pos.distanceTo(rabbit.pos) < 50) {
+
+        this.mob.game.addEntity(new Arrow(this.mob.game, this.mob.pos.clone(), rabbit.pos.clone()));
 
         if (roll(5) === 1) {
-
             rabbit.attacked();
 
             if (rabbit.health <= 0) {

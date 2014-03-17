@@ -103,14 +103,14 @@ GameEngine.prototype.init = function() {
 
     console.log('MiniRPG init!');
 
-    for (var i = 0; i < 15; i++) {
+    for (var i = 0; i < 10; i++) {
         rabbit = new Rabbit(this)
         rabbit.brain.setState("exploring");
         this.addEntity(rabbit);
         this.addEntity(new Cloud(this));
     }
 
-    for (var i = 0; i < 40; i++) {
+    for (var i = 0; i < 20; i++) {
         this.addEntity(new Tree(this));
 
     }

@@ -14,11 +14,15 @@ function Mob(game) {
     this.seekingState    = new MobStateSeeking(this);
     this.deliveringState = new MobStateDelivering(this);
     this.huntingState    = new MobStateHunting(this);
+    this.miningState    = new MobStateHunting(this);
+
 
     this.brain.addState(this.exploringState);
     this.brain.addState(this.seekingState);
     this.brain.addState(this.deliveringState);
     this.brain.addState(this.huntingState);
+    this.brain.addState(this.miningState);
+
 
     this.carryEntity = undefined;
 
