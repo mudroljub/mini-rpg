@@ -31,27 +31,19 @@ Mob.prototype.constructor = Mob;
 
 Mob.prototype.update = function () {
 
-
-    var deltaX, deltaY, deltaZ, vecToDestination,
-        distanceToDestination, heading, travelDistance,
-        oldPos, newPos;
+    var deltaX, deltaY, deltaZ;
 
     // rotation to target location
     deltaX = this.destination.x - this.pos.x;
     deltaY = this.destination.y - this.pos.y;
     deltaZ = this.destination.z - this.pos.z;
 
-    vecToDestination = this.destination.clone().sub(this.pos);
-    distanceToDestination = vecToDestination.length();
-    heading = vecToDestination.normalize();
-    travelDistance = Array.min([distanceToDestination, (this.game.delta * this.speed)]);
-    oldPos = this.pos;
-    newPos = oldPos.add(heading.multiplyScalar(travelDistance));
+    var dv = new THREE.Vector3();
+    dv.subVectors(this.destination, this.pos);
+    dv.setLength(this.speed);
+    this.vel = dv;
 
-    this.pos.x = newPos.x;
-    this.pos.z = newPos.z;
     this.pos.y = Math.sin((Math.PI * (Date.now() / 10) / 20));
-
     this.rotation.y = (Math.atan2(deltaX, deltaZ));
 
     // Mob is carrying a resource.
