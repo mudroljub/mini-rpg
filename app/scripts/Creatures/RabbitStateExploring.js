@@ -11,7 +11,7 @@ RabbitStateExploring.prototype.constructor = RabbitStateExploring;
 
 RabbitStateExploring.prototype.randomDestination = function () {
 
-    this.mob.destination = new THREE.Vector3(rndInt(1000), 5, rndInt(1000));
+    this.mob.destination = new THREE.Vector3(rndInt(1000), 0, rndInt(1000));
 
 };
 

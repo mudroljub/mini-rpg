@@ -36,7 +36,7 @@ MobStateHunting.prototype.doActions = function () {
             if (rabbit.health <= 0) {
 
                 this.mob.carry(rabbit);
-                this.mob.game.removeEntity(rabbit);
+                //this.mob.game.removeEntity(rabbit);
                 this.gotKill = true;
 
             }
@@ -64,7 +64,7 @@ MobStateHunting.prototype.checkConditions = function () {
 
     }
 
-    if (rabbit.pos.distanceTo(new THREE.Vector3(-256, 0, -256)) > 10 * 3) {
+    if (rabbit.pos.distanceTo(new THREE.Vector3(-256, 0, -256)) > 100) {
 
         return "exploring";
 

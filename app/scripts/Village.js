@@ -29,6 +29,9 @@ Village.prototype.create = function() {
         objects['village'].scale.set(15, 15, 15);
         objects['village'].castShadow = true;
         this.mesh = objects['village'].clone();
+        for (var i = 0; i < this.mesh.geometry.vertices.length; i++) {
+            this.mesh.geometry.vertices[i].y += 1.25;
+        }
     }
 
 };

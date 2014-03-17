@@ -2,7 +2,7 @@ function Mob(game) {
 
     this.name = 'mob';
     Entity.call(this, game, 0xecc2a7);
-    this.pos = new THREE.Vector3(rndInt(128) * 5, 5, rndInt(128) * 5);
+    this.pos = new THREE.Vector3(rndInt(128) * 5, 0, rndInt(128) * 5);
     this.destination = this.pos.clone();
     this.target = null;
     this.speed = 40;
@@ -71,6 +71,9 @@ Mob.prototype.create = function () {
     var geometry = new THREE.BoxGeometry(5, 10, 5);
     var material = new THREE.MeshLambertMaterial({ color: this.color, shading: THREE.SmoothShading });
     this.mesh = new THREE.Mesh(geometry, material);
+    for (var i = 0; i < this.mesh.geometry.vertices.length; i++) {
+        this.mesh.geometry.vertices[i].y += 5;
+    }
     this.mesh.castShadow = true;
 
 };
@@ -101,7 +104,7 @@ Mob.prototype.drop = function () {
         x = this.pos.x;
         y = this.pos.y;
         z = this.pos.z;
-        this.carryEntity.pos = new THREE.Vector3(x, y, z);
+        this.carryEntity.pos = new THREE.Vector3(x, 0, z);
         this.carryEntity = undefined;
 
     }

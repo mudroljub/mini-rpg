@@ -39,6 +39,9 @@ Resource.prototype.create = function() {
     var geometry = new THREE.BoxGeometry(4, 4, 4);
     var material = new THREE.MeshLambertMaterial({ color: this.color, shading: THREE.SmoothShading });
     this.mesh = new THREE.Mesh(geometry, material);
+    for (var i = 0; i < this.mesh.geometry.vertices.length; i++) {
+        this.mesh.geometry.vertices[i].y += 5;
+    }
     this.mesh.castShadow = true;
 
 };

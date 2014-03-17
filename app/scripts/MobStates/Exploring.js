@@ -11,7 +11,7 @@ MobStateExploring.prototype.constructor = MobStateExploring;
 
 MobStateExploring.prototype.randomDestination = function () {
 
-    this.mob.destination = new THREE.Vector3(rndInt(500), 5, rndInt(500));
+    this.mob.destination = new THREE.Vector3(rndInt(500), 0, rndInt(500));
 
 };
 

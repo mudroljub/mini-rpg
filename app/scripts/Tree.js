@@ -8,7 +8,7 @@ function Tree(game) {
 
     this.name = 'tree';
     Entity.call(this, game);
-    this.pos = new THREE.Vector3(rndInt(64) * 8, 10, rndInt(64) * 8);
+    this.pos = new THREE.Vector3(rndInt(64) * 8, 0, rndInt(64) * 8);
     this.units = 4;
 
 }
@@ -34,8 +34,8 @@ Tree.prototype.create = function() {
     leaves.castShadow = true;
     trunk.castShadow = true;
 
-    leaves.position.y += 20;
-    trunk.position.y -= 20;
+    leaves.position.y += 40;
+    trunk.position.y += 10;
 
     tree.add(leaves);
     tree.add(trunk);

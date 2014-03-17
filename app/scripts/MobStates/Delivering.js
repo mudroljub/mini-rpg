@@ -37,7 +37,7 @@ MobStateDelivering.prototype.checkConditions = function () {
 MobStateDelivering.prototype.entryActions = function () {
 
     var village = this.mob.game.getCloseEntity("village", this.mob.pos, 1500);
-    var randomOffset = new THREE.Vector3(rndInt(10), 5, rndInt(10));
+    var randomOffset = new THREE.Vector3(rndInt(10), 0, rndInt(10));
 
     this.mob.speed = 60;
     this.mob.destination = village.pos.clone().add(randomOffset);
