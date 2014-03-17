@@ -14,7 +14,7 @@ function Mob(game) {
     this.seekingState    = new MobStateSeeking(this);
     this.deliveringState = new MobStateDelivering(this);
     this.huntingState    = new MobStateHunting(this);
-    this.miningState    = new MobStateHunting(this);
+    this.miningState    = new MobStateMining(this);
 
 
     this.brain.addState(this.exploringState);

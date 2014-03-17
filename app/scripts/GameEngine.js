@@ -110,7 +110,7 @@ GameEngine.prototype.init = function() {
         this.addEntity(new Cloud(this));
     }
 
-    for (var i = 0; i < 20; i++) {
+    for (var i = 0; i < 50; i++) {
         this.addEntity(new Tree(this));
 
     }
