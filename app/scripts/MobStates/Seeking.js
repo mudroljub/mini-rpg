@@ -14,7 +14,7 @@ MobStateSeeking.prototype.checkConditions = function () {
 
     var tree = this.mob.game.getEntity(this.mob.treeId);
 
-    if (!tree) {
+    if (!tree || tree.units < 1) {
 
         return "exploring";
 
@@ -38,11 +38,13 @@ MobStateSeeking.prototype.entryActions = function () {
 
     var tree = this.mob.game.getEntity(this.mob.treeId);
 
-    if (tree) {
+    if (tree && tree.units > 0) {
 
         this.mob.destination = tree.pos.clone();
         this.mob.speed = 120 + rndInt(20);
 
+    } else {
+        return "exploring";
     }
 
 };
