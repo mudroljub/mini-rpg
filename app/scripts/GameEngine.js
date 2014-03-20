@@ -112,12 +112,6 @@ GameEngine.prototype.init = function() {
         this.addEntity(new Cloud(this));
     }
 
-    for (var i = 0; i < 41; i++) {
-
-        this.addEntity(new Tree(this));
-
-    }
-
     for (var i = 0; i < 1; i++) {
         this.addEntity(new Mine(this));
     }
@@ -125,14 +119,6 @@ GameEngine.prototype.init = function() {
     for (var i = 0; i < 1; i++) {
         this.addEntity(new Village(this));
     }
-
-    for (var i = 0; i < 20; i++) {
-        mob = new Mob(this);
-        mob.brain.setState("exploring");
-        this.addEntity(mob);
-    }
-
-
 
     this.initLighting();
 
@@ -193,3 +179,27 @@ GameEngine.prototype.pause = function () {
 GameEngine.prototype.getEntity = function (id) {
     return this.entities[id] || false;
 };
+
+GameEngine.prototype.plantTrees = function() {
+    for (var i = 0; i < 100; i++) {
+        var caster = new THREE.Raycaster();
+        var ray = new THREE.Vector3(0, -1, 0);
+
+        caster.set(new THREE.Vector3(rndInt(1100), 100, rndInt(1100)), ray);
+
+        var collisions = caster.intersectObject(MiniRPG.scene.getObjectByName('terrain').children[0]);
+
+        //var cube2 = new THREE.Mesh(new THREE.CubeGeometry(10,10,10), new THREE.MeshBasicMaterial({color:0x00ff00}));
+        //MiniRPG.scene.add(cube2);
+        //cube2.position = collisions[0].point;
+
+        if (collisions[0].point.y > 0) {
+
+            var tree = new Tree(MiniRPG);
+            this.addEntity(tree);
+
+            tree.pos = collisions[0].point;
+            tree.pos.y -= 10;
+        }
+    }
+}

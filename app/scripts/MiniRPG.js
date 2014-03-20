@@ -11,5 +11,12 @@ window.onload = function () {
     assets.loadMeshes(MESHES, function () {
         MiniRPG.init();
         MiniRPG.start();
+        MiniRPG.plantTrees();
+
+        for (var i = 0; i < 20; i++) {
+            mob = new Mob(MiniRPG);
+            mob.brain.setState("exploring");
+            MiniRPG.addEntity(mob);
+        }
     });
 };
