@@ -203,6 +203,10 @@ GameEngine.prototype.place = function(position) {
 
     var collisions = caster.intersectObject(MiniRPG.scene.getObjectByName('terrain').children[0]);
 
-    return collisions[0].point;
+    if (collisions.length > 0) {
+        return collisions[0].point ;
+    }
+
+    return position;
 
 }

@@ -2,7 +2,7 @@ function Mob(game) {
 
     this.name = 'mob';
     Entity.call(this, game, 0xecc2a7);
-    this.pos = new THREE.Vector3(rndInt(128) * 5, 0, rndInt(128) * 5);
+    this.pos = new THREE.Vector3(rndInt(128) * 5, 100, rndInt(128) * 5);
     this.destination = this.pos.clone();
     this.target = null;
     this.speed = 40;
@@ -47,7 +47,9 @@ Mob.prototype.update = function () {
     dv.setLength(this.speed);
     this.vel = dv;
 
-    this.pos.y = Math.sin((Math.PI * (Date.now() / 10) / 20));
+    var collision = this.game.place(this.pos);
+
+    this.pos.y = collision.y + 5; //Math.sin((Math.PI * (Date.now() / 10) / 20)) + 5;
     this.rotation.y = (Math.atan2(deltaX, deltaZ));
 
     // Mob is carrying a resource.

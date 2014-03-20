@@ -20,7 +20,7 @@ MobStateSeeking.prototype.checkConditions = function () {
 
     }
 
-    if (this.mob.pos.distanceTo(tree.pos) < 10) {
+    if (this.mob.pos.distanceTo(tree.pos) < 20) {
 
         this.mob.carry(tree);
         if (tree.units === 0) {
