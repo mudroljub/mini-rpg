@@ -112,13 +112,7 @@ GameEngine.prototype.init = function() {
         this.addEntity(new Cloud(this));
     }
 
-    for (var i = 0; i < 1; i++) {
-        this.addEntity(new Mine(this));
-    }
 
-    for (var i = 0; i < 1; i++) {
-        this.addEntity(new Village(this));
-    }
 
     this.initLighting();
 
@@ -168,11 +162,9 @@ GameEngine.prototype.initLighting = function () {
     this.scene.add(hemiLight);
 
     var pointLight = new THREE.PointLight(0xffffcc);
-         pointLight.intensity = 0.75;
-         pointLight.position = new THREE.Vector3(1000, 800, -1000);
-         this.scene.add(pointLight);
-
-
+    pointLight.intensity = 0.75;
+    pointLight.position = new THREE.Vector3(1000, 800, -1000);
+    this.scene.add(pointLight);
 
 };
 
@@ -186,26 +178,31 @@ GameEngine.prototype.getEntity = function (id) {
     return this.entities[id] || false;
 };
 
+
 GameEngine.prototype.plantTrees = function() {
     for (var i = 0; i < 100; i++) {
-        var caster = new THREE.Raycaster();
-        var ray = new THREE.Vector3(0, -1, 0);
-
-        caster.set(new THREE.Vector3(rndInt(1100), 100, rndInt(1100)), ray);
-
-        var collisions = caster.intersectObject(MiniRPG.scene.getObjectByName('terrain').children[0]);
-
-        //var cube2 = new THREE.Mesh(new THREE.CubeGeometry(10,10,10), new THREE.MeshBasicMaterial({color:0x00ff00}));
-        //MiniRPG.scene.add(cube2);
-        //cube2.position = collisions[0].point;
-
-        if (collisions[0].point.y > 0) {
+        var rndPoint = new THREE.Vector3(rndInt(1100), 100, rndInt(1100));
+        var collision = this.place(rndPoint);
+        if (collision.y > 0) {
 
             var tree = new Tree(MiniRPG);
             this.addEntity(tree);
 
-            tree.pos = collisions[0].point;
+            tree.pos = collision;
             tree.pos.y -= 10;
         }
     }
+};
+
+
+GameEngine.prototype.place = function(position) {
+    var caster = new THREE.Raycaster();
+    var ray = new THREE.Vector3(0, -1, 0);
+
+    caster.set(position, ray);
+
+    var collisions = caster.intersectObject(MiniRPG.scene.getObjectByName('terrain').children[0]);
+
+    return collisions[0].point;
+
 }

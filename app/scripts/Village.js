@@ -7,7 +7,6 @@ function Village(game) {
 
     this.name = 'village';
     Entity.call(this, game);
-    this.pos = new THREE.Vector3(-256, 20, -256);
 
 }
 
