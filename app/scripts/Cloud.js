@@ -7,7 +7,7 @@ function Cloud(game) {
 
     this.name = 'cloud';
     Entity.call(this, game);
-    this.pos = new THREE.Vector3(rndInt(128) * 5, 100 + rndInt(20), rndInt(128) * 5);
+    this.pos = new THREE.Vector3(rndInt(1200), 100 + rndInt(20), rndInt(1200));
 
 }
 
@@ -20,8 +20,8 @@ Cloud.prototype.update = function() {
 
     this.vel.x = 10;
 
-    if (this.pos.x > this.game.level.size/2 * this.game.level.tile.width) {
-        this.pos.x = -this.game.level.size/2 * this.game.level.tile.width;
+    if (this.pos.x > 1200/2 * 20) {
+        this.pos.x = -1200/2 * 20;
     }
 
     Entity.prototype.update.call(this);
@@ -35,6 +35,7 @@ Cloud.prototype.create = function() {
         objects['cloud'].scale.set(roll(50) + 10, 15, roll(10)+ 10);
         objects['cloud'].castShadow = true;
         this.mesh = objects['cloud'].clone();
+        this.mesh.name = 'cloud';
     }
 
 };

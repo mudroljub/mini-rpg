@@ -8,7 +8,7 @@ function Tree(game) {
 
     this.name = 'tree';
     Entity.call(this, game);
-    this.pos = new THREE.Vector3(rndInt(64) * 8, 0, rndInt(64) * 8);
+    this.pos = new THREE.Vector3(rndInt(1100), 0, rndInt(1100));
     this.units = 4;
 
 }
@@ -30,12 +30,15 @@ Tree.prototype.create = function() {
     var tree = new THREE.Object3D();
     var leaves = new THREE.Mesh(treeData.geom.leaves, treeData.materials.leaves);
     var trunk = new THREE.Mesh(treeData.geom.trunk, treeData.materials.trunk);
+    leaves.name = 'leaves';
+    trunk.name= 'trunk';
+
 
     leaves.castShadow = true;
     trunk.castShadow = true;
 
-    leaves.position.y += 40;
-    trunk.position.y += 10;
+    leaves.position.y += 50;
+    trunk.position.y += 20;
 
     tree.add(leaves);
     tree.add(trunk);
@@ -43,8 +46,9 @@ Tree.prototype.create = function() {
 
     this.rotation.y = roll(180) * (Math.PI / 180);
     this.mesh = tree;
-};
+    this.mesh.name = this.name;
 
+};
 
 var treeData = {
     geom: {

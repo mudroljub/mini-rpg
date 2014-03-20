@@ -1,64 +1,67 @@
-function Level(data) {
-    this.size = data.size || 64;
-    this.tile  = { width: 16, depth: 16 };
+function Level() {
+    this.resolution = 20;
 }
 
 Level.prototype.constructor = Level;
 
 Level.prototype.generate = function () {
-//    var offsetX = -(this.size * this.tile.width) / 2;
-//    var offsetY = -(this.size * this.tile.width) / 2;
-//    var x, y, floor;
-//    var _floor = new THREE.PlaneGeometry(this.tile.width, this.tile.depth);
-//    var floor_geometry = new THREE.Geometry();
-    var solidMat = new THREE.MeshLambertMaterial({ color: 0x33aa33, shading: THREE.FlatShading, vertexColors: THREE.FaceColors, overdraw: true});
-//
-//    var offsetXX = 0;
-//    var offsetYY = 0;
-//
-//    for (y = 0; y < this.size; y++) {
-//        for (x = 0; x < this.size; x++) {
-//
-//            // build tiles
-//            offsetXX = offsetX + (x * this.tile.width);
-//            offsetYY = offsetY + (y * this.tile.width);
-//            floor = new THREE.Mesh(_floor, material);
-//            floor.rotation.x = -Math.PI / 2;
-//            floor.position.set(offsetXX, -1, offsetYY);
-//            THREE.GeometryUtils.merge(floor_geometry, floor);
-//
-//
-//        }
-//    }
-//
-//    floor = new THREE.Mesh(floor_geometry, material);
-//    floor.receiveShadow = true;
-//    floor.castShadow = false;
 
-    var geometry = new THREE.PlaneGeometry(650, 650, 10, 10);
+    var material = new THREE.MeshLambertMaterial({ color: 0x33aa33, shading: THREE.FlatShading, vertexColors: THREE.FaceColors, overdraw: true});
+    var geometry = new THREE.PlaneGeometry(1200, 1200, this.resolution, this.resolution);
+    geometry.dynamic = true;
+    geometry.verticesNeedUpdate = true;
+    geometry.computeCentroids();
+
+    var noise = new SimplexNoise();
+    var n;
+
+    var factorX = 50;
+    var factorY = 25;
+    var factorZ = 60;
+
     for (var i = 0; i < geometry.vertices.length; i++) {
-        geometry.vertices[i].z += rndInt(5);
-        geometry.vertices[i].x += rndInt(15);
-        geometry.vertices[i].y += rndInt(15);
+        n = noise.noise(geometry.vertices[i].x / 20 / factorX, geometry.vertices[i].y / 20 / factorY);
+        n -= 0.25;
+        geometry.vertices[i].z = n * factorZ;
     }
 
     for (var f = 0; f < geometry.faces.length; f++) {
         var color = geometry.faces[f].color;
-        geometry.faces[f].color.setRGB(color.r + Math.random() / 2, color.g + Math.random() / 2, color.b + Math.random() / 2);
+        var rand = Math.random() / 5;
+        geometry.faces[f].color.setRGB(color.r + rand, color.g + rand, color.b + rand);
+    }
+    //THREE.GeometryUtils.triangulateQuads( geometry );
+
+    var land = new THREE.Mesh(geometry, material);
+    land.receiveShadow = true;
+    land.name = 'land';
+    land.rotateX(-Math.PI / 2);
+    land.position.set(0, 30, 0);
+
+    var water_material = new THREE.MeshLambertMaterial({color: 0x6699ff, transparent: true, opacity: 0.85,vertexColors: THREE.FaceColors, shading: THREE.FlatShading});
+    var water_geometry = new THREE.PlaneGeometry(1200, 1200, this.resolution, this.resolution);
+    water_geometry.dynamic = true;
+    water_geometry.verticesNeedUpdate = true;
+    for (var i = 0; i < water_geometry.faces.length; i++) {
+        var color = water_geometry.faces[i].color;
+        var rand = Math.random();
+        water_geometry.faces[i].color.setRGB(color.r + rand, color.g + rand, color.b + rand);
     }
 
+    var water = new THREE.Mesh(water_geometry, water_material);
+    water.receiveShadow = true;
+    water.name = 'water';
+    water.rotateX(-Math.PI / 2);
 
-    var floor_solid = new THREE.Mesh(geometry, solidMat);
-    floor_solid.receiveShadow = true;
+    var terrain = new THREE.Object3D();
+    terrain.name = 'terrain';
 
-    var floor = new THREE.Object3D();
+    terrain.add(land);
+    terrain.add(water);
 
-    floor.add(floor_solid);
 
+    //terrain.rotation.x = -Math.PI / 2;
+    terrain.receiveShadow = true;
 
-    floor.rotation.x = -Math.PI / 2;
-    floor.position.set(0, 0, 0);
-    floor.receiveShadow = true;
-
-    return floor;
+    return terrain;
 };

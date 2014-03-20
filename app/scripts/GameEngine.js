@@ -98,8 +98,10 @@ GameEngine.prototype.update = function() {
 GameEngine.prototype.init = function() {
     var mob, rabbit;
 
-    this.level = new Level( { size : 48 } );
-    var ground = this.level.generate();
+
+    this.terrain = new Level();
+    var ground = this.terrain.generate();
+    this.scene.add(ground);
 
     console.log('MiniRPG init!');
 
@@ -110,7 +112,8 @@ GameEngine.prototype.init = function() {
         this.addEntity(new Cloud(this));
     }
 
-    for (var i = 0; i < 50; i++) {
+    for (var i = 0; i < 41; i++) {
+
         this.addEntity(new Tree(this));
 
     }
@@ -129,7 +132,7 @@ GameEngine.prototype.init = function() {
         this.addEntity(mob);
     }
 
-    this.scene.add(ground);
+
 
     this.initLighting();
 

@@ -71,6 +71,7 @@ Mob.prototype.create = function () {
         this.mesh.geometry.vertices[i].y += 5;
     }
     this.mesh.castShadow = true;
+    this.mesh.name = this.name;
 
 };
 

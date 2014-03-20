@@ -22,8 +22,8 @@ Terrain.prototype.initLighting = function () {
 
     var d = 500;
     var ambient = new THREE.AmbientLight(0x111111);
-    var dirLight = new THREE.DirectionalLight(0xffffff, 0.5, 500);
-    var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
+    var dirLight = new THREE.DirectionalLight(0xffffcc, 0.5, 500);
+    var hemiLight = new THREE.HemisphereLight(0xffffcc, 0xffffcc, 0.6);
 
     // light for shadows
     dirLight.color.setHSL(0.1, 1, 0.95);
@@ -47,7 +47,7 @@ Terrain.prototype.initLighting = function () {
     hemiLight.color.setHSL(0.6, 1, 0.6);
     hemiLight.groundColor.setHSL(0.095, 1, 0.75);
     hemiLight.position.set(0, 500, 0);
-    this.scene.add(hemiLight);
+    //this.scene.add(hemiLight);
 
 
 };
@@ -55,28 +55,56 @@ Terrain.prototype.initLighting = function () {
 
 var t = new Terrain();
 
-var geometry = new THREE.PlaneGeometry(500, 500, 10, 10);
-var material = new THREE.MeshLambertMaterial({color:0xff6633, vertexColors: THREE.FaceColors, shading: THREE.FlatShading});
+var geometry = new THREE.PlaneGeometry(1200, 1200, 20, 20);
+geometry.dynamic = true;
+geometry.verticesNeedUpdate = true;
+var material = new THREE.MeshLambertMaterial({color:0x66cc66, vertexColors: THREE.FaceColors, shading: THREE.FlatShading});
+
+var noise = new SimplexNoise();
+var n;
+
+var factorX = 50;
+var factorY = 25;
+var factorZ = 60;
 
 for (var i = 0; i < geometry.vertices.length; i++) {
-    geometry.vertices[i].x += Math.random() * 15 | 0;
-    geometry.vertices[i].y += Math.random() * 15 | 0;
-    geometry.vertices[i].z += Math.random() * 5 | 0;
+    n = noise.noise(geometry.vertices[i].x / 20 / factorX, geometry.vertices[i].y / 20 / factorY);
+    n -= 0.25;
+    geometry.vertices[i].z = n * factorZ;
 }
 
 for (var i = 0; i < geometry.faces.length; i++) {
     var color = geometry.faces[i].color;
-    var rand = Math.random();
+    var rand = Math.random() / 5;
     geometry.faces[i].color.setRGB(color.r + rand, color.g + rand, color.b + rand);
 }
-
+geometry.computeCentroids();
 var plane = new THREE.Mesh(geometry, material);
 
 plane.rotation.x = -Math.PI / 2;
 plane.position.set(0, -20, 0);
 plane.receiveShadow = true;
+plane.name = 'land';
 
 t.scene.add(plane);
+
+
+var waterGeom = new THREE.PlaneGeometry(1200, 1200, 10, 10);
+for (var i = 0; i < waterGeom.faces.length; i++) {
+    var color = waterGeom.faces[i].color;
+    var rand = Math.random() / 5;
+    waterGeom.faces[i].color.setRGB(color.r + rand, color.g + rand, color.b + rand);
+}
+var waterMesh = new THREE.Mesh(waterGeom, new THREE.MeshLambertMaterial({color: 0x6699ff, transparent: true, opacity: 0.85,vertexColors: THREE.FaceColors, shading: THREE.FlatShading}));
+waterMesh.rotation.x = -90 * Math.PI / 180;
+waterMesh.position.y -= 50;
+waterMesh.name = 'water';
+
+t.scene.add(waterMesh);
+
+var cube = new THREE.Mesh(new THREE.CubeGeometry(10,10,10), new THREE.MeshBasicMaterial({color:0xff0000}));
+cube.position.set(50, 100, 0);
+t.scene.add(cube);
 
 t.initLighting();
 
@@ -90,3 +118,46 @@ Terrain.prototype.go = function() {
 };
 
 t.go();
+
+projector = new THREE.Projector();
+mouseVector = new THREE.Vector3();
+
+// User interaction
+//window.addEventListener( 'mousemove', onMouseMove, false );
+
+function onMouseMove( e ) {
+
+    mouseVector.x = 2 * (e.clientX / window.innerWidth) - 1;
+    mouseVector.y = 1 - 2 * ( e.clientY / window.innerHeight );
+
+    console.log(mouseVector)
+
+    var raycaster = projector.pickingRay( mouseVector.clone(), t.camera ),
+        intersects = raycaster.intersectObject( plane );
+
+
+
+
+    for( var i = 0; i < intersects.length; i++ ) {
+        var intersection = intersects[ i ];
+        cube.position = intersection.point;
+
+
+    }
+
+
+}
+
+for (var i = 0; i < 100; i++) {
+var caster = new THREE.Raycaster();
+var ray = new THREE.Vector3(0, -1, 0);
+
+caster.set(new THREE.Vector3(Math.random() * 250 | 0,100, Math.random() * 250 | 0), ray);
+
+var collisions = caster.intersectObject(plane);
+
+var cube2 = new THREE.Mesh(new THREE.CubeGeometry(10,10,10), new THREE.MeshBasicMaterial({color:0x00ff00}));
+t.scene.add(cube2);
+
+cube2.position = collisions[0].point;
+}
