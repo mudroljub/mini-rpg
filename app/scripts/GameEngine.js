@@ -140,8 +140,8 @@ GameEngine.prototype.initLighting = function () {
 
     var d = 500;
     var ambient = new THREE.AmbientLight(0x111111);
-    var dirLight = new THREE.DirectionalLight(0xffffff, 0.5, 500);
-    var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
+    var dirLight = new THREE.DirectionalLight(0xffffcc, 0.5, 500);
+    var hemiLight = new THREE.HemisphereLight(0xffffcc, 0xffffcc, 0.6);
 
     // light for shadows
     dirLight.color.setHSL(0.1, 1, 0.95);
@@ -160,12 +160,18 @@ GameEngine.prototype.initLighting = function () {
     dirLight.shadowDarkness = 0.35;
 
     this.scene.add(dirLight);
-    this.scene.add(ambient);
+    //this.scene.add(ambient);
 
     hemiLight.color.setHSL(0.6, 1, 0.6);
     hemiLight.groundColor.setHSL(0.095, 1, 0.75);
     hemiLight.position.set(0, 500, 0);
     this.scene.add(hemiLight);
+
+    var pointLight = new THREE.PointLight(0xffffcc);
+         pointLight.intensity = 0.75;
+         pointLight.position = new THREE.Vector3(1000, 800, -1000);
+         this.scene.add(pointLight);
+
 
 
 };
