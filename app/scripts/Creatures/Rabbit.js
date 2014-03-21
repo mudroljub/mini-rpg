@@ -33,7 +33,6 @@ Rabbit.prototype.update = function() {
     var collision = this.game.place(this.pos);
 
     this.pos.y = collision.y + 5;
-    //this.pos.y = Math.sin((Math.PI * (Date.now() / 10) / 20));
     this.rotation.y = (Math.atan2(deltaX, deltaZ));
 
     Entity.prototype.update.call(this);

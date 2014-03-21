@@ -20,7 +20,7 @@ MobStateDelivering.prototype.checkConditions = function () {
 
     var village = this.mob.game.getCloseEntity("village", this.mob.pos, 1500);
 
-    if (village.pos.distanceTo(this.mob.pos) < 50) {
+    if (village && village.pos.distanceTo(this.mob.pos) < 50) {
 
         if (roll(10) === 1) {
 

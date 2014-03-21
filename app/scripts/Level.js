@@ -38,7 +38,7 @@ Level.prototype.generate = function () {
     land.rotateX(-Math.PI / 2);
     land.position.set(0, 30, 0);
 
-    var water_material = new THREE.MeshLambertMaterial({color: 0x6699ff, transparent: true, opacity: 0.85,vertexColors: THREE.FaceColors, shading: THREE.FlatShading});
+    var water_material = new THREE.MeshLambertMaterial({color: 0x6699ff, transparent: true, opacity: 0.75,vertexColors: THREE.FaceColors, shading: THREE.FlatShading});
     var water_geometry = new THREE.PlaneGeometry(1200, 1200, this.resolution, this.resolution);
     water_geometry.dynamic = true;
     water_geometry.verticesNeedUpdate = true;

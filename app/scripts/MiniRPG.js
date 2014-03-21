@@ -13,7 +13,7 @@ window.onload = function () {
         MiniRPG.start();
         MiniRPG.plantTrees();
 
-        for (var i = 0; i < 20; i++) {
+        for (var i = 0; i < 10; i++) {
             mob = new Mob(MiniRPG);
             mob.brain.setState("exploring");
             MiniRPG.addEntity(mob);

@@ -1,6 +1,9 @@
+
+
 function GameEngine() {
 
     this.entityId = 0;
+    this.fps = false;
     this.paused = false;
     this.entities = {};
     this.clock = new THREE.Clock();
@@ -10,6 +13,9 @@ function GameEngine() {
     this.camera.position.y = 500;
     this.camera.position.z = 500;
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+    this.cameraFPS = new THREE.PerspectiveCamera( 90, window.innerWidth / window.innerHeight, 1, 5000 );
+
     this.scene = new THREE.Scene();
     this.renderer = new THREE.WebGLRenderer({antialias: true, maxLights: 100, alpha: true});
     this.renderer.setSize( window.innerWidth, window.innerHeight );
@@ -96,14 +102,13 @@ GameEngine.prototype.update = function() {
 
 
 GameEngine.prototype.init = function() {
-    var mob, rabbit;
+    var rabbit;
 
+    console.log('MiniRPG init!');
 
     this.terrain = new Level();
     var ground = this.terrain.generate();
     this.scene.add(ground);
-
-    console.log('MiniRPG init!');
 
     for (var i = 0; i < 10; i++) {
         rabbit = new Rabbit(this)
@@ -111,8 +116,6 @@ GameEngine.prototype.init = function() {
         this.addEntity(rabbit);
         this.addEntity(new Cloud(this));
     }
-
-
 
     this.initLighting();
 
@@ -125,7 +128,12 @@ GameEngine.prototype.start = function() {
     (function gameLoop() {
         that.loop();
         requestAnimationFrame(gameLoop);
-        that.renderer.render( that.scene, that.camera );
+        if (!that.fps) {
+            that.renderer.render( that.scene, that.camera );
+        } else {
+            that.renderer.render( that.scene, that.cameraFPS );
+
+        }
         that.elapsed = that.clock.getElapsedTime();
     })();
 };
@@ -209,4 +217,17 @@ GameEngine.prototype.place = function(position) {
 
     return position;
 
+}
+
+GameEngine.prototype.switchCam = function() {
+    if (this.fps) {
+        this.fps = false;
+    } else {
+    var mob = this.getCloseEntity('mob', new THREE.Vector3(0, 0, 0), 2000);
+    mob.fps = true;
+    mob.log = true;
+    this.fps = true;
+    this.cameraFPS.position = mob.pos;
+    this.cameraFPS.position.y += 10;
+    }
 }

@@ -1,5 +1,5 @@
 function Arrow(game, pos, dest) {
-    var randomOffset = new THREE.Vector3(rndInt(10), 0, rndInt(10));
+    var randomOffset = new THREE.Vector3(rndInt(10), roll(10), rndInt(10));
 
     this.name = 'arrow';
     Entity.call(this, game, 0x966f33);
@@ -20,11 +20,13 @@ Arrow.prototype.update = function () {
     if (this.lifeSpan > 0) {
         this.lifeSpan--;
     } else {
+        this.vel = new THREE.Vector3(0, 0, 0);
         this.remove = true;
-        this.pos.y = 1;
+        //this.pos.y = 1;
         this.game.removeEntity(this);
     }
 
+    if (this.pos !== this.destination) {
     // rotation to target location
     deltaX = this.destination.x - this.pos.x;
     deltaY = this.destination.y - this.pos.y;
@@ -38,6 +40,7 @@ Arrow.prototype.update = function () {
     this.rotation.y = (Math.atan2(deltaX, deltaZ));
 
     Entity.prototype.update.call(this);
+    }
 
 };
 

@@ -10,8 +10,14 @@ RabbitStateExploring.prototype.constructor = RabbitStateExploring;
 
 
 RabbitStateExploring.prototype.randomDestination = function () {
-
-    this.mob.destination = new THREE.Vector3(rndInt(1000), 0, rndInt(1000));
+    while (1) {
+        var rndPoint = new THREE.Vector3(rndInt(1100), 10, rndInt(1100));
+        var collision = this.mob.game.place(rndPoint);
+        if (collision.y > 5) {
+            this.mob.destination = collision;
+            break;
+        }
+    }
 
 };
 

@@ -6,23 +6,21 @@ function Mob(game) {
     this.destination = this.pos.clone();
     this.target = null;
     this.speed = 40;
+    this.log = false;
+    this.fps = false;
 
     // setup the brain for the mob
-
-
     this.exploringState  = new MobStateExploring(this);
     this.seekingState    = new MobStateSeeking(this);
     this.deliveringState = new MobStateDelivering(this);
     this.huntingState    = new MobStateHunting(this);
     this.miningState    = new MobStateMining(this);
 
-
     this.brain.addState(this.exploringState);
     this.brain.addState(this.seekingState);
     this.brain.addState(this.deliveringState);
     this.brain.addState(this.huntingState);
     this.brain.addState(this.miningState);
-
 
     this.carryEntity = undefined;
 
@@ -49,7 +47,7 @@ Mob.prototype.update = function () {
 
     var collision = this.game.place(this.pos);
 
-    this.pos.y = collision.y + 5; //Math.sin((Math.PI * (Date.now() / 10) / 20)) + 5;
+    this.pos.y = collision.y + 1.5; //Math.sin((Math.PI * (Date.now() / 10) / 20)) + 5;
     this.rotation.y = (Math.atan2(deltaX, deltaZ));
 
     // Mob is carrying a resource.
@@ -61,6 +59,13 @@ Mob.prototype.update = function () {
 
     Entity.prototype.update.call(this);
 
+    if (this.log) {
+        document.getElementById('overlay').innerHTML = this.brain.activeState.name;
+    }
+
+    if (this.fps) {
+        this.game.cameraFPS.lookAt(this.destination);
+    }
 };
 
 
