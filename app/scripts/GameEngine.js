@@ -102,7 +102,7 @@ GameEngine.prototype.update = function() {
 
 
 GameEngine.prototype.init = function() {
-    var rabbit;
+    var rabbit, bird;
 
     console.log('MiniRPG init!');
 
@@ -115,6 +115,12 @@ GameEngine.prototype.init = function() {
         rabbit.brain.setState("exploring");
         this.addEntity(rabbit);
         this.addEntity(new Cloud(this));
+    }
+
+    for (var i = 0; i < 10; i++) {
+        bird = new Bird(this)
+        bird.brain.setState("exploring");
+        this.addEntity(bird);
     }
 
     this.initLighting();

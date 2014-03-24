@@ -1,23 +1,23 @@
-function Rabbit(game) {
+function Bird(game) {
 
-    this.name = 'rabbit';
-    Entity.call(this, game, 0xff0000);
-    this.pos = new THREE.Vector3(rndInt(1200), 0, rndInt(1200));
+    this.name = 'bird';
+    Entity.call(this, game, 0xff6666);
+    this.pos = new THREE.Vector3(rndInt(2400), roll(150), rndInt(2400));
     this.destination = this.pos.clone();
 
     this.health = 5;
     this.speed = 50 + rndInt(40);
 
-    this.exploringState  = new RabbitStateExploring(this);
+    this.exploringState  = new BirdStateExploring(this);
     this.brain.addState(this.exploringState);
 }
 
 
-Rabbit.prototype = new Entity();
-Rabbit.prototype.constructor = Rabbit;
+Bird.prototype = new Entity();
+Bird.prototype.constructor = Bird;
 
 
-Rabbit.prototype.update = function() {
+Bird.prototype.update = function() {
 
     var deltaX, deltaY, deltaZ;
 
@@ -30,9 +30,9 @@ Rabbit.prototype.update = function() {
     dv.subVectors(this.destination, this.pos);
     dv.setLength(this.speed);
     this.vel = dv;
-    var collision = this.game.place(this.pos);
+    //var collision = this.game.place(this.pos);
 
-    this.pos.y = collision.y + 5;
+    //this.pos.y = collision.y + roll(50);
     this.rotation.y = (Math.atan2(deltaX, deltaZ));
 
     Entity.prototype.update.call(this);
@@ -40,10 +40,10 @@ Rabbit.prototype.update = function() {
 };
 
 
-Rabbit.prototype.create = function() {
+Bird.prototype.create = function() {
 
     var geometry = new THREE.BoxGeometry(2, 2, 5);
-    var material = new THREE.MeshLambertMaterial({ color: 0x777777, shading: THREE.SmoothShading, vertexColors: THREE.FaceColors });
+    var material = new THREE.MeshLambertMaterial({ color: 0xff6666, shading: THREE.SmoothShading, vertexColors: THREE.FaceColors });
     this.mesh = new THREE.Mesh(geometry, material);
     this.mesh.castShadow = true;
     for (var i = 0; i < this.mesh.geometry.vertices.length; i++) {
@@ -52,7 +52,7 @@ Rabbit.prototype.create = function() {
 
 };
 
-Rabbit.prototype.attacked = function() {
+Bird.prototype.attacked = function() {
     this.health -= 1;
     if (this.health <= 0) {
         this.speed = 0;
