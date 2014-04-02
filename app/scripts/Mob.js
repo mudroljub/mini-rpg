@@ -33,22 +33,9 @@ Mob.prototype.constructor = Mob;
 
 Mob.prototype.update = function () {
 
-    var deltaX, deltaY, deltaZ;
-
-    // rotation to target location
-    deltaX = this.destination.x - this.pos.x;
-    deltaY = this.destination.y - this.pos.y;
-    deltaZ = this.destination.z - this.pos.z;
-
-    var dv = new THREE.Vector3();
-    dv.subVectors(this.destination, this.pos);
-    dv.setLength(this.speed);
-    this.vel = dv;
-
     var collision = this.game.place(this.pos);
-
     this.pos.y = collision.y + 1.5; //Math.sin((Math.PI * (Date.now() / 10) / 20)) + 5;
-    this.rotation.y = (Math.atan2(deltaX, deltaZ));
+
 
     // Mob is carrying a resource.
     if (this.carryEntity) {

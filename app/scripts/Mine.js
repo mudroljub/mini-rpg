@@ -3,6 +3,7 @@ function Mine(game, data) {
     this.name = 'mine';
     Entity.call(this, game);
     this.pos = data.pos;
+    this.destination = this.pos.clone();
     this.units = 100;
 
 }

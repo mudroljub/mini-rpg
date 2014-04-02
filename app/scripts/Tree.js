@@ -9,6 +9,7 @@ function Tree(game, data) {
     this.name = 'tree';
     Entity.call(this, game);
     this.pos = data.pos;
+    this.destination = this.pos.clone();
     this.units = 4;
 
 }

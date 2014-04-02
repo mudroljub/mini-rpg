@@ -24,7 +24,7 @@ window.onload = function () {
             var collision = MiniRPG.place(rndPoint);
             collision.y += 10;
             MiniRPG.addEntity(new Mine(MiniRPG, {pos: collision}));
-            
+
             var rndPoint = new THREE.Vector3(rndInt(1100), 100, rndInt(1100));
             var collision = MiniRPG.place(rndPoint);
             collision.y += 20;

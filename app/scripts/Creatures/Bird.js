@@ -17,29 +17,6 @@ Bird.prototype = new Entity();
 Bird.prototype.constructor = Bird;
 
 
-Bird.prototype.update = function() {
-
-    var deltaX, deltaY, deltaZ;
-
-    // rotation to target location
-    deltaX = this.destination.x - this.pos.x;
-    deltaY = this.destination.y - this.pos.y;
-    deltaZ = this.destination.z - this.pos.z;
-
-    var dv = new THREE.Vector3();
-    dv.subVectors(this.destination, this.pos);
-    dv.setLength(this.speed);
-    this.vel = dv;
-    //var collision = this.game.place(this.pos);
-
-    //this.pos.y = collision.y + roll(50);
-    this.rotation.y = (Math.atan2(deltaX, deltaZ));
-
-    Entity.prototype.update.call(this);
-
-};
-
-
 Bird.prototype.create = function() {
 
     var geometry = new THREE.BoxGeometry(2, 2, 5);
