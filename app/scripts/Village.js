@@ -15,13 +15,6 @@ Village.prototype = new Entity();
 Village.prototype.constructor = Village;
 
 
-Village.prototype.update = function() {
-
-    Entity.prototype.update.call(this);
-
-};
-
-
 Village.prototype.create = function() {
 
     if (objects['village']) {

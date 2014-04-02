@@ -18,13 +18,6 @@ Tree.prototype = new Entity();
 Tree.prototype.constructor = Tree;
 
 
-Tree.prototype.update = function() {
-
-    Entity.prototype.update.call(this);
-
-};
-
-
 Tree.prototype.create = function() {
 
     var tree = new THREE.Object3D();

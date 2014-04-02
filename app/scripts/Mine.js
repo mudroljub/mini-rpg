@@ -11,13 +11,6 @@ Mine.prototype = new Entity();
 Mine.prototype.constructor = Mine;
 
 
-Mine.prototype.update = function() {
-
-    Entity.prototype.update.call(this);
-
-};
-
-
 Mine.prototype.create = function() {
 
     if (objects['mine']) {
