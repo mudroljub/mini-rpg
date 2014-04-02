@@ -4,11 +4,11 @@
  * @param game
  * @constructor
  */
-function Tree(game) {
+function Tree(game, data) {
 
     this.name = 'tree';
     Entity.call(this, game);
-    this.pos = new THREE.Vector3(rndInt(1100), 0, rndInt(1100));
+    this.pos = data.pos;
     this.units = 4;
 
 }

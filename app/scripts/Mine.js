@@ -1,7 +1,8 @@
-function Mine(game) {
+function Mine(game, data) {
 
     this.name = 'mine';
     Entity.call(this, game);
+    this.pos = data.pos;
     this.units = 100;
 
 }

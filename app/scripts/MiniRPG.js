@@ -22,19 +22,13 @@ window.onload = function () {
         for (var i = 0; i < 1; i++) {
             var rndPoint = new THREE.Vector3(rndInt(1100), 100, rndInt(1100));
             var collision = MiniRPG.place(rndPoint);
-            var mine = new Mine(MiniRPG);
-            MiniRPG.addEntity(mine);
-            mine.pos = collision;
-            mine.pos.y += 10;
-        }
-
-        for (var i = 0; i < 1; i++) {
+            collision.y += 10;
+            MiniRPG.addEntity(new Mine(MiniRPG, {pos: collision}));
+            
             var rndPoint = new THREE.Vector3(rndInt(1100), 100, rndInt(1100));
             var collision = MiniRPG.place(rndPoint);
-            var village = new Village(MiniRPG);
-            MiniRPG.addEntity(village);
-            village.pos = collision;
-            village.pos.y += 20;
+            collision.y += 20;
+            MiniRPG.addEntity(new Village(MiniRPG, {pos: collision}));
         }
     });
 };

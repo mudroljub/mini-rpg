@@ -198,12 +198,8 @@ GameEngine.prototype.plantTrees = function() {
         var rndPoint = new THREE.Vector3(rndInt(1100), 100, rndInt(1100));
         var collision = this.place(rndPoint);
         if (collision.y > 0) {
-
-            var tree = new Tree(MiniRPG);
-            this.addEntity(tree);
-
-            tree.pos = collision;
-            tree.pos.y -= 10;
+            collision.y -= 10;
+            this.addEntity(new Tree(MiniRPG, {pos: collision}));
         }
     }
 };
