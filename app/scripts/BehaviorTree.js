@@ -96,7 +96,6 @@ Node.prototype.can = function() {
     if (fn === undefined) {
         fn = "can" + this.id[0].toUpperCase() + this.id.substring(1, this.id.length);
     }
-
     if(this.states[fn] !== undefined) {
         return this.states[fn].call(this.actor);
     } else {

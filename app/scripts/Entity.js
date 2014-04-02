@@ -8,7 +8,7 @@ function Entity(game, color) {
     this.timeMult = 1;
     this.remove   = false;
     this.shadow   = false;
-    this.brain = new StateMachine();
+    this.state = null;
     this.color = color ? color : 0xffffff;
     this.create();
 
@@ -30,8 +30,6 @@ Entity.prototype.update = function () {
     dv.setLength(this.speed);
     this.vel = dv;
     this.rotation.y = (Math.atan2(deltaX, deltaZ));
-
-    this.brain.think();
 
     this.pos.x += this.vel.x * this.game.delta * this.timeMult;
     this.pos.y += this.vel.y * this.game.delta * this.timeMult;

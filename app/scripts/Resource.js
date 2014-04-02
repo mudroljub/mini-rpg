@@ -27,13 +27,6 @@ Resource.prototype = new Entity();
 Resource.prototype.constructor = Resource;
 
 
-Resource.prototype.update = function() {
-
-    Entity.prototype.update.call(this);
-
-};
-
-
 Resource.prototype.create = function() {
 
     var geometry = new THREE.BoxGeometry(4, 4, 4);

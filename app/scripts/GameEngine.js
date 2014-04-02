@@ -106,20 +106,19 @@ GameEngine.prototype.init = function() {
 
     console.log('MiniRPG init!');
 
+    this.machine = new Machine();
     this.terrain = new Level();
     var ground = this.terrain.generate();
     this.scene.add(ground);
 
     for (var i = 0; i < 10; i++) {
-        rabbit = new Rabbit(this)
-        rabbit.brain.setState("exploring");
+        rabbit = new Rabbit(this);
         this.addEntity(rabbit);
         this.addEntity(new Cloud(this));
     }
 
     for (var i = 0; i < 10; i++) {
-        bird = new Bird(this)
-        bird.brain.setState("exploring");
+        bird = new Bird(this);
         this.addEntity(bird);
     }
 
