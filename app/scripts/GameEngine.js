@@ -218,7 +218,8 @@ GameEngine.prototype.place = function(position) {
 
     return position;
 
-}
+};
+
 
 GameEngine.prototype.switchCam = function() {
     if (this.fps) {
@@ -231,4 +232,4 @@ GameEngine.prototype.switchCam = function() {
     this.cameraFPS.position = mob.pos;
     this.cameraFPS.position.y += 10;
     }
-}
+};

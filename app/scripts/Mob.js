@@ -8,19 +8,7 @@ function Mob(game) {
     this.speed = 40;
     this.log = false;
     this.fps = false;
-
-    // setup the brain for the mob
-    this.exploringState  = new MobStateExploring(this);
-    this.seekingState    = new MobStateSeeking(this);
-    this.deliveringState = new MobStateDelivering(this);
-    this.huntingState    = new MobStateHunting(this);
-    this.miningState    = new MobStateMining(this);
-
-    this.brain.addState(this.exploringState);
-    this.brain.addState(this.seekingState);
-    this.brain.addState(this.deliveringState);
-    this.brain.addState(this.huntingState);
-    this.brain.addState(this.miningState);
+    this.state = this.game.machine.generate(mobJson, this, Mob.states)
 
     this.carryEntity = undefined;
 
@@ -35,6 +23,7 @@ Mob.prototype.update = function () {
 
     var collision = this.game.place(this.pos);
     this.pos.y = collision.y + 1.5; //Math.sin((Math.PI * (Date.now() / 10) / 20)) + 5;
+    this.state = this.state.tick();
 
 
     // Mob is carrying a resource.
@@ -45,10 +34,6 @@ Mob.prototype.update = function () {
     }
 
     Entity.prototype.update.call(this);
-
-    if (this.log) {
-        document.getElementById('overlay').innerHTML = this.brain.activeState.name;
-    }
 
     if (this.fps) {
         this.game.cameraFPS.lookAt(this.destination);
@@ -87,17 +72,41 @@ Mob.prototype.carry = function ( entity ) {
 
 
 Mob.prototype.drop = function () {
-
     var x, y, z;
 
     if (this.carryEntity) {
 
         x = this.pos.x;
-        y = this.pos.y;
         z = this.pos.z;
         this.carryEntity.pos = new THREE.Vector3(x, 0, z);
         this.carryEntity = undefined;
 
     }
+};
 
+var mobJson = {
+    id: "idle", strategy: "prioritised",
+    children: [
+        { id: "explore", strategy: "sequential",
+            children: [
+                {id: "getRandomDestination"},
+            ]
+        }
+    ]
+};
+
+
+Mob.states = {
+    idle: function() { console.log('idle'); },
+    getRandomDestination: function() {
+        var rndPoint = new THREE.Vector3(rndInt(1100), 10, rndInt(1100));
+        var collision = this.game.place(rndPoint);
+        if (collision.y > 5) {
+            this.destination = collision;
+        }
+    },
+    canExplore: function() {
+        return Math.random() > 0.99;
+    },
+    sleep: function() {}
 };

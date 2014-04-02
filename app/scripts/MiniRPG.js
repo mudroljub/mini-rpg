@@ -13,11 +13,10 @@ window.onload = function () {
         MiniRPG.start();
         MiniRPG.plantTrees();
 
-//        for (var i = 0; i < 10; i++) {
-//            mob = new Mob(MiniRPG);
-//            mob.brain.setState("exploring");
-//            MiniRPG.addEntity(mob);
-//        }
+        for (var i = 0; i < 10; i++) {
+            var mob = new Mob(MiniRPG);
+            MiniRPG.addEntity(mob);
+        }
 
         for (var i = 0; i < 1; i++) {
             var rndPoint = new THREE.Vector3(rndInt(1100), 100, rndInt(1100));
