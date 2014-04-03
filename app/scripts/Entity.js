@@ -1,5 +1,4 @@
 function Entity(game, color) {
-
     this.game     = game;
     this.pos      = new THREE.Vector3(0, 0, 0);
     this.destination = new THREE.Vector3(0, 0, 0);
@@ -11,13 +10,10 @@ function Entity(game, color) {
     this.state = null;
     this.color = color ? color : 0xffffff;
     this.create();
-
 }
 
-Entity.prototype.constructor = Entity;
 
 Entity.prototype.update = function () {
-
     var deltaX, deltaY, deltaZ;
 
     // rotation to target location
@@ -39,15 +35,12 @@ Entity.prototype.update = function () {
     this.mesh.rotation.x = this.rotation.x;
     this.mesh.rotation.y = this.rotation.y;
     this.mesh.rotation.z = this.rotation.z;
-
 };
 
 
 Entity.prototype.create = function () {
-
     var geometry = new THREE.BoxGeometry(10, 10, 10);
     var material = new THREE.MeshLambertMaterial({ color: 0xff0000, shading: THREE.SmoothShading });
     this.mesh = new THREE.Mesh(geometry, material);
     this.mesh.castShadow = true;
-
 };

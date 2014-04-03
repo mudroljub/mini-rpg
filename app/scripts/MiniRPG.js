@@ -1,9 +1,6 @@
-
 var MiniRPG = new GameEngine();
 var loader = new THREE.JSONLoader();
 var objects   = {};
-
-
 
 
 window.onload = function () {

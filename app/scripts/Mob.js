@@ -1,17 +1,14 @@
 function Mob(game) {
-
     this.name = 'mob';
-    Entity.call(this, game, 0xecc2a7);
-    this.pos = new THREE.Vector3(rndInt(128) * 5, 100, rndInt(128) * 5);
+    Entity.call(this, game);
+    this.pos = new THREE.Vector3(rndInt(1100), 100, rndInt(1100));
     this.destination = this.pos.clone();
     this.target = null;
     this.speed = 40;
     this.log = false;
     this.fps = false;
-    this.state = this.game.machine.generate(mobJson, this, Mob.states)
-
+    this.state = this.game.machine.generate(mobJson, this, Mob.states);
     this.carryEntity = undefined;
-
 }
 
 
@@ -22,9 +19,8 @@ Mob.prototype.constructor = Mob;
 Mob.prototype.update = function () {
 
     var collision = this.game.place(this.pos);
-    this.pos.y = collision.y + 1.5; //Math.sin((Math.PI * (Date.now() / 10) / 20)) + 5;
+    this.pos.y = collision.y + 1.5;
     this.state = this.state.tick();
-
 
     // Mob is carrying a resource.
     if (this.carryEntity) {
@@ -42,16 +38,14 @@ Mob.prototype.update = function () {
 
 
 Mob.prototype.create = function () {
-
     var geometry = new THREE.BoxGeometry(5, 10, 5);
-    var material = new THREE.MeshLambertMaterial({ color: this.color, shading: THREE.SmoothShading });
+    var material = new THREE.MeshLambertMaterial({ color: 0xecc2a7, shading: THREE.SmoothShading });
     this.mesh = new THREE.Mesh(geometry, material);
     for (var i = 0; i < this.mesh.geometry.vertices.length; i++) {
         this.mesh.geometry.vertices[i].y += 5;
     }
     this.mesh.castShadow = true;
     this.mesh.name = this.name;
-
 };
 
 
@@ -72,24 +66,35 @@ Mob.prototype.carry = function ( entity ) {
 
 
 Mob.prototype.drop = function () {
-    var x, y, z;
-
     if (this.carryEntity) {
-
-        x = this.pos.x;
-        z = this.pos.z;
-        this.carryEntity.pos = new THREE.Vector3(x, 0, z);
+        this.carryEntity.pos = new THREE.Vector3(this.pos.x, 0, this.pos.z);
         this.carryEntity = undefined;
-
     }
 };
+
+
+Mob.prototype.shoot = function(destination) {
+    this.game.addEntity(
+        new Arrow(
+            this.game,
+            {
+                pos: this.pos.clone(),
+                destination: destination,
+                lifeSpan: 300,
+                speed: 300,
+                offset: 10
+            }
+        )
+    )
+};
+
 
 var mobJson = {
     id: "idle", strategy: "prioritised",
     children: [
         { id: "explore", strategy: "sequential",
             children: [
-                {id: "getRandomDestination"},
+                { id: "getRandomDestination" },
             ]
         }
     ]

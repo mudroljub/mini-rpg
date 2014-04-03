@@ -5,13 +5,11 @@
  * @constructor
  */
 function Tree(game, data) {
-
     this.name = 'tree';
     Entity.call(this, game);
     this.pos = data.pos;
     this.destination = this.pos.clone();
     this.units = 4;
-
 }
 
 
@@ -26,7 +24,6 @@ Tree.prototype.create = function() {
     var trunk = new THREE.Mesh(treeData.geom.trunk, treeData.materials.trunk);
     leaves.name = 'leaves';
     trunk.name= 'trunk';
-
 
     leaves.castShadow = true;
     trunk.castShadow = true;
@@ -44,6 +41,7 @@ Tree.prototype.create = function() {
 
 };
 
+
 var treeData = {
     geom: {
         leaves: new THREE.CylinderGeometry( 0, 25, 60, 4, 1 ),
@@ -54,4 +52,3 @@ var treeData = {
         trunk: new THREE.MeshLambertMaterial({ color: 0x966F33, shading: THREE.SmoothShading })
     }
 };
-

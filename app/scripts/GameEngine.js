@@ -1,7 +1,5 @@
 
-
 function GameEngine() {
-
     this.entityId = 0;
     this.fps = false;
     this.paused = false;
@@ -13,9 +11,7 @@ function GameEngine() {
     this.camera.position.y = 500;
     this.camera.position.z = 500;
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
-
     this.cameraFPS = new THREE.PerspectiveCamera( 90, window.innerWidth / window.innerHeight, 1, 5000 );
-
     this.scene = new THREE.Scene();
     this.renderer = new THREE.WebGLRenderer({antialias: true, maxLights: 100, alpha: true});
     this.renderer.setSize( window.innerWidth, window.innerHeight );
@@ -28,102 +24,73 @@ function GameEngine() {
     this.renderer.shadowMapType          = THREE.PCFSoftShadowMap;
     this.controls = new THREE.OrbitControls( this.camera, this.renderer.domElement );
     document.body.appendChild( this.renderer.domElement );
-
 }
-
-GameEngine.prototype.constructor = GameEngine;
 
 
 GameEngine.prototype.addEntity = function(entity) {
-
     this.entities[this.entityId] = entity;
     entity.id = this.entityId;
     this.entityId++;
     this.scene.add(entity.mesh);
-
 };
 
 
 GameEngine.prototype.removeEntity = function(entity) {
-
     this.entities[entity.id].remove = true;
     this.scene.remove(entity.mesh);
-
 };
 
 
 GameEngine.prototype.getCloseEntity = function(name, position, range) {
-
     var i, distance, entity;
-
     for (i in this.entities) {
-
         entity = this.entities[i];
-
         if (entity.name === name && !entity.remove) {
-
             distance = position.distanceTo(entity.pos);
-
             if (distance < range) {
-
                 return entity;
-
             }
-
         }
-
     }
-
     return false;
-
 };
 
 
 GameEngine.prototype.loop = function() {
-
     this.delta = this.clock.getDelta();
     this.update();
-
 };
 
 
 GameEngine.prototype.update = function() {
-    var i;
-
+    var i, entity;
     for (i in this.entities) {
-        var entity = this.entities[i];
+        entity = this.entities[i];
         if (!entity.remove) {
             entity.update();
         }
     }
-
     this.controls.update();
 };
 
 
 GameEngine.prototype.init = function() {
-    var rabbit, bird;
-
     console.log('MiniRPG init!');
 
     this.machine = new Machine();
     this.terrain = new Level();
-    var ground = this.terrain.generate();
-    this.scene.add(ground);
+    this.scene.add(this.terrain.generate());
 
     for (var i = 0; i < 10; i++) {
-        rabbit = new Rabbit(this);
-        this.addEntity(rabbit);
+        this.addEntity(new Rabbit(this));
         this.addEntity(new Cloud(this));
     }
 
     for (var i = 0; i < 10; i++) {
-        bird = new Bird(this);
-        this.addEntity(bird);
+        this.addEntity(new Bird(this));
     }
 
     this.initLighting();
-
 };
 
 
@@ -144,11 +111,11 @@ GameEngine.prototype.start = function() {
 };
 
 GameEngine.prototype.initLighting = function () {
-
     var d = 500;
-    var ambient = new THREE.AmbientLight(0x111111);
+//    var ambient = new THREE.AmbientLight(0x111111);
     var dirLight = new THREE.DirectionalLight(0xffffcc, 0.5, 500);
     var hemiLight = new THREE.HemisphereLight(0xffffcc, 0xffffcc, 0.6);
+    var pointLight = new THREE.PointLight(0xffffcc);
 
     // light for shadows
     dirLight.color.setHSL(0.1, 1, 0.95);
@@ -166,19 +133,17 @@ GameEngine.prototype.initLighting = function () {
     dirLight.shadowBias = -0.0001;
     dirLight.shadowDarkness = 0.35;
 
-    this.scene.add(dirLight);
-    //this.scene.add(ambient);
-
     hemiLight.color.setHSL(0.6, 1, 0.6);
     hemiLight.groundColor.setHSL(0.095, 1, 0.75);
     hemiLight.position.set(0, 500, 0);
-    this.scene.add(hemiLight);
 
-    var pointLight = new THREE.PointLight(0xffffcc);
     pointLight.intensity = 0.75;
     pointLight.position = new THREE.Vector3(1000, 800, -1000);
-    this.scene.add(pointLight);
 
+    this.scene.add(dirLight);
+    //this.scene.add(ambient);
+    this.scene.add(hemiLight);
+    this.scene.add(pointLight);
 };
 
 
@@ -215,9 +180,7 @@ GameEngine.prototype.place = function(position) {
     if (collisions.length > 0) {
         return collisions[0].point ;
     }
-
     return position;
-
 };
 
 
@@ -225,11 +188,11 @@ GameEngine.prototype.switchCam = function() {
     if (this.fps) {
         this.fps = false;
     } else {
-    var mob = this.getCloseEntity('mob', new THREE.Vector3(0, 0, 0), 2000);
-    mob.fps = true;
-    mob.log = true;
-    this.fps = true;
-    this.cameraFPS.position = mob.pos;
-    this.cameraFPS.position.y += 10;
+        var mob = this.getCloseEntity('mob', new THREE.Vector3(0, 0, 0), 2000);
+        mob.fps = true;
+        mob.log = true;
+        this.fps = true;
+        this.cameraFPS.position = mob.pos;
+        this.cameraFPS.position.y += 10;
     }
 };

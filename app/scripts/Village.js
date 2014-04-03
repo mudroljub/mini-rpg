@@ -4,12 +4,10 @@
  * @constructor
  */
 function Village(game, data) {
-
     this.name = 'village';
     Entity.call(this, game);
     this.pos = data.pos;
     this.destination = this.pos.clone();
-
 }
 
 
@@ -18,7 +16,6 @@ Village.prototype.constructor = Village;
 
 
 Village.prototype.create = function() {
-
     if (objects['village']) {
         objects['village'].scale.set(15, 15, 15);
         objects['village'].castShadow = true;
@@ -27,7 +24,4 @@ Village.prototype.create = function() {
             this.mesh.geometry.vertices[i].y += 1.25;
         }
     }
-
 };
-
-
