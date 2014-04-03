@@ -5,7 +5,7 @@ function Arrow(game, data) {
     Entity.call(this, game);
     this.pos = data.pos;
     this.destination = data.destination.add(randomOffset);
-    this.speed = data.speed || 300;
+    this.speed = data.speed || 600;
     this.lifeSpan = data.lifeSpan || 150;
 }
 
@@ -15,10 +15,10 @@ Arrow.prototype.constructor = Arrow;
 
 
 Arrow.prototype.update = function () {
-
-    if (this.lifeSpan > 0) {
-        this.lifeSpan--;
-    } else {
+    this.lifeSpan--;
+    this.speed--;
+    if (this.lifeSpan <= 0) {
+        this.speed = 0;
         this.remove = true;
         this.game.removeEntity(this);
     }

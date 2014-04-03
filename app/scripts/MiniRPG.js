@@ -6,7 +6,7 @@ var TREES = 50;
 var BIRDS = 5;
 var RABBITS = 5;
 var CLOUDS = 10;
-var MOBS = 5;
+var MOBS = 0;
 
 
 window.onload = function () {

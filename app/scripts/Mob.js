@@ -10,6 +10,7 @@ function Mob(game) {
     this.state = this.game.machine.generate(mobJson, this, Mob.states);
     this.carryEntity = undefined;
     this.shootCooldown = 5;
+    this.vision = 50;
 }
 
 
@@ -18,20 +19,18 @@ Mob.prototype.constructor = Mob;
 
 
 Mob.prototype.update = function () {
-
     var collision = this.game.place(this.pos);
     this.pos.y = collision.y + 1.5;
-    this.state = this.state.tick();
+    this.shootCooldown--;
 
+    this.state = this.state.tick();
     // Mob is carrying a resource.
     if (this.carryEntity) {
         this.carryEntity.pos.x = this.pos.x - 4;
         this.carryEntity.pos.y = this.pos.y;
         this.carryEntity.pos.z = this.pos.z - 4;
     }
-
     Entity.prototype.update.call(this);
-
     if (this.fps) {
         this.game.cameraFPS.lookAt(this.destination);
     }
@@ -53,12 +52,10 @@ Mob.prototype.create = function () {
 Mob.prototype.carry = function ( entity ) {
     if (entity.name !== 'rabbit') {
         if (entity.units > 0) {
-
             entity.units -= 1;
             var resource = new Resource(this.game, entity.name, this.pos.clone());
             this.game.addEntity(resource);
             this.carryEntity = resource;
-
         }
     } else {
         this.carryEntity = entity;
@@ -83,14 +80,13 @@ Mob.prototype.shoot = function(destination) {
                     pos: this.pos.clone(),
                     destination: destination,
                     lifeSpan: 300,
-                    speed: 300,
+                    speed: 600,
                     offset: 10
                 }
             )
         );
         this.shootCooldown = 5;
     }
-    this.shootCooldown--;
 };
 
 
