@@ -2,6 +2,12 @@ var MiniRPG = new GameEngine();
 var loader = new THREE.JSONLoader();
 var objects   = {};
 
+var TREES = 50;
+var BIRDS = 5;
+var RABBITS = 5;
+var CLOUDS = 10;
+var MOBS = 5;
+
 
 window.onload = function () {
     var assets = new AssetManager();
@@ -10,9 +16,8 @@ window.onload = function () {
         MiniRPG.start();
         MiniRPG.plantTrees();
 
-        for (var i = 0; i < 10; i++) {
-            var mob = new Mob(MiniRPG);
-            MiniRPG.addEntity(mob);
+        for (var i = 0; i < MOBS; i++) {
+            MiniRPG.addEntity(new Mob(MiniRPG));
         }
 
         for (var i = 0; i < 1; i++) {

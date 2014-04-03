@@ -81,12 +81,14 @@ GameEngine.prototype.init = function() {
     this.terrain = new Level();
     this.scene.add(this.terrain.generate());
 
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < RABBITS; i++) {
         this.addEntity(new Rabbit(this));
+    }
+    for (var i = 0; i < CLOUDS; i++) {
         this.addEntity(new Cloud(this));
     }
 
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < BIRDS; i++) {
         this.addEntity(new Bird(this));
     }
 
@@ -158,7 +160,7 @@ GameEngine.prototype.getEntity = function (id) {
 
 
 GameEngine.prototype.plantTrees = function() {
-    for (var i = 0; i < 100; i++) {
+    for (var i = 0; i < TREES; i++) {
         var rndPoint = new THREE.Vector3(rndInt(1100), 100, rndInt(1100));
         var collision = this.place(rndPoint);
         if (collision.y > 0) {
