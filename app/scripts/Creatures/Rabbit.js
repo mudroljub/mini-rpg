@@ -52,7 +52,7 @@ Rabbit.states = {
         }
     },
     canExplore: function() {
-        return Math.random() > 0.99;
+        return Math.random() > 0.99 && !this.remove && this.health > 0;
     },
     sleep: function() {}
 };

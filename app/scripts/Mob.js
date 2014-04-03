@@ -9,6 +9,7 @@ function Mob(game) {
     this.fps = false;
     this.state = this.game.machine.generate(mobJson, this, Mob.states);
     this.carryEntity = undefined;
+    this.shootCooldown = 5;
 }
 
 
@@ -74,18 +75,22 @@ Mob.prototype.drop = function () {
 
 
 Mob.prototype.shoot = function(destination) {
-    this.game.addEntity(
-        new Arrow(
-            this.game,
-            {
-                pos: this.pos.clone(),
-                destination: destination,
-                lifeSpan: 300,
-                speed: 300,
-                offset: 10
-            }
-        )
-    )
+    if (this.shootCooldown <= 0) {
+        this.game.addEntity(
+            new Arrow(
+                this.game,
+                {
+                    pos: this.pos.clone(),
+                    destination: destination,
+                    lifeSpan: 300,
+                    speed: 300,
+                    offset: 10
+                }
+            )
+        );
+        this.shootCooldown = 5;
+    }
+    this.shootCooldown--;
 };
 
 
@@ -95,6 +100,14 @@ var mobJson = {
         { id: "explore", strategy: "sequential",
             children: [
                 { id: "getRandomDestination" },
+                { id: "hunt", strategy: "sequential",
+                    children: [
+                        { id: "checkRangeAnimals" },
+                        { id: "shootTarget" },
+                        { id: "deliverKill" },
+                        { id: "dropKill"}
+                    ]
+                }
             ]
         }
     ]
@@ -111,7 +124,39 @@ Mob.states = {
         }
     },
     canExplore: function() {
-        return Math.random() > 0.99;
+        return Math.random() > 0.99 && !this.carryEntity;
     },
-    sleep: function() {}
+    canHunt: function() {
+        return Math.random() > 0.5 && !this.carryEntity;
+    },
+    checkRangeAnimals: function() {
+        var rabbit = this.game.getCloseEntity("rabbit", this.pos, 100);
+        if (rabbit) {
+            this.target = rabbit;
+        }
+    },
+    shootTarget: function() {
+        this.shoot(this.target.pos.clone());
+        if (roll(5) === 1) {
+            this.target.attacked();
+        }
+    },
+    canShootTarget: function() {
+        return this.target != undefined;
+    },
+    deliverKill: function() {
+        this.carry(this.target);
+        this.target = undefined;
+        this.destination = this.game.getCloseEntity("village", this.pos, 2000).pos.clone();
+    },
+    canDeliverKill: function() {
+        return this.target && this.target.health === 0;
+    },
+    dropKill: function() {
+        this.drop();
+    },
+    canDropKill: function() {
+        var village = this.game.getCloseEntity("village", this.pos, 1500);
+        return village && village.pos.distanceTo(this.pos) < 50;
+    }
 };
