@@ -20,7 +20,7 @@ Arrow.prototype.update = function () {
     if (this.lifeSpan <= 0) {
         this.speed = 0;
         this.remove = true;
-        this.game.removeEntity(this);
+        //this.game.removeEntity(this);
     }
 
     Entity.prototype.update.call(this);

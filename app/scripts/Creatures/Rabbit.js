@@ -33,7 +33,7 @@ Rabbit.prototype.create = function() {
 
 
 Rabbit.prototype.attacked = function() {
-    this.health -= 1;
+    this.health -= roll(6);
     if (this.health <= 0) {
         this.speed = 0;
         this.remove = true;

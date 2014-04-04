@@ -3,10 +3,10 @@ var loader = new THREE.JSONLoader();
 var objects   = {};
 
 var TREES = 50;
-var BIRDS = 5;
-var RABBITS = 5;
+var BIRDS = 15;
+var RABBITS = 15;
 var CLOUDS = 10;
-var MOBS = 0;
+var MOBS = 1;
 
 
 window.onload = function () {

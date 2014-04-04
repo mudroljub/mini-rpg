@@ -90,16 +90,56 @@ Mob.prototype.shoot = function(destination) {
 };
 
 
+Mob.prototype.getPrey = function() {
+    var rabbit = this.game.getCloseEntity("rabbit", this.pos, 1100);
+    var bird = this.game.getCloseEntity("bird", this.pos, 1100);
+    var prey = [rabbit, bird];
+    this.prey = prey[roll(2)];
+};
+
+
+Mob.prototype.hasPrey = function() {
+    if (this.prey) {
+        return true;
+    }
+    return false;
+}
+
+
+Mob.prototype.track = function() {
+    this.destination = this.prey.pos.clone();
+};
+
+
+Mob.prototype.goRandom = function() {
+    var rndPoint = new THREE.Vector3(rndInt(1100), 10, rndInt(1100));
+    var collision = this.game.place(rndPoint);
+    if (collision.y > 5) {
+        this.destination = collision;
+    }
+};
+
+
+Mob.prototype.attack = function() {
+    this.shoot(this.prey.pos.clone());
+    if (roll(5) === 1) {
+        this.prey.attacked();
+    }
+};
+
+
 var mobJson = {
     id: "idle", strategy: "prioritised",
     children: [
         { id: "explore", strategy: "sequential",
             children: [
-                { id: "getRandomDestination" },
+                //{ id: "getRandomDestination" },
                 { id: "hunt", strategy: "sequential",
                     children: [
-                        { id: "checkRangeAnimals" },
-                        { id: "shootTarget" },
+                        { id: "getPrey" },
+                        { id: "track"},
+                        { id: "attack" },
+                        { id: "getKill" },
                         { id: "deliverKill" },
                         { id: "dropKill"}
                     ]
@@ -113,11 +153,7 @@ var mobJson = {
 Mob.states = {
     idle: function() { console.log('idle'); },
     getRandomDestination: function() {
-        var rndPoint = new THREE.Vector3(rndInt(1100), 10, rndInt(1100));
-        var collision = this.game.place(rndPoint);
-        if (collision.y > 5) {
-            this.destination = collision;
-        }
+        this.goRandom();
     },
     canExplore: function() {
         return Math.random() > 0.99 && !this.carryEntity;
@@ -125,34 +161,43 @@ Mob.states = {
     canHunt: function() {
         return Math.random() > 0.5 && !this.carryEntity;
     },
-    checkRangeAnimals: function() {
-        var rabbit = this.game.getCloseEntity("rabbit", this.pos, 100);
-        if (rabbit) {
-            this.target = rabbit;
+    getPrey: function() {
+        if (!this.hasPrey()) {
+            this.getPrey();
         }
     },
-    shootTarget: function() {
-        this.shoot(this.target.pos.clone());
-        if (roll(5) === 1) {
-            this.target.attacked();
-        }
+    canGetPrey: function() {
+        return !this.hasPrey() && !this.carryEntity;
     },
-    canShootTarget: function() {
-        return this.target != undefined;
+    track: function() {
+        this.track();
+    },
+    canTrack: function() {
+        return this.hasPrey();
+    },
+    attack: function() {
+        this.attack();
+    },
+    canAttack: function() {
+        return this.hasPrey() && this.prey.pos.distanceTo(this.pos) < 100 && this.prey.health > 0;
+    },
+    getKill: function() {
+        this.destination = this.prey.pos.clone();
+    },
+    canGetKill: function() {
+        return this.hasPrey() && this.prey.health <= 0;
     },
     deliverKill: function() {
-        this.carry(this.target);
-        this.target = undefined;
+        this.carry(this.prey);
         this.destination = this.game.getCloseEntity("village", this.pos, 2000).pos.clone();
     },
     canDeliverKill: function() {
-        return this.target && this.target.health === 0;
+        return this.hasPrey() && this.prey.pos.distanceTo(this.pos) < 50 && this.prey.health <= 0;
     },
     dropKill: function() {
         this.drop();
     },
     canDropKill: function() {
-        var village = this.game.getCloseEntity("village", this.pos, 1500);
-        return village && village.pos.distanceTo(this.pos) < 50;
+        return this.hasPrey() && this.prey.health <= 0 && this.carryEntity && this.game.getCloseEntity("village", this.pos, 1500).pos.distanceTo(this.pos) < 100;
     }
 };
