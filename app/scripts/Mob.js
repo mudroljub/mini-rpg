@@ -68,6 +68,10 @@ Mob.prototype.drop = function () {
         this.carryEntity.pos = new THREE.Vector3(this.pos.x, 0, this.pos.z);
         this.carryEntity = undefined;
     }
+
+    if (this.prey) {
+        this.prey = undefined;
+    }
 };
 
 
@@ -152,14 +156,17 @@ var mobJson = {
 
 Mob.states = {
     idle: function() { console.log('idle'); },
+    explore: function() { console.log('exploring')},
+    hunt: function() { console.log('hunting');},
     getRandomDestination: function() {
         this.goRandom();
     },
     canExplore: function() {
-        return Math.random() > 0.99 && !this.carryEntity;
+        return Math.random() > 0.99;
     },
     canHunt: function() {
-        return Math.random() > 0.5 && !this.carryEntity;
+        console.log('canHunt')
+        return !this.carryEntity;
     },
     getPrey: function() {
         if (!this.hasPrey()) {
@@ -179,13 +186,13 @@ Mob.states = {
         this.attack();
     },
     canAttack: function() {
-        return this.hasPrey() && this.prey.pos.distanceTo(this.pos) < 100 && this.prey.health > 0;
+        return this.hasPrey() && this.prey.pos.distanceTo(this.pos) < 500 && this.prey.health > 0;
     },
     getKill: function() {
         this.destination = this.prey.pos.clone();
     },
     canGetKill: function() {
-        return this.hasPrey() && this.prey.health <= 0;
+        return this.hasPrey() && this.prey.health <= 0 && !this.carryEntity;
     },
     deliverKill: function() {
         this.carry(this.prey);
@@ -198,6 +205,7 @@ Mob.states = {
         this.drop();
     },
     canDropKill: function() {
+        console.log('canDrop')
         return this.hasPrey() && this.prey.health <= 0 && this.carryEntity && this.game.getCloseEntity("village", this.pos, 1500).pos.distanceTo(this.pos) < 100;
     }
 };
