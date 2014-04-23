@@ -204,9 +204,6 @@ State.prototype.transition = function() {
 };
 
 State.prototype.run = function() {
-    if (this.actor.name ==='mob') {
-        console.log(this.id)
-    }
     this.states[this.id].call(this.actor);
 };
 

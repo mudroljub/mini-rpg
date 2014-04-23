@@ -1,3 +1,11 @@
+var birdModel = (function(){ 
+    var geometry = new THREE.BoxGeometry(2, 2, 5);
+    var material = new THREE.MeshLambertMaterial({ color: 0xff6666, shading: THREE.SmoothShading, vertexColors: THREE.FaceColors });
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.castShadow = true;
+  return mesh; 
+})();
+
 function Bird(game) {
     this.name = 'bird';
     Entity.call(this, game);
@@ -20,10 +28,7 @@ Bird.prototype.update = function() {
 
 
 Bird.prototype.create = function() {
-    var geometry = new THREE.BoxGeometry(2, 2, 5);
-    var material = new THREE.MeshLambertMaterial({ color: 0xff6666, shading: THREE.SmoothShading, vertexColors: THREE.FaceColors });
-    this.mesh = new THREE.Mesh(geometry, material);
-    this.mesh.castShadow = true;
+  this.mesh = birdModel.clone();
 };
 
 

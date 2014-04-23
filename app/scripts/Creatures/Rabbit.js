@@ -1,3 +1,14 @@
+var rabbitModel = (function(){
+    var geometry = new THREE.BoxGeometry(2, 2, 5);
+    var material = new THREE.MeshLambertMaterial({ color: 0x777777, shading: THREE.SmoothShading, vertexColors: THREE.FaceColors });
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.castShadow = true;
+    for (var i = 0; i < mesh.geometry.vertices.length; i++) {
+        mesh.geometry.vertices[i].y += 5;
+    }
+    return mesh;
+})();
+
 function Rabbit(game) {
     this.name = 'rabbit';
     Entity.call(this, game);
@@ -22,13 +33,7 @@ Rabbit.prototype.update = function() {
 
 
 Rabbit.prototype.create = function() {
-    var geometry = new THREE.BoxGeometry(2, 2, 5);
-    var material = new THREE.MeshLambertMaterial({ color: 0x777777, shading: THREE.SmoothShading, vertexColors: THREE.FaceColors });
-    this.mesh = new THREE.Mesh(geometry, material);
-    this.mesh.castShadow = true;
-    for (var i = 0; i < this.mesh.geometry.vertices.length; i++) {
-        this.mesh.geometry.vertices[i].y += 5;
-    }
+  this.mesh = rabbitModel.clone();
 };
 
 

@@ -165,7 +165,6 @@ Mob.states = {
         return Math.random() > 0.99;
     },
     canHunt: function() {
-        console.log('canHunt')
         return !this.carryEntity;
     },
     getPrey: function() {
@@ -205,7 +204,6 @@ Mob.states = {
         this.drop();
     },
     canDropKill: function() {
-        console.log('canDrop')
         return this.hasPrey() && this.prey.health <= 0 && this.carryEntity && this.game.getCloseEntity("village", this.pos, 1500).pos.distanceTo(this.pos) < 100;
     }
 };

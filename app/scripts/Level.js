@@ -20,7 +20,7 @@ Level.prototype.generate = function () {
     var factorZ = 60;
 
     for (var i = 0; i < geometry.vertices.length; i++) {
-        n = noise.noise(geometry.vertices[i].x / 20 / factorX, geometry.vertices[i].y / 20 / factorY);
+        n = noise.noise(geometry.vertices[i].x / this.resolution / factorX, geometry.vertices[i].y / this.resolution / factorY);
         n -= 0.25;
         geometry.vertices[i].z = n * factorZ;
     }

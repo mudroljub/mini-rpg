@@ -2,10 +2,10 @@ var MiniRPG = new GameEngine();
 var loader = new THREE.JSONLoader();
 var objects   = {};
 
-var TREES = 50;
+var TREES = 100;
 var BIRDS = 15;
-var RABBITS = 15;
-var CLOUDS = 10;
+var RABBITS = 50;
+var CLOUDS = 15;
 var MOBS = 1;
 
 
