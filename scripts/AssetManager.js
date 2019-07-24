@@ -26,7 +26,7 @@ AssetManager.prototype.loadMaterials = function (callback) {
 AssetManager.prototype.loadMeshes = function (meshes, callback) {
     var i = 0;
     meshes.forEach(function (mesh) {
-        loader.load('assets/' + mesh + '.js', function (geometry, materials) {
+        loader.load('assets/' + mesh + '.json', function (geometry, materials) {
             var material = new THREE.MeshFaceMaterial(materials);
             objects[mesh] = new THREE.Mesh(geometry, material);
             i++;
