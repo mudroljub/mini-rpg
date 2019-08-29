@@ -1,4 +1,4 @@
-/* global SimplexNoise */
+import SimplexNoise from '../lib/SimplexNoise.js'
 
 export default function Level() {
   this.resolution = 20
