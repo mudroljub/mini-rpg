@@ -176,7 +176,7 @@ Pointer.prototype.getClassName = function() {
   return 'Pointer'
 }
 
-const Machine = function() {}
+export const Machine = function() {}
 
 Machine.prototype.generate = function(TreeJson, actor, states) {
   states = states || actor // eslint-disable-line
@@ -184,11 +184,9 @@ Machine.prototype.generate = function(TreeJson, actor, states) {
 }
 
 Machine.prototype.read = function(subTreeJson, parent, actor, states) {
-  let node = null
-  if (subTreeJson.pointer == true)
-    node = new Pointer(subTreeJson.id, subTreeJson.strategy, parent, actor, states)
-  else
-    node = new State(subTreeJson.id, subTreeJson.test, subTreeJson.strategy, parent, actor, states)
+  const node = subTreeJson.pointer == true
+    ? new Pointer(subTreeJson.id, subTreeJson.strategy, parent, actor, states)
+    : new State(subTreeJson.id, subTreeJson.test, subTreeJson.strategy, parent, actor, states)
 
   node.report = subTreeJson.report
 

@@ -1,9 +1,10 @@
-/* global Machine, rndInt */
+/* global rndInt */
 import Tree from './Tree.js'
 import Cloud from './Cloud.js'
 import Bird from './creatures/Bird.js'
 import Rabbit from './creatures/Rabbit.js'
 import Level from './Level.js'
+import {Machine} from './BehaviorTree.js'
 
 const TREES = 100
 const BIRDS = 15
