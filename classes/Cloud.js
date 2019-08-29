@@ -5,7 +5,7 @@
  * @param game
  * @constructor
  */
-function Cloud(game) {
+export default function Cloud(game) {
   this.name = 'cloud'
   Entity.call(this, game)
   this.pos = new THREE.Vector3(rndInt(1200), 100 + rndInt(20), rndInt(1200))

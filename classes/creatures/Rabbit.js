@@ -21,7 +21,7 @@ const rabbitModel = (function() {
   return mesh
 })()
 
-function Rabbit(game) {
+export default function Rabbit(game) {
   this.name = 'rabbit'
   Entity.call(this, game)
   this.pos = new THREE.Vector3(rndInt(1200), 0, rndInt(1200))
