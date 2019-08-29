@@ -174,7 +174,7 @@ Pointer.prototype.getClassName = function() {
   return 'Pointer'
 }
 
-export const Machine = function() {}
+export default class Machine {}
 
 Machine.prototype.generate = function(TreeJson, actor, states) {
   states = states || actor // eslint-disable-line

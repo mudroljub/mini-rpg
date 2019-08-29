@@ -3,7 +3,7 @@ import Cloud from './Cloud.js'
 import Bird from './creatures/Bird.js'
 import Rabbit from './creatures/Rabbit.js'
 import Level from './Level.js'
-import {Machine} from './Machine.js'
+import Machine from './Machine.js'
 import {rndInt} from '../utils/helpers.js'
 
 const TREES = 100
