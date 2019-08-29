@@ -26,7 +26,7 @@ AssetManager.prototype.loadMeshes = function(meshes, callback) {
   let i = 0
   meshes.forEach(mesh => {
     loader.load('assets/' + mesh + '.json', (geometry, materials) => {
-      const material = new THREE.MeshFaceMaterial(materials)
+      const material = new THREE.MultiMaterial(materials)
       objects[mesh] = new THREE.Mesh(geometry, material)
       i++
       if (i === meshes.length)
