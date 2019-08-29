@@ -1,5 +1,6 @@
-/* global Machine, Level, Rabbit, Cloud, Bird, rndInt */
+/* global Machine, Level, Rabbit, Cloud, rndInt */
 import Tree from './Tree.js'
+import Bird from './Creatures/Bird.js'
 
 const TREES = 100
 const BIRDS = 15

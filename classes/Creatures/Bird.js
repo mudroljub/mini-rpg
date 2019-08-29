@@ -19,7 +19,7 @@ const birdModel = (function() {
   return mesh
 })()
 
-function Bird(game) {
+export default function Bird(game) {
   this.name = 'bird'
   Entity.call(this, game)
   this.pos = new THREE.Vector3(rndInt(1100), 30 + roll(50), rndInt(1100))

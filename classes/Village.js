@@ -5,7 +5,7 @@
  * @param game
  * @constructor
  */
-function Village(game, data) {
+export default function Village(game, data) {
   this.name = 'village'
   Entity.call(this, game)
   this.pos = data.pos
