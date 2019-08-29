@@ -1,4 +1,5 @@
-/* global Entity, rndInt, roll */
+/* global rndInt, roll */
+import Entity from '../Entity.js'
 
 const rabbitJson = {
   id: 'idle', strategy: 'prioritised',

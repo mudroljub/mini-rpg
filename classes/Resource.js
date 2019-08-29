@@ -1,4 +1,4 @@
-/* global Entity */
+import Entity from './Entity.js'
 
 /**
  * Small items to be carried by mobs.

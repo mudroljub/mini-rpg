@@ -1,4 +1,4 @@
-function Entity(game, color) {
+export default function Entity(game, color) {
   this.game     = game
   this.pos      = new THREE.Vector3(0, 0, 0)
   this.destination = new THREE.Vector3(0, 0, 0)

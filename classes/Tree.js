@@ -1,4 +1,4 @@
-/* global Entity */
+import Entity from './Entity.js'
 
 const treeModel = (function() {
   const treeData = {

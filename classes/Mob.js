@@ -1,4 +1,5 @@
-/* global Entity, rndInt, roll */
+/* global rndInt, roll */
+import Entity from './Entity.js'
 import Arrow from './Arrow.js'
 import Resource from './Resource.js'
 
