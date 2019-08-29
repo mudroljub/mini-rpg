@@ -31,3 +31,7 @@ assets.loadMeshes(MESHES, () => {
     game.addEntity(new Village(game, {pos: collision}))
   }
 })
+
+/* EVENTS */
+
+document.getElementById('switch').addEventListener('click', () => game.switchCam())
