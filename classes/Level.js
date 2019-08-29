@@ -7,11 +7,16 @@ export default function Level() {
 Level.prototype.constructor = Level
 
 Level.prototype.generate = function() {
-  const material = new THREE.MeshLambertMaterial({ color: 0x33aa33, shading: THREE.FlatShading, vertexColors: THREE.FaceColors, overdraw: true})
+  const material = new THREE.MeshLambertMaterial({
+    color: 0x33aa33,
+    shading: THREE.FlatShading,
+    vertexColors: THREE.FaceColors,
+    overdraw: true
+  })
   const geometry = new THREE.PlaneGeometry(1200, 1200, this.resolution, this.resolution)
   geometry.dynamic = true
   geometry.verticesNeedUpdate = true
-  geometry.computeCentroids()
+  // geometry.computeCentroids()
 
   const noise = new SimplexNoise()
   let n
@@ -27,7 +32,7 @@ Level.prototype.generate = function() {
   }
 
   for (let f = 0; f < geometry.faces.length; f++) {
-    const {color} = geometry.faces[f]
+    const { color } = geometry.faces[f]
     const rand = Math.random() / 5
     geometry.faces[f].color.setRGB(color.r + rand, color.g + rand, color.b + rand)
   }
@@ -38,12 +43,12 @@ Level.prototype.generate = function() {
   land.rotateX(-Math.PI / 2)
   land.position.set(0, 30, 0)
 
-  const water_material = new THREE.MeshLambertMaterial({color: 0x6699ff, transparent: true, opacity: 0.75, vertexColors: THREE.FaceColors, shading: THREE.FlatShading})
+  const water_material = new THREE.MeshLambertMaterial({ color: 0x6699ff, transparent: true, opacity: 0.75, vertexColors: THREE.FaceColors, shading: THREE.FlatShading })
   const water_geometry = new THREE.PlaneGeometry(1200, 1200, this.resolution, this.resolution)
   water_geometry.dynamic = true
   water_geometry.verticesNeedUpdate = true
   for (let i = 0; i < water_geometry.faces.length; i++) {
-    const {color} = water_geometry.faces[i]
+    const { color } = water_geometry.faces[i]
     const rand = Math.random()
     water_geometry.faces[i].color.setRGB(color.r + rand, color.g + rand, color.b + rand)
   }
