@@ -1,4 +1,5 @@
-/* global Machine, Level, Rabbit, Cloud, Bird, Tree, rndInt */
+/* global Machine, Level, Rabbit, Cloud, Bird, rndInt */
+import Tree from './Tree.js'
 
 const TREES = 100
 const BIRDS = 15

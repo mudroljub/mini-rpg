@@ -36,7 +36,7 @@ const treeModel = (function() {
  * @param game
  * @constructor
  */
-function Tree(game, data) {
+export default function Tree(game, data) {
   this.name = 'tree'
   Entity.call(this, game)
   this.pos = data.pos
