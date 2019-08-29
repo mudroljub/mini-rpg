@@ -1,4 +1,5 @@
-/* global GameEngine, AssetManager, Mob, Mine, Village, rndInt */
+/* global AssetManager, Mob, Mine, Village, rndInt */
+import GameEngine from './classes/GameEngine.js'
 
 const MESHES = ['tree', 'mine', 'cloud', 'village']
 const MOBS = 3

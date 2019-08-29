@@ -5,7 +5,7 @@ const BIRDS = 15
 const RABBITS = 50
 const CLOUDS = 15
 
-function GameEngine() {
+export default function GameEngine() {
   this.entityId = 0
   this.fps = false
   this.paused = false
