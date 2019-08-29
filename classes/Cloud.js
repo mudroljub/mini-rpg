@@ -1,3 +1,5 @@
+/* global Entity, objects, rndInt, roll */
+
 /**
  * Clouds!
  * @param game
@@ -17,7 +19,6 @@ Cloud.prototype.constructor = Cloud
 Cloud.prototype.update = function() {
   if (this.pos.x > 600)
     this.pos.x = -600
-
   Entity.prototype.update.call(this)
 }
 

@@ -1,3 +1,5 @@
+/* global Entity */
+
 /**
  * Small items to be carried by mobs.
  * @param game
@@ -6,12 +8,10 @@
  * @constructor
  */
 function Resource(game, name, pos) {
-
   switch(name) {
     case 'tree':
       this.name = 'wood'
       this.color = 0x966f33
-
       break
     case 'mine':
       this.name = 'gold'
@@ -26,7 +26,6 @@ Resource.prototype = new Entity()
 Resource.prototype.constructor = Resource
 
 Resource.prototype.create = function() {
-
   const geometry = new THREE.BoxGeometry(4, 4, 4)
   const material = new THREE.MeshLambertMaterial({ color: this.color, shading: THREE.SmoothShading })
   this.mesh = new THREE.Mesh(geometry, material)
@@ -34,6 +33,5 @@ Resource.prototype.create = function() {
     this.mesh.geometry.vertices[i].y += 5
 
   this.mesh.castShadow = true
-
 }
 

@@ -1,3 +1,5 @@
+/* global Entity, objects, roll */
+
 function Mine(game, data) {
   this.name = 'mine'
   Entity.call(this, game)

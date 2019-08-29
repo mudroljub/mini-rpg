@@ -13,12 +13,9 @@ function Entity(game, color) {
 }
 
 Entity.prototype.update = function() {
-  let deltaX, deltaY, deltaZ
-
   // rotation to target location
-  deltaX = this.destination.x - this.pos.x
-  deltaY = this.destination.y - this.pos.y
-  deltaZ = this.destination.z - this.pos.z
+  const deltaX = this.destination.x - this.pos.x
+  const deltaZ = this.destination.z - this.pos.z
 
   const dv = new THREE.Vector3()
   dv.subVectors(this.destination, this.pos)

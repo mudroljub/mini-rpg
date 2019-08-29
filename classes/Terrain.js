@@ -1,3 +1,5 @@
+/* global SimplexNoise */
+
 function Terrain() {
   this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 5000)
   this.camera.position.y = 500
@@ -18,11 +20,9 @@ function Terrain() {
 }
 
 Terrain.prototype.initLighting = function() {
-
   const d = 500
   const ambient = new THREE.AmbientLight(0x111111)
   const dirLight = new THREE.DirectionalLight(0xffffcc, 0.5, 500)
-  const hemiLight = new THREE.HemisphereLight(0xffffcc, 0xffffcc, 0.6)
 
   // light for shadows
   dirLight.color.setHSL(0.1, 1, 0.95)
@@ -42,12 +42,6 @@ Terrain.prototype.initLighting = function() {
 
   this.scene.add(dirLight)
   this.scene.add(ambient)
-
-  hemiLight.color.setHSL(0.6, 1, 0.6)
-  hemiLight.groundColor.setHSL(0.095, 1, 0.75)
-  hemiLight.position.set(0, 500, 0)
-  // this.scene.add(hemiLight);
-
 }
 
 const t = new Terrain()
@@ -64,15 +58,15 @@ const factorX = 50
 const factorY = 25
 const factorZ = 60
 
-for (var i = 0; i < geometry.vertices.length; i++) {
+for (let i = 0; i < geometry.vertices.length; i++) {
   n = noise.noise(geometry.vertices[i].x / 20 / factorX, geometry.vertices[i].y / 20 / factorY)
   n -= 0.25
   geometry.vertices[i].z = n * factorZ
 }
 
-for (var i = 0; i < geometry.faces.length; i++) {
-  var {color} = geometry.faces[i]
-  var rand = Math.random() / 5
+for (let i = 0; i < geometry.faces.length; i++) {
+  const {color} = geometry.faces[i]
+  const rand = Math.random() / 5
   geometry.faces[i].color.setRGB(color.r + rand, color.g + rand, color.b + rand)
 }
 geometry.computeCentroids()
@@ -86,9 +80,9 @@ plane.name = 'land'
 t.scene.add(plane)
 
 const waterGeom = new THREE.PlaneGeometry(1200, 1200, 10, 10)
-for (var i = 0; i < waterGeom.faces.length; i++) {
-  var {color} = waterGeom.faces[i]
-  var rand = Math.random() / 5
+for (let i = 0; i < waterGeom.faces.length; i++) {
+  const {color} = waterGeom.faces[i]
+  const rand = Math.random() / 5
   waterGeom.faces[i].color.setRGB(color.r + rand, color.g + rand, color.b + rand)
 }
 const waterMesh = new THREE.Mesh(waterGeom, new THREE.MeshLambertMaterial({color: 0x6699ff, transparent: true, opacity: 0.85, vertexColors: THREE.FaceColors, shading: THREE.FlatShading}))
@@ -115,36 +109,11 @@ Terrain.prototype.go = function() {
 
 t.go()
 
-projector = new THREE.Projector()
-mouseVector = new THREE.Vector3()
-
-// User interaction
-// window.addEventListener( 'mousemove', onMouseMove, false );
-
-function onMouseMove(e) {
-
-  mouseVector.x = 2 * (e.clientX / window.innerWidth) - 1
-  mouseVector.y = 1 - 2 * (e.clientY / window.innerHeight)
-
-  console.log(mouseVector)
-
-  const raycaster = projector.pickingRay(mouseVector.clone(), t.camera),
-    intersects = raycaster.intersectObject(plane)
-
-  for(let i = 0; i < intersects.length; i++) {
-    const intersection = intersects[ i ]
-    cube.position = intersection.point
-
-  }
-
-}
-
-for (var i = 0; i < 100; i++) {
+for (let i = 0; i < 100; i++) {
   const caster = new THREE.Raycaster()
   const ray = new THREE.Vector3(0, -1, 0)
 
   caster.set(new THREE.Vector3(Math.random() * 250 | 0, 100, Math.random() * 250 | 0), ray)
-
   const collisions = caster.intersectObject(plane)
 
   const cube2 = new THREE.Mesh(new THREE.CubeGeometry(10, 10, 10), new THREE.MeshBasicMaterial({color:0x00ff00}))

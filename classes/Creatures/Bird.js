@@ -1,3 +1,16 @@
+/* global Entity, rndInt, roll */
+
+const birdJson = {
+  id: 'idle', strategy: 'prioritised',
+  children: [
+    { id: 'explore', strategy: 'sequential',
+      children: [
+        {id: 'getRandomDestination'},
+      ]
+    }
+  ]
+}
+
 const birdModel = (function() {
   const geometry = new THREE.BoxGeometry(2, 2, 5)
   const material = new THREE.MeshLambertMaterial({ color: 0xff6666, shading: THREE.SmoothShading, vertexColors: THREE.FaceColors })
@@ -41,21 +54,9 @@ Bird.states = {
   getRandomDestination() {
     const rndPoint = new THREE.Vector3(rndInt(1100), 30 + roll(50), rndInt(1100))
     this.destination = rndPoint
-
   },
   canExplore() {
     return Math.random() > 0.99
   },
   sleep() {}
-}
-
-var birdJson = {
-  id: 'idle', strategy: 'prioritised',
-  children: [
-    { id: 'explore', strategy: 'sequential',
-      children: [
-        {id: 'getRandomDestination'},
-      ]
-    }
-  ]
 }

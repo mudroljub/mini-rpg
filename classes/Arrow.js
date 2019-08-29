@@ -1,3 +1,5 @@
+/* global Entity, rndInt, roll */
+
 function Arrow(game, data) {
   const offset = data.offset || 10
   const randomOffset = new THREE.Vector3(rndInt(offset), roll(offset), rndInt(offset))
@@ -18,17 +20,13 @@ Arrow.prototype.update = function() {
   if (this.lifeSpan <= 0) {
     this.speed = 0
     this.remove = true
-    // this.game.removeEntity(this);
   }
-
   Entity.prototype.update.call(this)
 }
 
 Arrow.prototype.create = function() {
-
   const geometry = new THREE.BoxGeometry(0.5, 0.5, 5)
   const material = new THREE.MeshLambertMaterial({ color: 0x966f33, shading: THREE.SmoothShading })
   this.mesh = new THREE.Mesh(geometry, material)
   this.mesh.castShadow = true
-
 }

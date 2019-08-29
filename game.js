@@ -1,27 +1,29 @@
-const MiniRPG = new GameEngine()
+/* global GameEngine, AssetManager, Mob, Mine, Village, rndInt */
 
-const objects   = {}
+const game = new GameEngine()
+const MESHES = ['tree', 'mine', 'cloud', 'village']
 const MOBS = 1
 
 const assets = new AssetManager()
+
 assets.loadMeshes(MESHES, () => {
-  MiniRPG.init()
-  MiniRPG.start()
-  MiniRPG.plantTrees()
+  game.init()
+  game.start()
+  game.plantTrees()
 
   for (let i = 0; i < MOBS; i++)
-    MiniRPG.addEntity(new Mob(MiniRPG))
+    game.addEntity(new Mob(game))
 
   for (let i = 0; i < 1; i++) {
     let rndPoint = new THREE.Vector3(rndInt(1100), 100, rndInt(1100))
-    let collision = MiniRPG.place(rndPoint)
+    let collision = game.place(rndPoint)
     collision.y += 10
-    MiniRPG.addEntity(new Mine(MiniRPG, {pos: collision}))
+    game.addEntity(new Mine(game, {pos: collision}))
 
     rndPoint = new THREE.Vector3(rndInt(1100), 100, rndInt(1100))
-    collision = MiniRPG.place(rndPoint)
+    collision = game.place(rndPoint)
     collision.y += 20
-    MiniRPG.addEntity(new Village(MiniRPG, {pos: collision}))
+    game.addEntity(new Village(game, {pos: collision}))
   }
 })
 

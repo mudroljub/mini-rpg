@@ -1,3 +1,5 @@
+/* global Entity */
+
 const treeModel = (function() {
   const treeData = {
     geom: {
@@ -46,7 +48,5 @@ Tree.prototype = new Entity()
 Tree.prototype.constructor = Tree
 
 Tree.prototype.create = function() {
-  // var randScale = 1 + Math.random();
   this.mesh = treeModel.clone()
-  // this.mesh.scale.set(randScale, randScale, randScale);
 }

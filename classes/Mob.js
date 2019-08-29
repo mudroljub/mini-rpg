@@ -1,3 +1,27 @@
+/* global Entity, rndInt, Resource, Arrow, roll */
+
+const mobJson = {
+  id: 'idle', strategy: 'prioritised',
+  children: [
+    {
+      id: 'explore', strategy: 'sequential',
+      children: [
+        {
+          id: 'hunt', strategy: 'sequential',
+          children: [
+            { id: 'getPrey' },
+            { id: 'track' },
+            { id: 'attack' },
+            { id: 'getKill' },
+            { id: 'deliverKill' },
+            { id: 'dropKill' }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
 function Mob(game) {
   this.name = 'mob'
   Entity.call(this, game)
@@ -31,7 +55,6 @@ Mob.prototype.update = function() {
   Entity.prototype.update.call(this)
   if (this.fps)
     this.game.cameraFPS.lookAt(this.destination)
-
 }
 
 Mob.prototype.create = function() {
@@ -55,7 +78,6 @@ Mob.prototype.carry = function(entity) {
     }
   } else
     this.carryEntity = entity
-
 }
 
 Mob.prototype.drop = function() {
@@ -63,10 +85,8 @@ Mob.prototype.drop = function() {
     this.carryEntity.pos = new THREE.Vector3(this.pos.x, 0, this.pos.z)
     this.carryEntity = undefined
   }
-
   if (this.prey)
     this.prey = undefined
-
 }
 
 Mob.prototype.shoot = function(destination) {
@@ -97,7 +117,6 @@ Mob.prototype.getPrey = function() {
 Mob.prototype.hasPrey = function() {
   if (this.prey)
     return true
-
   return false
 }
 
@@ -110,41 +129,18 @@ Mob.prototype.goRandom = function() {
   const collision = this.game.place(rndPoint)
   if (collision.y > 5)
     this.destination = collision
-
 }
 
 Mob.prototype.attack = function() {
   this.shoot(this.prey.pos.clone())
   if (roll(5) === 1)
     this.prey.attacked()
-
-}
-
-var mobJson = {
-  id: 'idle', strategy: 'prioritised',
-  children: [
-    { id: 'explore', strategy: 'sequential',
-      children: [
-        // { id: "getRandomDestination" },
-        { id: 'hunt', strategy: 'sequential',
-          children: [
-            { id: 'getPrey' },
-            { id: 'track'},
-            { id: 'attack' },
-            { id: 'getKill' },
-            { id: 'deliverKill' },
-            { id: 'dropKill'}
-          ]
-        }
-      ]
-    }
-  ]
 }
 
 Mob.states = {
   idle() { console.log('idle') },
-  explore() { console.log('exploring')},
-  hunt() { console.log('hunting')},
+  explore() { console.log('exploring') },
+  hunt() { console.log('hunting') },
   getRandomDestination() {
     this.goRandom()
   },
@@ -157,7 +153,6 @@ Mob.states = {
   getPrey() {
     if (!this.hasPrey())
       this.getPrey()
-
   },
   canGetPrey() {
     return !this.hasPrey() && !this.carryEntity

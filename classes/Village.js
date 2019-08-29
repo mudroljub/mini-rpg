@@ -1,3 +1,5 @@
+/* global Entity, objects */
+
 /**
  *
  * @param game

@@ -1,13 +1,9 @@
 Array.max = function(array) {
-
   return Math.max.apply(Math, array)
-
 }
 
 Array.min = function(array) {
-
   return Math.min.apply(Math, array)
-
 }
 
 /**
@@ -16,9 +12,7 @@ Array.min = function(array) {
  * @returns {number}
  */
 function roll(n) {
-
   return Math.random() * n | 0
-
 }
 
 /**
@@ -27,7 +21,5 @@ function roll(n) {
  * @returns {number}
  */
 function rndInt(n) {
-
   return (Math.random() * n | 0) - n / 2
-
 }

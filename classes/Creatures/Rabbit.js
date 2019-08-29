@@ -1,3 +1,16 @@
+/* global Entity, rndInt, roll */
+
+const rabbitJson = {
+  id: 'idle', strategy: 'prioritised',
+  children: [
+    { id: 'explore', strategy: 'sequential',
+      children: [
+        { id: 'getRandomDestination' }
+      ]
+    }
+  ]
+}
+
 const rabbitModel = (function() {
   const geometry = new THREE.BoxGeometry(2, 2, 5)
   const material = new THREE.MeshLambertMaterial({ color: 0x777777, shading: THREE.SmoothShading, vertexColors: THREE.FaceColors })
@@ -5,7 +18,6 @@ const rabbitModel = (function() {
   mesh.castShadow = true
   for (let i = 0; i < mesh.geometry.vertices.length; i++)
     mesh.geometry.vertices[i].y += 5
-
   return mesh
 })()
 
@@ -49,21 +61,9 @@ Rabbit.states = {
     const collision = this.game.place(rndPoint)
     if (collision.y > 5)
       this.destination = collision
-
   },
   canExplore() {
     return Math.random() > 0.99 && !this.remove && this.health > 0
   },
   sleep() {}
-}
-
-var rabbitJson = {
-  id: 'idle', strategy: 'prioritised',
-  children: [
-    { id: 'explore', strategy: 'sequential',
-      children: [
-        { id: 'getRandomDestination' }
-      ]
-    }
-  ]
 }

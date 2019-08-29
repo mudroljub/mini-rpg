@@ -1,3 +1,5 @@
+/* global  */
+
 /*
   Originally from Machine.js
   by mary rose cook
@@ -5,33 +7,6 @@
 
   modified to remove dependency on base.js
 */
-
-const Machine = function() {}
-
-Machine.prototype.generate = function(TreeJson, actor, states) {
-  states = states || actor
-  return this.read(TreeJson, null, actor, states)
-}
-
-Machine.prototype.read = function(subTreeJson, parent, actor, states) {
-  let node = null
-  if (subTreeJson.pointer == true)
-    node = new Pointer(subTreeJson.id, subTreeJson.strategy, parent, actor, states)
-  else
-    node = new State(subTreeJson.id, subTreeJson.test, subTreeJson.strategy, parent, actor, states)
-
-  node.report = subTreeJson.report
-
-  if (subTreeJson.children !== undefined)
-    for (let i = 0; i < subTreeJson.children.length; i++)
-      node.children[node.children.length] = this.read(subTreeJson.children[i], node, actor, states)
-
-  return node
-}
-
-Machine.prototype.getClassName = function() {
-  return 'Machine'
-}
 
 const Node = function(id, test, strategy, parent, actor, states) {
   this.id = id
@@ -45,7 +20,6 @@ const Node = function(id, test, strategy, parent, actor, states) {
 
 Node.prototype.tick = function() {
   let nextState = this.nextState()
-
   if (this.isAction())
     this.run()
 
@@ -63,20 +37,16 @@ Node.prototype.tick = function() {
 Node.prototype.nextState = function() {
   let {strategy} = this,
     ancestor = null
-
   if (strategy === undefined) {
     ancestor = this.nearestAncestorWithStrategy()
-
     if (ancestor !== null)
       strategy = ancestor.strategy
-
   }
 
   if (strategy !== null)
     return this[strategy].call(this)
 
   return null
-
 }
 
 Node.prototype.isTransition = function() {
@@ -96,7 +66,6 @@ Node.prototype.can = function() {
     return this.states[fn].call(this.actor)
 
   return true
-
 }
 
 Node.prototype.prioritised = function() {
@@ -107,7 +76,6 @@ Node.prototype.nextRunnable = function(nodes) {
   for (let i = 0; i < nodes.length; i++)
     if (nodes[i].can())
       return nodes[i]
-
   return null
 }
 
@@ -123,13 +91,11 @@ Node.prototype.sequential = function() {
         foundThis = true
       else if (foundThis && sibling.can())
         return sibling
-
     }
   else {
     firstRunnableChild = this.nextRunnable(this.children)
     if (firstRunnableChild !== null)
       return firstRunnableChild
-
   }
   return this.nearestRunnableAncestor()
 }
@@ -141,7 +107,6 @@ Node.prototype.nearestAncestor = function(test) {
     return this.parent
 
   return this.parent.nearestAncestor(test)
-
 }
 
 Node.prototype.getRootNode = function() {
@@ -149,7 +114,6 @@ Node.prototype.getRootNode = function() {
     return this
 
   return this.parent.getRootNode()
-
 }
 
 Node.prototype.nearestAncestorWithStrategy = function() {
@@ -174,7 +138,7 @@ Node.prototype.getClassName = function() {
   return 'Node'
 }
 
-var State = function(id, test, strategy, parent, actor, states) {
+const State = function(id, test, strategy, parent, actor, states) {
   Node.call(this, id, test, strategy, parent, actor, states)
 }
 
@@ -210,4 +174,31 @@ Pointer.prototype.hereditory = function() {
 
 Pointer.prototype.getClassName = function() {
   return 'Pointer'
+}
+
+const Machine = function() {}
+
+Machine.prototype.generate = function(TreeJson, actor, states) {
+  states = states || actor // eslint-disable-line
+  return this.read(TreeJson, null, actor, states)
+}
+
+Machine.prototype.read = function(subTreeJson, parent, actor, states) {
+  let node = null
+  if (subTreeJson.pointer == true)
+    node = new Pointer(subTreeJson.id, subTreeJson.strategy, parent, actor, states)
+  else
+    node = new State(subTreeJson.id, subTreeJson.test, subTreeJson.strategy, parent, actor, states)
+
+  node.report = subTreeJson.report
+
+  if (subTreeJson.children !== undefined)
+    for (let i = 0; i < subTreeJson.children.length; i++)
+      node.children[node.children.length] = this.read(subTreeJson.children[i], node, actor, states)
+
+  return node
+}
+
+Machine.prototype.getClassName = function() {
+  return 'Machine'
 }

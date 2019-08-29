@@ -1,3 +1,5 @@
+/* global Machine, Level, Rabbit, Cloud, Bird, Tree, rndInt, game */
+
 const TREES = 100
 const BIRDS = 15
 const RABBITS = 50
@@ -50,7 +52,6 @@ GameEngine.prototype.getCloseEntity = function(name, position, range) {
       distance = position.distanceTo(entity.pos)
       if (distance < range)
         return entity
-
     }
   }
   return false
@@ -67,13 +68,12 @@ GameEngine.prototype.update = function() {
     entity = this.entities[i]
     if (!entity.remove)
       entity.update()
-
   }
   this.controls.update()
 }
 
 GameEngine.prototype.init = function() {
-  console.log('MiniRPG init!')
+  console.log('game init!')
 
   this.machine = new Machine()
   this.terrain = new Level()
@@ -92,7 +92,7 @@ GameEngine.prototype.init = function() {
 }
 
 GameEngine.prototype.start = function() {
-  console.log('MiniRPG is go!')
+  console.log('game is go!')
   const that = this;
   (function gameLoop() {
     that.loop()
@@ -108,7 +108,6 @@ GameEngine.prototype.start = function() {
 
 GameEngine.prototype.initLighting = function() {
   const d = 500
-  //    var ambient = new THREE.AmbientLight(0x111111);
   const dirLight = new THREE.DirectionalLight(0xffffcc, 0.5, 500)
   const hemiLight = new THREE.HemisphereLight(0xffffcc, 0xffffcc, 0.6)
   const pointLight = new THREE.PointLight(0xffffcc)
@@ -137,7 +136,6 @@ GameEngine.prototype.initLighting = function() {
   pointLight.position = new THREE.Vector3(1000, 800, -1000)
 
   this.scene.add(dirLight)
-  // this.scene.add(ambient);
   this.scene.add(hemiLight)
   this.scene.add(pointLight)
 }
@@ -156,7 +154,7 @@ GameEngine.prototype.plantTrees = function() {
     const collision = this.place(rndPoint)
     if (collision.y > 0) {
       collision.y -= 10
-      this.addEntity(new Tree(MiniRPG, {pos: collision}))
+      this.addEntity(new Tree(game, {pos: collision}))
     }
   }
 }
@@ -164,14 +162,9 @@ GameEngine.prototype.plantTrees = function() {
 GameEngine.prototype.place = function(position) {
   const caster = new THREE.Raycaster()
   const ray = new THREE.Vector3(0, -1, 0)
-
   caster.set(position, ray)
-
-  const collisions = caster.intersectObject(MiniRPG.scene.getObjectByName('terrain').children[0])
-
-  if (collisions.length > 0)
-    return collisions[0].point
-
+  const collisions = caster.intersectObject(game.scene.getObjectByName('terrain').children[0])
+  if (collisions.length > 0) return collisions[0].point
   return position
 }
 

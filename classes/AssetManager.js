@@ -1,6 +1,5 @@
 const IMAGES = []
-const MESHES = ['tree', 'mine', 'cloud', 'village']
-const ITEMS = ['tree', 'mine', 'cloud', 'village']
+const objects   = {}
 
 const loader = new THREE.JSONLoader()
 
@@ -32,7 +31,6 @@ AssetManager.prototype.loadMeshes = function(meshes, callback) {
       i++
       if (i === meshes.length)
         callback(objects)
-
     })
   })
 }
