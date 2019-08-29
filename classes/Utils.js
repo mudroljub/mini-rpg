@@ -1,16 +1,14 @@
-Array.max = function (array) {
+Array.max = function(array) {
 
-    return Math.max.apply(Math, array);
+  return Math.max.apply(Math, array)
 
-};
+}
 
+Array.min = function(array) {
 
-Array.min = function (array) {
+  return Math.min.apply(Math, array)
 
-    return Math.min.apply(Math, array);
-
-};
-
+}
 
 /**
  * roll a random positive integer <= n
@@ -19,10 +17,9 @@ Array.min = function (array) {
  */
 function roll(n) {
 
-    return Math.random() * n | 0;
+  return Math.random() * n | 0
 
 }
-
 
 /**
  * roll a random integer between -n and n
@@ -31,6 +28,6 @@ function roll(n) {
  */
 function rndInt(n) {
 
-    return (Math.random() * n | 0) - n / 2;
+  return (Math.random() * n | 0) - n / 2
 
 }
