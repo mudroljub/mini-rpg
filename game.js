@@ -1,9 +1,9 @@
-/* global rndInt */
 import AssetManager from './classes/AssetManager.js'
 import GameEngine from './classes/GameEngine.js'
 import Mine from './classes/Mine.js'
 import Village from './classes/Village.js'
 import Mob from './classes/Mob.js'
+import {rndInt} from './utils/helpers.js'
 
 const MESHES = ['tree', 'mine', 'cloud', 'village']
 const MOBS = 3

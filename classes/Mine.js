@@ -1,6 +1,6 @@
-/* global roll */
 import Entity from './Entity.js'
 import {objects} from './AssetManager.js'
+import {roll} from '../utils/helpers.js'
 
 export default class Mine extends Entity {
   constructor(game, data) {

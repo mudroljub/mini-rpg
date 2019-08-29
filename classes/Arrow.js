@@ -1,5 +1,5 @@
-/* global rndInt, roll */
 import Entity from './Entity.js'
+import {rndInt, roll} from '../utils/helpers.js'
 
 export default function Arrow(game, data) {
   const offset = data.offset || 10

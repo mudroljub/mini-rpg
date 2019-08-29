@@ -11,7 +11,7 @@ Array.min = function(array) {
  * @param n
  * @returns {number}
  */
-function roll(n) {
+export function roll(n) {
   return Math.random() * n | 0
 }
 
@@ -20,6 +20,6 @@ function roll(n) {
  * @param n
  * @returns {number}
  */
-function rndInt(n) {
+export function rndInt(n) {
   return (Math.random() * n | 0) - n / 2
 }
