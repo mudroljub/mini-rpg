@@ -1,5 +1,6 @@
-/* global Entity, rndInt, Resource, roll */
+/* global Entity, rndInt, roll */
 import Arrow from './Arrow.js'
+import Resource from './Resource.js'
 
 const mobJson = {
   id: 'idle', strategy: 'prioritised',

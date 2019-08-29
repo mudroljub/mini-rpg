@@ -7,7 +7,7 @@
  * @param pos
  * @constructor
  */
-function Resource(game, name, pos) {
+export default function Resource(game, name, pos) {
   switch(name) {
     case 'tree':
       this.name = 'wood'
