@@ -1,4 +1,5 @@
-/* global AssetManager, rndInt */
+/* global rndInt */
+import AssetManager from './classes/AssetManager.js'
 import GameEngine from './classes/GameEngine.js'
 import Mine from './classes/Mine.js'
 import Village from './classes/Village.js'

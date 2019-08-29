@@ -1,4 +1,5 @@
-/* global Entity, objects, rndInt, roll */
+/* global Entity, rndInt, roll */
+import {objects} from './AssetManager.js'
 
 /**
  * Clouds!

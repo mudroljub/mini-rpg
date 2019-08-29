@@ -1,9 +1,9 @@
 const IMAGES = []
-const objects   = {}
+export const objects   = {}
 
 const loader = new THREE.JSONLoader()
 
-function AssetManager() {
+export default function AssetManager() {
   this.TEXTURES  = {}
   this.MATERIALS = {}
   this.MESHES    = {}

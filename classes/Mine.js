@@ -1,4 +1,5 @@
-/* global Entity, objects, roll */
+/* global Entity, roll */
+import {objects} from './AssetManager.js'
 
 export default class Mine extends Entity {
   constructor(game, data) {

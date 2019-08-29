@@ -1,4 +1,5 @@
-/* global Entity, objects */
+/* global Entity */
+import {objects} from './AssetManager.js'
 
 /**
  *
