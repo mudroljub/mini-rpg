@@ -1,5 +1,3 @@
-/* global  */
-
 /*
   Originally from Machine.js
   by mary rose cook

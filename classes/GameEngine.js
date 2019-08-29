@@ -4,7 +4,7 @@ import Cloud from './Cloud.js'
 import Bird from './creatures/Bird.js'
 import Rabbit from './creatures/Rabbit.js'
 import Level from './Level.js'
-import {Machine} from './BehaviorTree.js'
+import {Machine} from './Machine.js'
 
 const TREES = 100
 const BIRDS = 15
