@@ -27,7 +27,7 @@ Arrow.prototype.update = function() {
 
 Arrow.prototype.create = function() {
   const geometry = new THREE.BoxGeometry(0.5, 0.5, 5)
-  const material = new THREE.MeshLambertMaterial({ color: 0x966f33, shading: THREE.SmoothShading })
+  const material = new THREE.MeshLambertMaterial({ color: 0x966f33 })
   this.mesh = new THREE.Mesh(geometry, material)
   this.mesh.castShadow = true
 }

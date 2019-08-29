@@ -7,8 +7,8 @@ const treeModel = (function() {
       trunk: new THREE.BoxGeometry(5, 20, 5)
     },
     materials: {
-      leaves: new THREE.MeshLambertMaterial({ color: 0x3EA055, shading: THREE.SmoothShading }),
-      trunk: new THREE.MeshLambertMaterial({ color: 0x966F33, shading: THREE.SmoothShading })
+      leaves: new THREE.MeshLambertMaterial({ color: 0x3EA055 }),
+      trunk: new THREE.MeshLambertMaterial({ color: 0x966F33 })
     }
   }
   const tree = new THREE.Object3D()

@@ -9,7 +9,6 @@ Level.prototype.constructor = Level
 Level.prototype.generate = function() {
   const material = new THREE.MeshLambertMaterial({
     color: 0x33aa33,
-    shading: THREE.FlatShading,
     vertexColors: THREE.FaceColors,
     overdraw: true
   })
@@ -43,7 +42,7 @@ Level.prototype.generate = function() {
   land.rotateX(-Math.PI / 2)
   land.position.set(0, 30, 0)
 
-  const water_material = new THREE.MeshLambertMaterial({ color: 0x6699ff, transparent: true, opacity: 0.75, vertexColors: THREE.FaceColors, shading: THREE.FlatShading })
+  const water_material = new THREE.MeshLambertMaterial({ color: 0x6699ff, transparent: true, opacity: 0.75, vertexColors: THREE.FaceColors })
   const water_geometry = new THREE.PlaneGeometry(1200, 1200, this.resolution, this.resolution)
   water_geometry.dynamic = true
   water_geometry.verticesNeedUpdate = true

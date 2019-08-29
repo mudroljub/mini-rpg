@@ -62,7 +62,7 @@ Mob.prototype.update = function() {
 
 Mob.prototype.create = function() {
   const geometry = new THREE.BoxGeometry(5, 10, 5)
-  const material = new THREE.MeshLambertMaterial({ color: 0xecc2a7, shading: THREE.SmoothShading })
+  const material = new THREE.MeshLambertMaterial({ color: 0xecc2a7 })
   this.mesh = new THREE.Mesh(geometry, material)
   for (let i = 0; i < this.mesh.geometry.vertices.length; i++)
     this.mesh.geometry.vertices[i].y += 5

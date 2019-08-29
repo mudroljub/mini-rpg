@@ -30,10 +30,10 @@ export default function GameEngine() {
   this.renderer.gammaInput             = true
   this.renderer.gammaOutput            = true
   this.renderer.physicallyBasedShading = true
-  this.renderer.shadowMapEnabled       = true
-  this.renderer.shadowMapCullFace      = THREE.CullFaceBack
+  this.renderer.shadowMap.enabled       = true
+  this.renderer.shadowMap.cullFace      = THREE.CullFaceBack
   this.renderer.shadowMapAutoUpdate    = true
-  this.renderer.shadowMapType          = THREE.PCFSoftShadowMap
+  this.renderer.shadowMap.type          = THREE.PCFSoftShadowMap
   this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement)
   document.body.appendChild(this.renderer.domElement)
 }

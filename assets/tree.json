@@ -28,7 +28,7 @@
 		"depthWrite" : true,
 		"shading" : "Lambert",
 		"specularCoef" : 1,
-		"transparency" : 1.0,
+		"opacity" : 1.0,
 		"transparent" : true,
 		"vertexColors" : false
 	},
@@ -45,7 +45,7 @@
 		"depthWrite" : true,
 		"shading" : "Lambert",
 		"specularCoef" : 1,
-		"transparency" : 1.0,
+		"opacity" : 1.0,
 		"transparent" : true,
 		"vertexColors" : false
 	}],

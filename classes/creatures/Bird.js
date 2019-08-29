@@ -14,7 +14,7 @@ const birdJson = {
 
 const birdModel = (function() {
   const geometry = new THREE.BoxGeometry(2, 2, 5)
-  const material = new THREE.MeshLambertMaterial({ color: 0xff6666, shading: THREE.SmoothShading, vertexColors: THREE.FaceColors })
+  const material = new THREE.MeshLambertMaterial({ color: 0xff6666, vertexColors: THREE.FaceColors })
   const mesh = new THREE.Mesh(geometry, material)
   mesh.castShadow = true
   return mesh

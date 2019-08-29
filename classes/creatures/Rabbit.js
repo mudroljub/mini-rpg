@@ -14,7 +14,7 @@ const rabbitJson = {
 
 const rabbitModel = (function() {
   const geometry = new THREE.BoxGeometry(2, 2, 5)
-  const material = new THREE.MeshLambertMaterial({ color: 0x777777, shading: THREE.SmoothShading, vertexColors: THREE.FaceColors })
+  const material = new THREE.MeshLambertMaterial({ color: 0x777777, vertexColors: THREE.FaceColors })
   const mesh = new THREE.Mesh(geometry, material)
   mesh.castShadow = true
   for (let i = 0; i < mesh.geometry.vertices.length; i++)

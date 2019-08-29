@@ -35,7 +35,7 @@ Entity.prototype.update = function() {
 
 Entity.prototype.create = function() {
   const geometry = new THREE.BoxGeometry(10, 10, 10)
-  const material = new THREE.MeshLambertMaterial({ color: 0xff0000, shading: THREE.SmoothShading })
+  const material = new THREE.MeshLambertMaterial({ color: 0xff0000 })
   this.mesh = new THREE.Mesh(geometry, material)
   this.mesh.castShadow = true
 }
