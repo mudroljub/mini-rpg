@@ -122,7 +122,7 @@ GameEngine.prototype.initLighting = function() {
   dirLight.color.setHSL(0.1, 1, 0.95)
   dirLight.position.set(-1, 1.75, 1)
   dirLight.position.multiplyScalar(100)
-  dirLight.position = this.camera.position
+  dirLight.position.copy(this.camera.position)
   dirLight.castShadow = true
   dirLight.shadowMapWidth = 2048
   dirLight.shadowMapHeight = 2048
@@ -139,7 +139,7 @@ GameEngine.prototype.initLighting = function() {
   hemiLight.position.set(0, 500, 0)
 
   pointLight.intensity = 0.75
-  pointLight.position = new THREE.Vector3(1000, 800, -1000)
+  pointLight.position.copy(new THREE.Vector3(1000, 800, -1000))
 
   this.scene.add(dirLight)
   this.scene.add(hemiLight)

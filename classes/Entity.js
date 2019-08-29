@@ -27,7 +27,7 @@ Entity.prototype.update = function() {
   this.pos.y += this.vel.y * this.game.delta * this.timeMult
   this.pos.z += this.vel.z * this.game.delta * this.timeMult
 
-  this.mesh.position = this.pos
+  this.mesh.position.copy(this.pos)
   this.mesh.rotation.x = this.rotation.x
   this.mesh.rotation.y = this.rotation.y
   this.mesh.rotation.z = this.rotation.z
