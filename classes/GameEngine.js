@@ -1,3 +1,7 @@
+const TREES = 100
+const BIRDS = 15
+const RABBITS = 50
+const CLOUDS = 15
 
 function GameEngine() {
   this.entityId = 0
@@ -75,13 +79,13 @@ GameEngine.prototype.init = function() {
   this.terrain = new Level()
   this.scene.add(this.terrain.generate())
 
-  for (var i = 0; i < RABBITS; i++)
+  for (let i = 0; i < RABBITS; i++)
     this.addEntity(new Rabbit(this))
 
-  for (var i = 0; i < CLOUDS; i++)
+  for (let i = 0; i < CLOUDS; i++)
     this.addEntity(new Cloud(this))
 
-  for (var i = 0; i < BIRDS; i++)
+  for (let i = 0; i < BIRDS; i++)
     this.addEntity(new Bird(this))
 
   this.initLighting()

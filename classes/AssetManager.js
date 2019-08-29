@@ -2,6 +2,8 @@ const IMAGES = []
 const MESHES = ['tree', 'mine', 'cloud', 'village']
 const ITEMS = ['tree', 'mine', 'cloud', 'village']
 
+const loader = new THREE.JSONLoader()
+
 function AssetManager() {
   this.TEXTURES  = {}
   this.MATERIALS = {}
