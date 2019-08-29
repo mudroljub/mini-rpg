@@ -1,4 +1,5 @@
-/* global Entity, rndInt, Resource, Arrow, roll */
+/* global Entity, rndInt, Resource, roll */
+import Arrow from './Arrow.js'
 
 const mobJson = {
   id: 'idle', strategy: 'prioritised',
@@ -22,7 +23,7 @@ const mobJson = {
   ]
 }
 
-function Mob(game) {
+export default function Mob(game) {
   this.name = 'mob'
   Entity.call(this, game)
   this.pos = new THREE.Vector3(rndInt(1100), 100, rndInt(1100))

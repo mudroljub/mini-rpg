@@ -1,6 +1,6 @@
 /* global Entity, rndInt, roll */
 
-function Arrow(game, data) {
+export default function Arrow(game, data) {
   const offset = data.offset || 10
   const randomOffset = new THREE.Vector3(rndInt(offset), roll(offset), rndInt(offset))
   this.name = 'arrow'
