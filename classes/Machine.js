@@ -6,14 +6,16 @@
   modified to remove dependency on base.js
 */
 
-const Node = function(id, test, strategy, parent, actor, states) {
-  this.id = id
-  this.test = test
-  this.strategy = strategy
-  this.parent = parent
-  this.actor = actor
-  this.states = states
-  this.children = []
+class Node {
+  constructor(id, test, strategy, parent, actor, states) {
+    this.id = id
+    this.test = test
+    this.strategy = strategy
+    this.parent = parent
+    this.actor = actor
+    this.states = states
+    this.children = []
+  }
 }
 
 Node.prototype.tick = function() {
@@ -136,12 +138,7 @@ Node.prototype.getClassName = function() {
   return 'Node'
 }
 
-const State = function(id, test, strategy, parent, actor, states) {
-  Node.call(this, id, test, strategy, parent, actor, states)
-}
-
-State.prototype = new Node()
-State.prototype.constructor = Node
+class State extends Node {}
 
 State.prototype.transition = function() {
   return this
@@ -155,12 +152,7 @@ State.prototype.getClassName = function() {
   return 'State'
 }
 
-var Pointer = function(id, test, strategy, parent, actor, states) {
-  Node.call(this, id, test, strategy, parent, actor, states)
-}
-
-Pointer.prototype = new Node()
-Pointer.prototype.constructor = Node
+class Pointer extends Node {}
 
 Pointer.prototype.transition = function() {
   return this[this.strategy].call(this)
