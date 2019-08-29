@@ -1,4 +1,4 @@
-/* global Machine, Level, Rabbit, Cloud, Bird, Tree, rndInt, game */
+/* global Machine, Level, Rabbit, Cloud, Bird, Tree, rndInt */
 
 const TREES = 100
 const BIRDS = 15
@@ -154,7 +154,7 @@ GameEngine.prototype.plantTrees = function() {
     const collision = this.place(rndPoint)
     if (collision.y > 0) {
       collision.y -= 10
-      this.addEntity(new Tree(game, {pos: collision}))
+      this.addEntity(new Tree(this, {pos: collision}))
     }
   }
 }
@@ -163,7 +163,7 @@ GameEngine.prototype.place = function(position) {
   const caster = new THREE.Raycaster()
   const ray = new THREE.Vector3(0, -1, 0)
   caster.set(position, ray)
-  const collisions = caster.intersectObject(game.scene.getObjectByName('terrain').children[0])
+  const collisions = caster.intersectObject(this.scene.getObjectByName('terrain').children[0])
   if (collisions.length > 0) return collisions[0].point
   return position
 }

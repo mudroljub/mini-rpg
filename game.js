@@ -1,9 +1,9 @@
 /* global GameEngine, AssetManager, Mob, Mine, Village, rndInt */
 
-const game = new GameEngine()
 const MESHES = ['tree', 'mine', 'cloud', 'village']
-const MOBS = 1
+const MOBS = 3
 
+const game = new GameEngine()
 const assets = new AssetManager()
 
 assets.loadMeshes(MESHES, () => {
