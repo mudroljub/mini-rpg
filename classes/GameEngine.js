@@ -182,7 +182,7 @@ GameEngine.prototype.switchCam = function() {
     mob.fps = true
     mob.log = true
     this.fps = true
-    this.cameraFPS.position = mob.pos
+    this.cameraFPS.position.copy(mob.pos)
     this.cameraFPS.position.y += 10
   }
 }
