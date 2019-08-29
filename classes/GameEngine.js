@@ -31,7 +31,7 @@ export default function GameEngine() {
   this.renderer.gammaOutput            = true
   this.renderer.physicallyBasedShading = true
   this.renderer.shadowMap.enabled       = true
-  this.renderer.shadowMap.cullFace      = THREE.CullFaceBack
+  this.renderer.shadowMap.renderReverseSided      = false
   this.renderer.shadowMapAutoUpdate    = true
   this.renderer.shadowMap.type          = THREE.PCFSoftShadowMap
   this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement)
@@ -124,15 +124,14 @@ GameEngine.prototype.initLighting = function() {
   dirLight.position.multiplyScalar(100)
   dirLight.position.copy(this.camera.position)
   dirLight.castShadow = true
-  dirLight.shadowMapWidth = 2048
-  dirLight.shadowMapHeight = 2048
-  dirLight.shadowCameraLeft = -d
-  dirLight.shadowCameraRight = d
-  dirLight.shadowCameraTop = d
-  dirLight.shadowCameraBottom = -d
-  dirLight.shadowCameraFar = 3500
-  dirLight.shadowBias = -0.0001
-  dirLight.shadowDarkness = 0.35
+  dirLight.shadow.mapSize.width = 2048
+  dirLight.shadow.mapSize.height = 2048
+  dirLight.shadow.camera.left = -d
+  dirLight.shadow.camera.right = d
+  dirLight.shadow.camera.top = d
+  dirLight.shadow.camera.bottom = -d
+  dirLight.shadow.camera.far = 3500
+  dirLight.shadow.bias = -0.0001
 
   hemiLight.color.setHSL(0.6, 1, 0.6)
   hemiLight.groundColor.setHSL(0.095, 1, 0.75)
