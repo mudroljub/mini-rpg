@@ -1,6 +1,6 @@
 /* global SimplexNoise */
 
-function Level() {
+export default function Level() {
   this.resolution = 20
 }
 
