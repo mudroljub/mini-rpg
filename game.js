@@ -13,6 +13,7 @@ const MOBS = 3
 const BIRDS = 15
 const RABBITS = 50
 const CLOUDS = 15
+const MINES = 2
 
 const game = new GameEngine()
 const assets = new AssetManager()
@@ -34,17 +35,17 @@ assets.loadMeshes(MESHES, () => {
   for (let i = 0; i < MOBS; i++)
     game.addEntity(new Mob(game))
 
-  for (let i = 0; i < 1; i++) {
-    let rndPoint = new THREE.Vector3(rndInt(1100), 100, rndInt(1100))
-    let collision = game.place(rndPoint)
+  for (let i = 0; i < MINES; i++) {
+    const rndPoint = new THREE.Vector3(rndInt(1100), 100, rndInt(1100))
+    const collision = game.place(rndPoint)
     collision.y += 10
     game.addEntity(new Mine(game, {pos: collision}))
-
-    rndPoint = new THREE.Vector3(rndInt(1100), 100, rndInt(1100))
-    collision = game.place(rndPoint)
-    collision.y += 20
-    game.addEntity(new Village(game, {pos: collision}))
   }
+
+  const rndPoint = new THREE.Vector3(rndInt(1100), 100, rndInt(1100))
+  const collision = game.place(rndPoint)
+  collision.y += 20
+  game.addEntity(new Village(game, {pos: collision}))
 })
 
 /* EVENTS */
