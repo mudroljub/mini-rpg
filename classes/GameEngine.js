@@ -4,38 +4,38 @@ import Cloud from './Cloud.js'
 import Bird from './creatures/Bird.js'
 import Rabbit from './creatures/Rabbit.js'
 import Level from './Level.js'
-import {rndInt} from '../utils/helpers.js'
+import { rndInt } from '../utils/helpers.js'
 
 const TREES = 100
 const BIRDS = 15
 const RABBITS = 50
 const CLOUDS = 15
+const { innerWidth, innerHeight } = window
 
-export default function GameEngine() {
-  this.entityId = 0
-  this.fps = false
-  this.paused = false
-  this.entities = {}
-  this.clock = new THREE.Clock()
-  this.delta = 0
-  this.elapsed = 0
-  this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 5000)
-  this.camera.position.y = 500
-  this.camera.position.z = 500
-  this.camera.lookAt(new THREE.Vector3(0, 0, 0))
-  this.cameraFPS = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 1, 5000)
-  this.scene = new THREE.Scene()
-  this.renderer = new THREE.WebGLRenderer({antialias: true, maxLights: 100, alpha: true})
-  this.renderer.setSize(window.innerWidth, window.innerHeight)
-  this.renderer.gammaInput             = true
-  this.renderer.gammaOutput            = true
-  this.renderer.physicallyBasedShading = true
-  this.renderer.shadowMap.enabled       = true
-  this.renderer.shadowMap.renderReverseSided      = false
-  this.renderer.shadowMapAutoUpdate    = true
-  this.renderer.shadowMap.type          = THREE.PCFSoftShadowMap
-  this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement)
-  document.body.appendChild(this.renderer.domElement)
+export default class GameEngine {
+  constructor() {
+    this.entityId = 0
+    this.fps = false
+    this.paused = false
+    this.entities = {}
+    this.clock = new THREE.Clock()
+    this.delta = 0
+    this.elapsed = 0
+    this.camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 1, 5000)
+    this.camera.position.y = this.camera.position.z = 500
+    this.camera.lookAt(new THREE.Vector3(0, 0, 0))
+    this.cameraFPS = new THREE.PerspectiveCamera(90, innerWidth / innerHeight, 1, 5000)
+    this.scene = new THREE.Scene()
+    this.renderer = new THREE.WebGLRenderer({ antialias: true, maxLights: 100, alpha: true })
+    this.renderer.setSize(innerWidth, innerHeight)
+    this.renderer.gammaInput = true
+    this.renderer.physicallyBasedShading = true
+    this.renderer.shadowMap.enabled = true
+    this.renderer.shadowMap.renderReverseSided = false
+    this.renderer.shadowMapAutoUpdate = true
+    this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement)
+    document.body.appendChild(this.renderer.domElement)
+  }
 }
 
 GameEngine.prototype.addEntity = function(entity) {
@@ -159,7 +159,7 @@ GameEngine.prototype.plantTrees = function() {
     const collision = this.place(rndPoint)
     if (collision.y > 0) {
       collision.y -= 10
-      this.addEntity(new Tree(this, {pos: collision}))
+      this.addEntity(new Tree(this, { pos: collision }))
     }
   }
 }
