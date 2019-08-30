@@ -5,6 +5,7 @@ export default class Entity {
     this.vel = new THREE.Vector3(0, 0, 0)
     this.rotation = new THREE.Euler(0, 0, 0)
     this.timeMult = 1
+    this.speed = 1
     this.remove = false
     this.shadow = false
     this.state = null
@@ -35,7 +36,7 @@ export default class Entity {
 
     const dv = new THREE.Vector3()
     dv.subVectors(this.destination, this.mesh.position)
-    dv.setLength(this.speed)
+    dv.multiplyScalar(this.speed * .001)
     this.vel = dv
     this.rotation.y = (Math.atan2(deltaX, deltaZ))
 
