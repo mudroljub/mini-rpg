@@ -1,6 +1,6 @@
 import Entity from './Entity.js'
 
-const treeModel = (function() {
+function createTree() {
   const treeData = {
     geom: {
       leaves: new THREE.CylinderGeometry(0, 25, 60, 4, 1),
@@ -28,25 +28,22 @@ const treeModel = (function() {
   tree.castShadow = true
 
   return tree
-})()
+}
 
 /**
  * Trees constructed from primitives.
  * Provide wood resources.
- * @param game
- * @constructor
  */
-export default function Tree(game, data) {
-  this.name = 'tree'
-  Entity.call(this, game)
-  this.pos = data.pos
-  this.destination = this.pos.clone()
-  this.units = 4
-}
+export default class Tree extends Entity {
+  constructor(game, data) {
+    super(game)
+    this.name = 'tree'
+    this.pos = data.pos
+    this.destination = this.pos.clone()
+    this.units = 4
+  }
 
-Tree.prototype = new Entity()
-Tree.prototype.constructor = Tree
-
-Tree.prototype.create = function() {
-  this.mesh = treeModel.clone()
+  create() {
+    this.mesh = createTree()
+  }
 }

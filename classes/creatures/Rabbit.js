@@ -22,8 +22,6 @@ function createRabbit() {
   return mesh
 }
 
-const rabbitModel = createRabbit()
-
 const rabbitStates = {
   idle() {
     console.log('idle')
@@ -59,7 +57,7 @@ export default class Rabbit extends Entity {
   }
 
   create() {
-    this.mesh = rabbitModel.clone()
+    this.mesh = createRabbit()
   }
 
   attacked() {

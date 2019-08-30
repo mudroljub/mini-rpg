@@ -1,27 +1,21 @@
 import Entity from './Entity.js'
 import {objects} from './AssetManager.js'
 
-/**
- *
- * @param game
- * @constructor
- */
-export default function Village(game, data) {
-  this.name = 'village'
-  Entity.call(this, game)
-  this.pos = data.pos
-  this.destination = this.pos.clone()
-}
+export default class Village extends Entity {
+  constructor(game, data) {
+    super(game)
+    this.name = 'village'
+    this.pos = data.pos
+    this.destination = this.pos.clone()
+  }
 
-Village.prototype = new Entity()
-Village.prototype.constructor = Village
-
-Village.prototype.create = function() {
-  if (objects.village) {
-    objects.village.scale.set(15, 15, 15)
-    objects.village.castShadow = true
-    this.mesh = objects.village.clone()
-    for (let i = 0; i < this.mesh.geometry.vertices.length; i++)
-      this.mesh.geometry.vertices[i].y += 1.25
+  create() {
+    if (objects.village) {
+      objects.village.scale.set(15, 15, 15)
+      objects.village.castShadow = true
+      this.mesh = objects.village.clone()
+      for (let i = 0; i < this.mesh.geometry.vertices.length; i++)
+        this.mesh.geometry.vertices[i].y += 1.25
+    }
   }
 }

@@ -20,8 +20,6 @@ function createBird() {
   return mesh
 }
 
-const birdModel = createBird()
-
 const birdStates = {
   idle() {
     console.log('idle')
@@ -53,7 +51,7 @@ export default class Bird extends Entity {
   }
 
   create() {
-    this.mesh = birdModel.clone()
+    this.mesh = createBird()
   }
 
   attacked() {
