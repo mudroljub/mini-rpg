@@ -86,10 +86,10 @@ const mobStates = {
 
 export default class Mob extends Entity {
   constructor(game) {
-    super(game)
+    const position = new THREE.Vector3(rndInt(1100), 100, rndInt(1100))
+    super(game, position)
     this.name = 'mob'
-    this.pos = new THREE.Vector3(rndInt(1100), 100, rndInt(1100))
-    this.destination = this.pos.clone()
+    this.destination = position.clone()
     this.target = null
     this.speed = 40
     this.log = false

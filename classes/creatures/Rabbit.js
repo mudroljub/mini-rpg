@@ -40,10 +40,10 @@ const rabbitStates = {
 
 export default class Rabbit extends Entity {
   constructor(game) {
-    super(game)
+    const position = new THREE.Vector3(rndInt(1200), 0, rndInt(1200))
+    super(game, position)
     this.name = 'rabbit'
-    this.pos = new THREE.Vector3(rndInt(1200), 0, rndInt(1200))
-    this.destination = this.pos.clone()
+    this.destination = position.clone()
     this.health = 5
     this.speed = 50 + rndInt(40)
     this.state = this.game.machine.generate(rabbitJson, this, rabbitStates)
@@ -53,7 +53,7 @@ export default class Rabbit extends Entity {
     const collision = this.game.place(this.pos)
     this.pos.y = collision.y + 5
     this.state = this.state.tick()
-    Entity.prototype.update.call(this)
+    super.update(this)
   }
 
   create() {

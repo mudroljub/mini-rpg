@@ -36,10 +36,9 @@ function createTree() {
  */
 export default class Tree extends Entity {
   constructor(game, data) {
-    super(game)
+    super(game, data.pos)
     this.name = 'tree'
-    this.pos = data.pos
-    this.destination = this.pos.clone()
+    this.destination = data.pos.clone()
     this.units = 4
   }
 

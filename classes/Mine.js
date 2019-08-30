@@ -3,11 +3,10 @@ import {objects} from './AssetManager.js'
 import {roll} from '../utils/helpers.js'
 
 export default class Mine extends Entity {
-  constructor(game, data) {
-    super(game)
+  constructor(game, {pos}) {
+    super(game, pos)
     this.name = 'mine'
-    this.pos = data.pos
-    this.destination = this.pos.clone()
+    this.destination = pos.clone()
     this.units = 100
   }
 

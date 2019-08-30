@@ -1,5 +1,5 @@
 export default class Entity {
-  constructor(game, color) {
+  constructor(game, position, color = 0xffffff) {
     this.game = game
     this.destination = new THREE.Vector3(0, 0, 0)
     this.vel = new THREE.Vector3(0, 0, 0)
@@ -8,8 +8,9 @@ export default class Entity {
     this.remove = false
     this.shadow = false
     this.state = null
-    this.color = color ? color : 0xffffff
+    this.color = color
     this.create()
+    this.mesh.position.copy(position)
   }
 
   get pos() {
@@ -29,18 +30,18 @@ export default class Entity {
 
   update() {
     // rotate to target location
-    const deltaX = this.destination.x - this.pos.x
-    const deltaZ = this.destination.z - this.pos.z
+    const deltaX = this.destination.x - this.mesh.position.x
+    const deltaZ = this.destination.z - this.mesh.position.z
 
     const dv = new THREE.Vector3()
-    dv.subVectors(this.destination, this.pos)
+    dv.subVectors(this.destination, this.mesh.position)
     dv.setLength(this.speed)
     this.vel = dv
     this.rotation.y = (Math.atan2(deltaX, deltaZ))
 
-    this.pos.x += this.vel.x * this.game.delta * this.timeMult
-    this.pos.y += this.vel.y * this.game.delta * this.timeMult
-    this.pos.z += this.vel.z * this.game.delta * this.timeMult
+    this.mesh.position.x += this.vel.x * this.game.delta * this.timeMult
+    this.mesh.position.y += this.vel.y * this.game.delta * this.timeMult
+    this.mesh.position.z += this.vel.z * this.game.delta * this.timeMult
 
     this.mesh.rotation.x = this.rotation.x
     this.mesh.rotation.y = this.rotation.y

@@ -4,9 +4,9 @@ import Entity from './Entity.js'
  * Small items to be carried by mobs.
  */
 export default class Resource extends Entity {
-  constructor(game, name, pos) {
+  constructor(game, name, position) {
     const color = name == 'mine' ? 0xfdd017 : 0x966f33
-    super(game, color)
+    super(game, position, color)
     switch(name) {
       case 'tree':
         this.name = 'wood'
@@ -15,7 +15,6 @@ export default class Resource extends Entity {
         this.name = 'gold'
         break
     }
-    this.pos = pos
   }
 
   create() {

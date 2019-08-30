@@ -3,10 +3,9 @@ import {objects} from './AssetManager.js'
 
 export default class Village extends Entity {
   constructor(game, data) {
-    super(game)
+    super(game, data.pos)
     this.name = 'village'
-    this.pos = data.pos
-    this.destination = this.pos.clone()
+    this.destination = data.pos.clone()
   }
 
   create() {
