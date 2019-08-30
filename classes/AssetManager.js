@@ -1,7 +1,7 @@
 const IMAGES = []
 export const objects   = {}
 
-const loader = new THREE.JSONLoader()
+const loader = new THREE.LegacyJSONLoader()
 
 export default class AssetManager {
   constructor() {
