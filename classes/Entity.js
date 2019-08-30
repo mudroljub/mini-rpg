@@ -1,7 +1,6 @@
 export default class Entity {
   constructor(game, color) {
     this.game = game
-    this.pos = new THREE.Vector3(0, 0, 0)
     this.destination = new THREE.Vector3(0, 0, 0)
     this.vel = new THREE.Vector3(0, 0, 0)
     this.rotation = new THREE.Euler(0, 0, 0)
@@ -11,6 +10,21 @@ export default class Entity {
     this.state = null
     this.color = color ? color : 0xffffff
     this.create()
+  }
+
+  get pos() {
+    return this.mesh.position
+  }
+
+  set pos(newPos) {
+    this.mesh.position.copy(newPos)
+  }
+
+  create() {
+    const geometry = new THREE.BoxGeometry(10, 10, 10)
+    const material = new THREE.MeshLambertMaterial({ color: 0xff0000 })
+    this.mesh = new THREE.Mesh(geometry, material)
+    this.mesh.castShadow = true
   }
 
   update() {
@@ -28,16 +42,8 @@ export default class Entity {
     this.pos.y += this.vel.y * this.game.delta * this.timeMult
     this.pos.z += this.vel.z * this.game.delta * this.timeMult
 
-    this.mesh.position.copy(this.pos)
     this.mesh.rotation.x = this.rotation.x
     this.mesh.rotation.y = this.rotation.y
     this.mesh.rotation.z = this.rotation.z
-  }
-
-  create() {
-    const geometry = new THREE.BoxGeometry(10, 10, 10)
-    const material = new THREE.MeshLambertMaterial({ color: 0xff0000 })
-    this.mesh = new THREE.Mesh(geometry, material)
-    this.mesh.castShadow = true
   }
 }
