@@ -12,7 +12,7 @@ const rabbitJson = {
   ]
 }
 
-const rabbitModel = (function() {
+function createRabbit() {
   const geometry = new THREE.BoxGeometry(2, 2, 5)
   const material = new THREE.MeshLambertMaterial({ color: 0x777777, vertexColors: THREE.FaceColors })
   const mesh = new THREE.Mesh(geometry, material)
@@ -20,7 +20,9 @@ const rabbitModel = (function() {
   for (let i = 0; i < mesh.geometry.vertices.length; i++)
     mesh.geometry.vertices[i].y += 5
   return mesh
-})()
+}
+
+const rabbitModel = createRabbit()
 
 export default function Rabbit(game) {
   this.name = 'rabbit'
