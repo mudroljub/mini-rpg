@@ -24,40 +24,10 @@ function createRabbit() {
 
 const rabbitModel = createRabbit()
 
-export default class Rabbit extends Entity {
-  constructor(game) {
-    super(game)
-    this.name = 'rabbit'
-    this.pos = new THREE.Vector3(rndInt(1200), 0, rndInt(1200))
-    this.destination = this.pos.clone()
-    this.health = 5
-    this.speed = 50 + rndInt(40)
-    this.state = this.game.machine.generate(rabbitJson, this, Rabbit.states)
-  }
-}
-
-Rabbit.prototype.update = function() {
-  const collision = this.game.place(this.pos)
-  this.pos.y = collision.y + 5
-  this.state = this.state.tick()
-  Entity.prototype.update.call(this)
-}
-
-Rabbit.prototype.create = function() {
-  this.mesh = rabbitModel.clone()
-}
-
-Rabbit.prototype.attacked = function() {
-  this.health -= roll(6)
-  if (this.health <= 0) {
-    this.speed = 0
-    this.remove = true
-  }
-  this.speed = 140
-}
-
-Rabbit.states = {
-  idle() {console.log('idle')},
+const rabbitStates = {
+  idle() {
+    console.log('idle')
+  },
   getRandomDestination() {
     const rndPoint = new THREE.Vector3(rndInt(1100), 10, rndInt(1100))
     const collision = this.game.place(rndPoint)
@@ -68,4 +38,36 @@ Rabbit.states = {
     return Math.random() > 0.99 && !this.remove && this.health > 0
   },
   sleep() {}
+}
+
+export default class Rabbit extends Entity {
+  constructor(game) {
+    super(game)
+    this.name = 'rabbit'
+    this.pos = new THREE.Vector3(rndInt(1200), 0, rndInt(1200))
+    this.destination = this.pos.clone()
+    this.health = 5
+    this.speed = 50 + rndInt(40)
+    this.state = this.game.machine.generate(rabbitJson, this, rabbitStates)
+  }
+
+  update() {
+    const collision = this.game.place(this.pos)
+    this.pos.y = collision.y + 5
+    this.state = this.state.tick()
+    Entity.prototype.update.call(this)
+  }
+
+  create() {
+    this.mesh = rabbitModel.clone()
+  }
+
+  attacked() {
+    this.health -= roll(6)
+    if (this.health <= 0) {
+      this.speed = 0
+      this.remove = true
+    }
+    this.speed = 140
+  }
 }
