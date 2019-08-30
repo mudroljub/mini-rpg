@@ -36,152 +36,146 @@ export default class GameEngine {
     this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement)
     document.body.appendChild(this.renderer.domElement)
   }
-}
 
-GameEngine.prototype.addEntity = function(entity) {
-  this.entities[this.entityId] = entity
-  entity.id = this.entityId
-  this.entityId++
-  this.scene.add(entity.mesh)
-}
+  addEntity(entity) {
+    this.entities[this.entityId] = entity
+    entity.id = this.entityId
+    this.entityId++
+    this.scene.add(entity.mesh)
+  }
 
-GameEngine.prototype.removeEntity = function(entity) {
-  this.entities[entity.id].remove = true
-  this.scene.remove(entity.mesh)
-}
+  removeEntity(entity) {
+    this.entities[entity.id].remove = true
+    this.scene.remove(entity.mesh)
+  }
 
-GameEngine.prototype.getCloseEntity = function(name, position, range) {
-  let i, distance, entity
-  for (i in this.entities) {
-    entity = this.entities[i]
-    if (entity.name === name && !entity.remove) {
-      distance = position.distanceTo(entity.pos)
-      if (distance < range)
-        return entity
+  getCloseEntity(name, position, range) {
+    let i, distance, entity
+    for (i in this.entities) {
+      entity = this.entities[i]
+      if (entity.name === name && !entity.remove) {
+        distance = position.distanceTo(entity.pos)
+        if (distance < range)
+          return entity
+      }
+    }
+    return false
+  }
+
+  loop() {
+    this.delta = this.clock.getDelta()
+    this.update()
+  }
+
+  update() {
+    for (const key in this.entities) {
+      const entity = this.entities[key]
+      if (!entity.remove) entity.update()
+    }
+    this.controls.update()
+  }
+
+  init() {
+    console.log('game init!')
+
+    this.machine = new Machine()
+    this.terrain = new Level()
+    this.scene.add(this.terrain.generate())
+
+    for (let i = 0; i < RABBITS; i++)
+      this.addEntity(new Rabbit(this))
+
+    for (let i = 0; i < CLOUDS; i++)
+      this.addEntity(new Cloud(this))
+
+    for (let i = 0; i < BIRDS; i++)
+      this.addEntity(new Bird(this))
+
+    this.initLighting()
+  }
+
+  start() {
+    const self = this
+    void function gameLoop() {
+      self.loop()
+      requestAnimationFrame(gameLoop)
+      const camera = self.fps ? self.cameraFPS : self.camera
+      self.renderer.render(self.scene, camera)
+      self.elapsed = self.clock.getElapsedTime()
+    }()
+  }
+
+  initLighting() {
+    const d = 500
+    const dirLight = new THREE.DirectionalLight(0xffffcc, 0.5, 500)
+    const hemiLight = new THREE.HemisphereLight(0xffffcc, 0xffffcc, 0.6)
+    const pointLight = new THREE.PointLight(0xffffcc)
+
+    // light for shadows
+    dirLight.color.setHSL(0.1, 1, 0.95)
+    dirLight.position.set(-1, 1.75, 1)
+    dirLight.position.multiplyScalar(100)
+    dirLight.position.copy(this.camera.position)
+    dirLight.castShadow = true
+    dirLight.shadow.mapSize.width = 2048
+    dirLight.shadow.mapSize.height = 2048
+    dirLight.shadow.camera.left = -d
+    dirLight.shadow.camera.right = d
+    dirLight.shadow.camera.top = d
+    dirLight.shadow.camera.bottom = -d
+    dirLight.shadow.camera.far = 3500
+    dirLight.shadow.bias = -0.0001
+
+    hemiLight.color.setHSL(0.6, 1, 0.6)
+    hemiLight.groundColor.setHSL(0.095, 1, 0.75)
+    hemiLight.position.set(0, 500, 0)
+
+    pointLight.intensity = 0.75
+    pointLight.position.copy(new THREE.Vector3(1000, 800, -1000))
+
+    this.scene.add(dirLight)
+    this.scene.add(hemiLight)
+    this.scene.add(pointLight)
+  }
+
+  pause() {
+    this.paused = this.paused ? false : true
+  }
+
+  getEntity(id) {
+    return this.entities[id] || false
+  }
+
+  plantTrees() {
+    for (let i = 0; i < TREES; i++) {
+      const rndPoint = new THREE.Vector3(rndInt(1100), 100, rndInt(1100))
+      const collision = this.place(rndPoint)
+      if (collision.y > 0) {
+        collision.y -= 10
+        this.addEntity(new Tree(this, { pos: collision }))
+      }
     }
   }
-  return false
-}
 
-GameEngine.prototype.loop = function() {
-  this.delta = this.clock.getDelta()
-  this.update()
-}
-
-GameEngine.prototype.update = function() {
-  let i, entity
-  for (i in this.entities) {
-    entity = this.entities[i]
-    if (!entity.remove)
-      entity.update()
+  place(position) {
+    const caster = new THREE.Raycaster()
+    const ray = new THREE.Vector3(0, -1, 0)
+    caster.set(position, ray)
+    const collisions = caster.intersectObject(this.scene.getObjectByName('terrain').children[0])
+    if (collisions.length > 0) return collisions[0].point
+    return position
   }
-  this.controls.update()
-}
 
-GameEngine.prototype.init = function() {
-  console.log('game init!')
-
-  this.machine = new Machine()
-  this.terrain = new Level()
-  this.scene.add(this.terrain.generate())
-
-  for (let i = 0; i < RABBITS; i++)
-    this.addEntity(new Rabbit(this))
-
-  for (let i = 0; i < CLOUDS; i++)
-    this.addEntity(new Cloud(this))
-
-  for (let i = 0; i < BIRDS; i++)
-    this.addEntity(new Bird(this))
-
-  this.initLighting()
-}
-
-GameEngine.prototype.start = function() {
-  console.log('game is go!')
-  const that = this;
-  (function gameLoop() {
-    that.loop()
-    requestAnimationFrame(gameLoop)
-    if (!that.fps)
-      that.renderer.render(that.scene, that.camera)
-    else
-      that.renderer.render(that.scene, that.cameraFPS)
-
-    that.elapsed = that.clock.getElapsedTime()
-  })()
-}
-
-GameEngine.prototype.initLighting = function() {
-  const d = 500
-  const dirLight = new THREE.DirectionalLight(0xffffcc, 0.5, 500)
-  const hemiLight = new THREE.HemisphereLight(0xffffcc, 0xffffcc, 0.6)
-  const pointLight = new THREE.PointLight(0xffffcc)
-
-  // light for shadows
-  dirLight.color.setHSL(0.1, 1, 0.95)
-  dirLight.position.set(-1, 1.75, 1)
-  dirLight.position.multiplyScalar(100)
-  dirLight.position.copy(this.camera.position)
-  dirLight.castShadow = true
-  dirLight.shadow.mapSize.width = 2048
-  dirLight.shadow.mapSize.height = 2048
-  dirLight.shadow.camera.left = -d
-  dirLight.shadow.camera.right = d
-  dirLight.shadow.camera.top = d
-  dirLight.shadow.camera.bottom = -d
-  dirLight.shadow.camera.far = 3500
-  dirLight.shadow.bias = -0.0001
-
-  hemiLight.color.setHSL(0.6, 1, 0.6)
-  hemiLight.groundColor.setHSL(0.095, 1, 0.75)
-  hemiLight.position.set(0, 500, 0)
-
-  pointLight.intensity = 0.75
-  pointLight.position.copy(new THREE.Vector3(1000, 800, -1000))
-
-  this.scene.add(dirLight)
-  this.scene.add(hemiLight)
-  this.scene.add(pointLight)
-}
-
-GameEngine.prototype.pause = function() {
-  this.paused = this.paused ? false : true
-}
-
-GameEngine.prototype.getEntity = function(id) {
-  return this.entities[id] || false
-}
-
-GameEngine.prototype.plantTrees = function() {
-  for (let i = 0; i < TREES; i++) {
-    const rndPoint = new THREE.Vector3(rndInt(1100), 100, rndInt(1100))
-    const collision = this.place(rndPoint)
-    if (collision.y > 0) {
-      collision.y -= 10
-      this.addEntity(new Tree(this, { pos: collision }))
+  switchCam() {
+    if (this.fps)
+      this.fps = false
+    else {
+      const mob = this.getCloseEntity('mob', new THREE.Vector3(0, 0, 0), 2000)
+      mob.fps = true
+      mob.log = true
+      this.fps = true
+      this.cameraFPS.position.copy(mob.pos)
+      this.cameraFPS.position.y += 10
     }
-  }
-}
-
-GameEngine.prototype.place = function(position) {
-  const caster = new THREE.Raycaster()
-  const ray = new THREE.Vector3(0, -1, 0)
-  caster.set(position, ray)
-  const collisions = caster.intersectObject(this.scene.getObjectByName('terrain').children[0])
-  if (collisions.length > 0) return collisions[0].point
-  return position
-}
-
-GameEngine.prototype.switchCam = function() {
-  if (this.fps)
-    this.fps = false
-  else {
-    const mob = this.getCloseEntity('mob', new THREE.Vector3(0, 0, 0), 2000)
-    mob.fps = true
-    mob.log = true
-    this.fps = true
-    this.cameraFPS.position.copy(mob.pos)
-    this.cameraFPS.position.y += 10
   }
 }

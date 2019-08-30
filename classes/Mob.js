@@ -104,17 +104,15 @@ export default class Mob extends Entity {
     const collision = this.game.place(this.pos)
     this.pos.y = collision.y + 1.5
     this.shootCooldown--
-
     this.state = this.state.tick()
-    // Mob is carrying a resource.
+    // carrying resource
     if (this.carryEntity) {
       this.carryEntity.pos.x = this.pos.x - 4
       this.carryEntity.pos.y = this.pos.y
       this.carryEntity.pos.z = this.pos.z - 4
     }
     super.update()
-    if (this.fps)
-      this.game.cameraFPS.lookAt(this.destination)
+    if (this.fps) this.game.cameraFPS.lookAt(this.destination)
   }
 
   create() {
@@ -136,8 +134,7 @@ export default class Mob extends Entity {
         this.game.addEntity(resource)
         this.carryEntity = resource
       }
-    } else
-      this.carryEntity = entity
+    } else this.carryEntity = entity
   }
 
   drop() {
@@ -145,26 +142,24 @@ export default class Mob extends Entity {
       this.carryEntity.pos = new THREE.Vector3(this.pos.x, 0, this.pos.z)
       this.carryEntity = undefined
     }
-    if (this.prey)
-      this.prey = undefined
+    if (this.prey) this.prey = undefined
   }
 
   shoot(destination) {
-    if (this.shootCooldown <= 0) {
-      this.game.addEntity(
-        new Arrow(
-          this.game,
-          {
-            pos: this.pos.clone(),
-            destination,
-            lifeSpan: 300,
-            speed: 600,
-            offset: 10
-          }
-        )
+    if (this.shootCooldown > 0) return
+    this.game.addEntity(
+      new Arrow(
+        this.game,
+        {
+          pos: this.pos.clone(),
+          destination,
+          lifeSpan: 300,
+          speed: 600,
+          offset: 10
+        }
       )
-      this.shootCooldown = 5
-    }
+    )
+    this.shootCooldown = 5
   }
 
   getPrey() {
@@ -185,13 +180,11 @@ export default class Mob extends Entity {
   goRandom() {
     const rndPoint = new THREE.Vector3(rndInt(1100), 10, rndInt(1100))
     const collision = this.game.place(rndPoint)
-    if (collision.y > 5)
-      this.destination = collision
+    if (collision.y > 5) this.destination = collision
   }
 
   attack() {
     this.shoot(this.prey.pos.clone())
-    if (roll(5) === 1)
-      this.prey.attacked()
+    if (roll(5) === 1) this.prey.attacked()
   }
 }
