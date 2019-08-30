@@ -8,8 +8,7 @@ export default class Level {
   generate() {
     const material = new THREE.MeshLambertMaterial({
       color: 0x33aa33,
-      vertexColors: THREE.FaceColors,
-      overdraw: true
+      vertexColors: THREE.FaceColors
     })
     const geometry = new THREE.PlaneGeometry(1200, 1200, this.resolution, this.resolution)
     geometry.dynamic = true

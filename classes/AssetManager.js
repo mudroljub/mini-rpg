@@ -25,8 +25,7 @@ export default class AssetManager {
     let i = 0
     meshes.forEach(mesh => {
       loader.load('assets/' + mesh + '.json', (geometry, materials) => {
-        const material = new THREE.MultiMaterial(materials)
-        objects[mesh] = new THREE.Mesh(geometry, material)
+        objects[mesh] = new THREE.Mesh(geometry, materials[0])
         i++
         if (i === meshes.length) callback(objects)
       })

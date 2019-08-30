@@ -31,7 +31,6 @@ export default class GameEngine {
     this.renderer.gammaInput = true
     this.renderer.physicallyBasedShading = true
     this.renderer.shadowMap.enabled = true
-    this.renderer.shadowMap.renderReverseSided = false
     this.renderer.shadowMapAutoUpdate = true
     this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement)
     document.body.appendChild(this.renderer.domElement)
