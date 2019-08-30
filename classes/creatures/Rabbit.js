@@ -24,18 +24,17 @@ function createRabbit() {
 
 const rabbitModel = createRabbit()
 
-export default function Rabbit(game) {
-  this.name = 'rabbit'
-  Entity.call(this, game)
-  this.pos = new THREE.Vector3(rndInt(1200), 0, rndInt(1200))
-  this.destination = this.pos.clone()
-  this.health = 5
-  this.speed = 50 + rndInt(40)
-  this.state = this.game.machine.generate(rabbitJson, this, Rabbit.states)
+export default class Rabbit extends Entity {
+  constructor(game) {
+    super(game)
+    this.name = 'rabbit'
+    this.pos = new THREE.Vector3(rndInt(1200), 0, rndInt(1200))
+    this.destination = this.pos.clone()
+    this.health = 5
+    this.speed = 50 + rndInt(40)
+    this.state = this.game.machine.generate(rabbitJson, this, Rabbit.states)
+  }
 }
-
-Rabbit.prototype = new Entity()
-Rabbit.prototype.constructor = Rabbit
 
 Rabbit.prototype.update = function() {
   const collision = this.game.place(this.pos)
