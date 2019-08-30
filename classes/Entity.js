@@ -5,7 +5,7 @@ export default class Entity {
     this.vel = new THREE.Vector3(0, 0, 0)
     this.rotation = new THREE.Euler(0, 0, 0)
     this.timeMult = 1
-    this.speed = 1
+    this.speed = 0
     this.remove = false
     this.shadow = false
     this.state = null

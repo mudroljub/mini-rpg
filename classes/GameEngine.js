@@ -1,15 +1,9 @@
 import Machine from '../lib/Machine.js'
 import Tree from './Tree.js'
-import Cloud from './Cloud.js'
-import Bird from './creatures/Bird.js'
-import Rabbit from './creatures/Rabbit.js'
 import Level from './Level.js'
 import { rndInt } from '../utils/helpers.js'
 
 const TREES = 100
-const BIRDS = 15
-const RABBITS = 50
-const CLOUDS = 15
 const { innerWidth, innerHeight } = window
 
 export default class GameEngine {
@@ -75,21 +69,9 @@ export default class GameEngine {
   }
 
   init() {
-    console.log('game init!')
-
     this.machine = new Machine()
     this.terrain = new Level()
     this.scene.add(this.terrain.generate())
-
-    for (let i = 0; i < RABBITS; i++)
-      this.addEntity(new Rabbit(this))
-
-    for (let i = 0; i < CLOUDS; i++)
-      this.addEntity(new Cloud(this))
-
-    for (let i = 0; i < BIRDS; i++)
-      this.addEntity(new Bird(this))
-
     this.initLighting()
   }
 
