@@ -17,7 +17,7 @@ export default class Resource extends Entity {
     }
   }
 
-  create() {
+  createMesh() {
     const geometry = new THREE.BoxGeometry(4, 4, 4)
     const material = new THREE.MeshLambertMaterial({ color: this.color })
     this.mesh = new THREE.Mesh(geometry, material)

@@ -10,7 +10,7 @@ export default class Entity {
     this.shadow = false
     this.state = null
     this.color = color
-    this.create()
+    this.createMesh()
     this.mesh.position.copy(position)
   }
 
@@ -22,7 +22,7 @@ export default class Entity {
     this.mesh.position.copy(newPos)
   }
 
-  create() {
+  createMesh() {
     const geometry = new THREE.BoxGeometry(10, 10, 10)
     const material = new THREE.MeshLambertMaterial({ color: 0xff0000 })
     this.mesh = new THREE.Mesh(geometry, material)

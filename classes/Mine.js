@@ -10,7 +10,7 @@ export default class Mine extends Entity {
     this.units = 100
   }
 
-  create() {
+  createMesh() {
     if (objects.mine) {
       objects.mine.scale.set(10, 10, 10)
       objects.mine.castShadow = true

@@ -56,7 +56,7 @@ export default class Rabbit extends Entity {
     super.update(this)
   }
 
-  create() {
+  createMesh() {
     this.mesh = createRabbit()
   }
 

@@ -8,7 +8,7 @@ export default class Village extends Entity {
     this.destination = data.pos.clone()
   }
 
-  create() {
+  createMesh() {
     if (objects.village) {
       objects.village.scale.set(15, 15, 15)
       objects.village.castShadow = true

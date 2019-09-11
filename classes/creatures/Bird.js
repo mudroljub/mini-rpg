@@ -50,7 +50,7 @@ export default class Bird extends Entity {
     super.update()
   }
 
-  create() {
+  createMesh() {
     this.mesh = createBird()
   }
 

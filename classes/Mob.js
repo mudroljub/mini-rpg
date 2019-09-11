@@ -115,7 +115,7 @@ export default class Mob extends Entity {
     if (this.fps) this.game.cameraFPS.lookAt(this.destination)
   }
 
-  create() {
+  createMesh() {
     const geometry = new THREE.BoxGeometry(5, 10, 5)
     const material = new THREE.MeshLambertMaterial({ color: 0xecc2a7 })
     this.mesh = new THREE.Mesh(geometry, material)

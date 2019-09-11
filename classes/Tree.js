@@ -42,7 +42,7 @@ export default class Tree extends Entity {
     this.units = 4
   }
 
-  create() {
+  createMesh() {
     this.mesh = createTree()
   }
 }

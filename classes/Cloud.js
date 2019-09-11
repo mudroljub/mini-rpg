@@ -17,7 +17,7 @@ export default class Cloud extends Entity {
     super.update()
   }
 
-  create() {
+  createMesh() {
     if (objects.cloud) {
       objects.cloud.scale.set(roll(50) + 10, 15, roll(10) + 10)
       objects.cloud.castShadow = true
