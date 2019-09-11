@@ -6,6 +6,6 @@ Small game world simulation. Randomly generated world on page refresh. Mouse to 
 
 ## Start
 
-```shell
+```
 live-server
 ```
